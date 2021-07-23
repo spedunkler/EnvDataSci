@@ -1,0 +1,317 @@
+---
+title: "SVM_RCV_Sentinel2"
+author: "Modified from Valentin Stefan https://valentinitnelav.github.io/satellite-image-classification-r by Jerry Davis"
+date: "7/18/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(rgdal)        # [readOGR]
+library(gdalUtils)
+library(raster)       # [writeRaster, brick, beginCluster, unique, projection, rasterToPoints]
+library(sf)
+library(sp)           # [spTransform]
+library(RStoolbox)    # Remote Sensing toolbox.  [normImage]
+library(getSpatialData)   # for reading Sentinel, Landsat, MODIS, SRTM [set_aoi, view_aoi]
+# library(rasterVis)   # terra required, creates error in module
+                       # "spat" -- function 'Rcpp_precious_remove' not provided by package 'Rcpp'
+library(mapview)  # [viewRGB, mapview]
+
+library(RColorBrewer)
+library(plotly)       # [plot_ly]
+library(grDevices)
+
+library(caret)          # [createDataPartition, createFolds, trainControl, train, confusionMatrix]
+
+library(data.table)   # [setDT, setnames]
+library(dplyr)
+library(stringr)
+library(doParallel)  # [registerDoParallel]
+library(snow)       # [makeCluster, stopCluster]
+library(parallel)   # [makeCluster, stopCluster, detectCores]
+
+# set the temporary folder for raster package operations
+rasterOptions(tmpdir = "./cache/temp")
+```
+
+## Read all 10m & 20m bands in this order into a list of 10 bands
+
+10 m bands
+-B02 - Blue	0.490 $\mu m
+-B03 - Green	0.560	$\mu m
+-B04 - Red	0.665	$\mu m
+-B08 - NIR	0.842	$\mu m
+
+20 m bands
+-B05 - Red Edge	0.705	$\mu m
+-B06 - Red Edge	0.740	$\mu m
+-B07 - Red Edge	0.783	$\mu m
+-B11 - SWIR	1.610	$\mu m
+-B12 - SWIR	2.190	$\mu m
+-B8A - Red Edge	0.865	$\mu m
+
+```{r}
+dtaPath <- system.file("extdata", "RCVimagery", package="iGIScData")
+imgList <- list.files(paste0(dtaPath,"/crop"), pattern = "*.tif", full.names = TRUE)
+rst_lst <- lapply(imgList, FUN = raster) # list of 10 bands
+names(rst_lst) <- str_extract(sapply(rst_lst, names), "B.{2}")
+viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview]
+```
+
+
+
+
+
+# Visualize the image in false color (IR-R-G as R-G-B).
+
+```{r falseColor}
+viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
+```
+
+
+## Set up prediction raster brick
+Needed to build a brick raster object to be used for prediction result
+[see raster::brick, etc.]
+
+```{r prepPrediction}
+rst_for_prediction <- vector(mode = "list", length = length(rst_lst))
+names(rst_for_prediction) <- names(rst_lst)
+```
+
+## Resample 20 m bands to 10 m
+
+```{r resample}
+for (b in c("B05", "B06", "B07", "B8A", "B11", "B12")){
+  beginCluster(n = round(3/4 * detectCores()))  # [raster]
+  try(
+    rst_for_prediction[[b]] <- raster::resample(x = rst_lst[[b]],
+                                                y = rst_lst$B02)
+  )
+  endCluster()
+}
+
+b_10m <- c("B02", "B03", "B04", "B08")
+rst_for_prediction[b_10m] <- rst_lst[b_10m]
+brick_for_prediction <- brick(rst_for_prediction)  # [raster]
+
+```
+
+## Normalize (Center & scale) raster images:
+Subtract the mean and divide by the standard deviation for each variable/feature/band.
+While the data don't need normalization to convert to normal distribution,
+the transformation is needed for the ML algorithms, especially for the neural networks.
+
+```{r normalize}
+brick_for_prediction_norm <- normImage(brick_for_prediction)  # [RStoolbox]
+names(brick_for_prediction_norm) <- names(brick_for_prediction)
+
+```
+
+## Create the same AOI that was used to crop the image, for display purposes
+
+```{r aoi}
+aoi <- matrix(data = c(-120.470, 39.975,  # Upper left corner
+                       -120.396, 39.975,  # Upper right corner
+                       -120.396, 39.918,  # Bottom right corner
+                       -120.470, 39.918,  # Bottom left corner
+                       -120.470, 39.975), # Upper left corner - closure
+              ncol = 2, byrow = TRUE)
+set_aoi(aoi)   # [getSpatialData]
+view_aoi()     # [getSpatialData]
+```
+
+
+## Training polygons
+Polygons to points
+Read the training polygons in shapefiles with 'class' field
+digitized from multispectral drone imagery.
+
+```{r training}
+poly <- rgdal::readOGR(dsn   = dtaPath,
+                       layer = "train_polys",
+                       stringsAsFactors = FALSE)
+poly@data$id <- as.integer(factor(poly@data$class)) # creates a numeric id useful for rasterization
+setDT(poly@data)
+# Prepare colors for each class.
+cls_dt <- unique(poly@data) %>%   # [raster]
+  arrange(id) %>%
+  mutate(hex = c(bare        = "#cccccc",
+                 forest      = "#006600",
+                 hydric      = "#99ffcc",
+                 mesic       = "#ffff66",
+                 water       = "#003366",
+                 willow      = "#66ff33",
+                 xeric       = "#ff7f7f"))
+view_aoi(color = "#a1d99b") +
+  mapView(poly, zcol = "class", col.regions = cls_dt$hex)
+poly_utm <- sp::spTransform(poly, CRSobj = rst_lst[[1]]@crs)
+```
+
+## Extract training values from polygons at 10 m resolution
+Convert the raster to points and then use them to extract values from the Sentinel bands.
+
+```{r extract}
+# Create raster template
+template_rst <- raster(extent(rst_lst$B02), # B02 has resolution 10 m so appropriate extent
+                       resolution = 10,
+                       crs = projection(rst_lst$B02))       # [raster]
+poly_utm_rst <- rasterize(poly_utm, template_rst, field = 'id')  # [raster]
+poly_dt <- as.data.table(rasterToPoints(poly_utm_rst))           # [raster]
+setnames(poly_dt, old = "layer", new = "id_cls")                 # [data.table]
+
+points <- SpatialPointsDataFrame(coords = poly_dt[, .(x, y)],    # [sp]
+                                 data = poly_dt,
+                                 proj4string = poly_utm_rst@crs)
+
+# Extract band values to points
+dt <- brick_for_prediction_norm %>%
+  extract(y = points) %>%
+  as.data.frame %>%
+  mutate(id_cls = points@data$id_cls) %>%  # add the class names to each row
+  left_join(y = unique(poly@data), by = c("id_cls" = "id")) %>%
+  mutate(id_cls = NULL) %>%       # this column is extra now, delete it
+  mutate(class = factor(class))
+
+setDT(dt)
+
+```
+
+# Histograms of predictors
+
+```{r histograms}
+dt %>%
+  select(-"class") %>%
+  melt(measure.vars = names(.)) %>%   # [data.table]
+  ggplot() +
+  geom_histogram(aes(value)) +
+  geom_vline(xintercept = 0, color = "gray70") +
+  facet_wrap(facets = vars(variable), ncol = 3)
+
+```
+
+## Split into training and testing subsets
+The training subset will be used for model tuning by cross-validation and grid search.
+The final models are tested using the test subset to build confusion matrices
+See caret package
+
+```{r split}
+set.seed(321)
+# A stratified random split of the data
+idx_train <- createDataPartition(dt$class,    # [caret]
+                                 p = 0.7, # percentage of data as training
+                                 list = FALSE)
+dt_train <- dt[idx_train]
+dt_test <- dt[-idx_train]
+table(dt_train$class)
+table(dt_test$class)
+
+```
+
+## What's next
+The next step is setting up and fitting models -- we'll look at:
+- Random Forest
+- Support Vector Machine (SVM)
+- Neural Network
+
+
+## Fit models
+Note that the first part of this is the same for the other models.
+
+The training dataset is used for to cross-validate and model tuning. Once the optimal/best parameters were found a final model is fit to the entire training dataset using those findings. Then we test.
+
+Details are provided in the intro vignette of caret package <https://cran.r-project.org/web/packages/caret/vignettes/caret.html>
+
+Cross validation (CV) is used to compare models, using a number of folds which must be set for each model. Also see help(trainControl).
+
+```{r CVfolds}
+# create cross-validation folds (splits the data into n random groups)
+n_folds <- 10
+set.seed(321)
+folds <- createFolds(1:nrow(dt_train), k = n_folds)    # [caret]
+# Set the seed at each resampling iteration. Useful when running CV in parallel.
+seeds <- vector(mode = "list", length = n_folds + 1) # +1 for the final model
+for(i in 1:n_folds) seeds[[i]] <- sample.int(1000, n_folds)
+seeds[n_folds + 1] <- sample.int(1000, 1) # seed for the final model
+```
+
+#### For each model:
+for each model, in trainControl we need to provide the following:
+
+```{r}
+ctrl <- trainControl(summaryFunction = multiClassSummary,   # [caret]
+                     method = "cv",
+                     number = n_folds,
+                     search = "grid",
+                     classProbs = TRUE, # not implemented for SVM; will just get a warning
+                     savePredictions = TRUE,
+                     index = folds,
+                     seeds = seeds)
+```
+
+
+SVM
+“L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
+
+importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, I didn’t bother to make another ctrl object for SVM, so it works to recycle the one used for the random forests models with ignoring the warning: Class probabilities were requested for a model that does not implement them.
+
+## Train model
+[After reinstalling caret, parallel tools makeCluster or detectCores create errors, 
+but parallel processing isn't essential for this size dataset]
+
+```{r svmTrain}
+# Grid of tuning parameters
+svm_grid <- expand.grid(cost = c(0.2, 0.5, 1),
+                        Loss = c("L1", "L2"))
+
+# cl <- makeCluster(3/4 * detectCores())    # [parallel]  -- NOT WORKING
+# registerDoParallel(cl)                    # [doParallel]
+
+model_svm <- caret::train(class ~ . , method = "svmLinear3", data = dt_train,
+                         allowParallel = FALSE,   # since parallel now fails
+                         tuneGrid = svm_grid,
+                         trControl = ctrl)
+# stopCluster(cl); remove(cl)
+registerDoSEQ()   # [foreach]
+# saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
+```
+
+## Model summary & confusion matrix
+```{r}
+model_svm$times$everything # total computation time
+##    user  system elapsed 
+##    1.44    0.31   16.55
+plot(model_svm) # tuning results
+
+# The confusion matrix using the test dataset
+cm_svm <- confusionMatrix(data = predict(model_svm, newdata = dt_test),  # [caret]
+                          dt_test$class)
+cm_svm
+```
+
+## Prediction map
+
+```{r}
+predict_svm <- raster::predict(object = brick_for_prediction_norm,
+                                 model = model_svm, type = 'raw')
+mapView(predict_svm, col.regions = cls_dt$hex)
+```
+
+## Random Forest
+We'll see if this works ... nope
+
+```{r rf}
+model_rf <- caret::train(class ~ . , method = "rf", data = dt_train,
+                         importance = TRUE, # passed to randomForest()
+                         # run CV process in parallel;
+                         # see https://stackoverflow.com/a/44774591/5193830
+                         allowParallel = FALSE,
+                         tuneGrid = data.frame(mtry = c(2, 3, 4, 5, 8)),
+                         trControl = ctrl)
+registerDoSEQ()
+saveRDS(model_rf, file = "./cache/model_rf.rds")
+```
+
