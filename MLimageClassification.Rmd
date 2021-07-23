@@ -20,7 +20,6 @@ library(getSpatialData)   # for reading Sentinel, Landsat, MODIS, SRTM [set_aoi,
 # library(rasterVis)   # terra required, creates error in module
                        # "spat" -- function 'Rcpp_precious_remove' not provided by package 'Rcpp'
 library(mapview)  # [viewRGB, mapview]
-
 library(RColorBrewer)
 library(plotly)       # [plot_ly]
 library(grDevices)
@@ -57,20 +56,36 @@ rasterOptions(tmpdir = "./cache/temp")
 ```{r}
 dtaPath <- system.file("extdata", "RCVimagery", package="iGIScData")
 imgList <- list.files(paste0(dtaPath,"/crop"), pattern = "*.tif", full.names = TRUE)
-rst_lst <- lapply(imgList, FUN = raster) # list of 10 bands
+rst_lst <- lapply(imgList, FUN = raster) # Apply the raster() function over the list of 10 bands
 names(rst_lst) <- str_extract(sapply(rst_lst, names), "B.{2}")
-viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview]
+   # sapply here returns a vector using the names() function, 
+   # then str_extract() just gets the part of file name with B followed by any 2 characters 
+viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview::viewRGB, raster::brick]
 ```
-
-
-
-
 
 # Visualize the image in false color (IR-R-G as R-G-B).
 
-```{r falseColor}
+```{r falseColor message=FALSE warning=FALSE echo=F}
+str_extract(sapply(rst_lst, names), "B.{2}") # shows the order of bands, with B08 (NIR) as the 7th
 viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
 ```
+
+## Create an NDVI raster
+I couldn't figure out how to pull the bands out of the list, so I'm reading them in again.
+
+```{r}
+red <- raster(paste0(dtaPath, "/crop/B04.tif"))
+nir <- raster(paste0(dtaPath, "/crop/B08.tif"))
+ndvi <- (nir - red)/(nir + red)
+mapview(ndvi)
+# This also works but requires some redundancy (list id number + name)
+redL <- rst_lst[3]$B04
+nirL <- rst_lst[7]$B08
+ndviL <- (nirL - redL)/(nirL + redL)
+mapview(ndviL)
+```
+
+
 
 
 ## Set up prediction raster brick
