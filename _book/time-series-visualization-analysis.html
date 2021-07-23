@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-05-23" />
+<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,7 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -363,19 +363,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="time-series-visualization-analysis" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Time Series Visualization &amp; Analysis</h1>
 <div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="time-series-visualization-analysis.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">stl</span>(co2, <span class="at">s.window =</span> <span class="st">&quot;periodic&quot;</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-227-1.png" width="672" /></p>
 <p>Time series data are widely used in the financial sector for obvious reasons, and
 these methods can be very useful environmental data science especially in studies
 such as looking at long-term climate change variables such as the Mauna Loa CO<sub>2</sub>
 data above, or at the much finer temporal scale, environmental data from data loggers such as eddy covariance
 flux towers.</p>
-<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-206"></span>
+<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-228"></span>
 <img src="img/RCVfluxTower2.png" alt="Red Clover Valley eddy covariance flux tower installation" width="75%" />
 <p class="caption">
 Figure 9.1: Red Clover Valley eddy covariance flux tower installation
 </p>
 </div>
-<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-207"></span>
+<div class="figure" style="text-align: left"><span id="fig:unnamed-chunk-229"></span>
 <img src="img/LoneyGraph.png" alt="Loney Meadow net ecosystem exchange (NEE) results" width="75%" />
 <p class="caption">
 Figure 9.2: Loney Meadow net ecosystem exchange (NEE) results
@@ -397,7 +397,7 @@ Figure 9.2: Loney Meadow net ecosystem exchange (NEE) results
 <span id="cb459-5"><a href="time-series-visualization-analysis.html#cb459-5" aria-hidden="true" tabindex="-1"></a>SFlowC  <span class="ot">&lt;-</span> (SFlowF<span class="dv">-32</span>)<span class="sc">*</span><span class="dv">5</span><span class="sc">/</span><span class="dv">9</span></span>
 <span id="cb459-6"><a href="time-series-visualization-analysis.html#cb459-6" aria-hidden="true" tabindex="-1"></a>SFtempC <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(<span class="at">high=</span>SFhighC,<span class="at">low=</span>SFlowC)</span>
 <span id="cb459-7"><a href="time-series-visualization-analysis.html#cb459-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(SFtempC);                  <span class="fu">plot</span>(<span class="fu">ts</span>(SFtempC))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-208-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-208-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-230-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-230-2.png" width="672" /></p>
 <div id="frequency-setting" class="section level3" number="9.1.1">
 <h3><span class="header-section-number">9.1.1</span> frequency setting</h3>
 <p>Frequency setting is a key parameter for ts()</p>
@@ -406,9 +406,9 @@ Figure 9.2: Loney Meadow net ecosystem exchange (NEE) results
 <li>ts() mostly doesn’t seem to care what the time unit is, however some functions figure it out, at least for an annual time unit, e.g. that 1-12 means months when there’s a frequency of 12</li>
 </ul>
 <div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="time-series-visualization-analysis.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(SFtempC, <span class="at">frequency=</span><span class="dv">1</span>), <span class="at">main=</span><span class="st">&quot;monthly time unit&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
 <div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="time-series-visualization-analysis.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(SFtempC, <span class="at">frequency=</span><span class="dv">12</span>), <span class="at">main=</span><span class="st">&quot;yearly time unit&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-209-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-231-2.png" width="672" /></p>
 <p><strong>frequency &lt; 1</strong></p>
 <p>If you have data of lower frequency than 1 per unit</p>
 <ul>
@@ -420,7 +420,7 @@ Figure 9.2: Loney Meadow net ecosystem exchange (NEE) results
 <span id="cb462-4"><a href="time-series-visualization-analysis.html#cb462-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">values_from =</span> concentration)</span>
 <span id="cb462-5"><a href="time-series-visualization-analysis.html#cb462-5" aria-hidden="true" tabindex="-1"></a>GHG <span class="ot">&lt;-</span> <span class="fu">ts</span>(GHGwide, <span class="at">frequency=</span><span class="fl">0.05</span>, <span class="at">start=</span><span class="dv">20</span>) </span>
 <span id="cb462-6"><a href="time-series-visualization-analysis.html#cb462-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(GHG)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
 <p>– greenhouse gas data from <span class="citation"><a href="references.html#ref-irizarry2019introduction" role="doc-biblioref">Irizarry</a> (<a href="references.html#ref-irizarry2019introduction" role="doc-biblioref">2019</a>)</span></p>
 <p><strong>start and end parameters</strong></p>
 <ul>
@@ -435,7 +435,7 @@ Figure 9.2: Loney Meadow net ecosystem exchange (NEE) results
 <p>For a study of chemical water quality and hydrology of a karst system in the Marble Mountains of California,
 a spring <em>resurgence</em> was instrumented to measure water level, temperature, and specific conductance (a surrogate for total dissolved solids) over a 4-year period <span class="citation">(<a href="references.html#ref-marbles" role="doc-biblioref">J. D. Davis and Davis 2001</a>)</span>.</p>
 <p><img src="img/resurgenceStageRecorder.png" width="75%" /></p>
-<div class="figure"><span id="fig:unnamed-chunk-212"></span>
+<div class="figure"><span id="fig:unnamed-chunk-234"></span>
 <img src="img/ResurgenceDataLogger.png" alt="Marble Mountains resurgence data logger design" width="796" />
 <p class="caption">
 Figure 9.3: Marble Mountains resurgence data logger design
@@ -448,7 +448,7 @@ Figure 9.3: Marble Mountains resurgence data logger design
 <span id="cb463-4"><a href="time-series-visualization-analysis.html#cb463-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(date_time, ATemp, BTemp, wlevelm, EC, InputV)</span>
 <span id="cb463-5"><a href="time-series-visualization-analysis.html#cb463-5" aria-hidden="true" tabindex="-1"></a>resurgTS <span class="ot">&lt;-</span> <span class="fu">ts</span>(resurg, <span class="at">frequency =</span> <span class="dv">12</span><span class="sc">*</span><span class="dv">365</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1994</span>, <span class="dv">266</span><span class="sc">*</span><span class="dv">12</span><span class="sc">+</span><span class="dv">7</span>))</span>
 <span id="cb463-6"><a href="time-series-visualization-analysis.html#cb463-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(resurgTS)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
 </div>
 </div>
 <div id="data-smoothing-methods" class="section level2" number="9.2">
@@ -503,11 +503,11 @@ Figure 9.3: Marble Mountains resurgence data logger design
 <span id="cb468-8"><a href="time-series-visualization-analysis.html#cb468-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
 <span id="cb468-9"><a href="time-series-visualization-analysis.html#cb468-9" aria-hidden="true" tabindex="-1"></a>CO2ma <span class="ot">&lt;-</span> <span class="fu">ma</span>(CO2, <span class="at">order=</span><span class="dv">7</span>)</span>
 <span id="cb468-10"><a href="time-series-visualization-analysis.html#cb468-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(CO2)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-216-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-238-1.png" width="672" /></p>
 <div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="time-series-visualization-analysis.html#cb469-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(CO2ma)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-216-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-238-2.png" width="672" /></p>
 <div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="time-series-visualization-analysis.html#cb470-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(CO2<span class="sc">-</span>CO2ma)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-216-3.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-238-3.png" width="672" /></p>
 </div>
 <div id="loess-local-regression-smoothing" class="section level3" number="9.2.2">
 <h3><span class="header-section-number">9.2.2</span> loess (local regression) smoothing</h3>
@@ -542,8 +542,8 @@ at first, then the “loess” method used by <code>stl</code>.</p>
 <p>A good place to see the effect of seasonality is to look at the Mauna Loa CO<sub>2</sub> data, which shows regular annual cycles, yet with
 a regularly increasing trend over the years. The decomposition shows the original observations, followed by a trend line that removes the seasonal and local (short-term) random irregularities, a detrended <em>seasonal</em> picture which removes that trend to just show the seasonal cycles, followed by the random irregularities. Note the vertical scale: the units are all the same – parts per million – so the actual amplitude of the seasonal cycle should be the same as the annual amplitude of the observations, it’s just scaled to the chart height, which tends to exaggerate the seasonal cycles and random irregularities.</p>
 <div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="time-series-visualization-analysis.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">decompose</span>(co2))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-217"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-217-1.png" alt="Decomposition of Mauna Loa monthly co2 time series (in base) extending from 1959 to 1981" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-239"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-239-1.png" alt="Decomposition of Mauna Loa monthly co2 time series (in base) extending from 1959 to 1981" width="672" />
 <p class="caption">
 Figure 9.4: Decomposition of Mauna Loa monthly co2 time series (in base) extending from 1959 to 1981
 </p>
@@ -553,7 +553,7 @@ Figure 9.4: Decomposition of Mauna Loa monthly co2 time series (in base) extendi
 Loess is a smoothing algorithm, that wor. If s.window = “periodic” the mean is used for smoothing;
 the seasonal values are removed and the remainder smoothed to find the trend.</p>
 <div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="time-series-visualization-analysis.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">stl</span>(co2, <span class="at">s.window=</span><span class="st">&quot;periodic&quot;</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-218-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
 <p><strong>Marble Mountains karst resurgence study</strong></p>
 <p>[<strong><code>Marbles</code></strong>]</p>
 <p>In the Marble Mountains karst resurgence study <span class="citation">(<a href="references.html#ref-marbles" role="doc-biblioref">J. D. Davis and Davis 2001</a>)</span>, water level water level has an annual seasonality
@@ -566,7 +566,7 @@ that might be best understand by decomposition.</p>
 <span id="cb473-6"><a href="time-series-visualization-analysis.html#cb473-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1994</span>, <span class="dv">266</span><span class="sc">*</span><span class="dv">12</span><span class="sc">+</span><span class="dv">7</span>))</span>
 <span id="cb473-7"><a href="time-series-visualization-analysis.html#cb473-7" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">stl</span>(wlevelm, <span class="at">s.window=</span><span class="st">&quot;periodic&quot;</span>)</span>
 <span id="cb473-8"><a href="time-series-visualization-analysis.html#cb473-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-219-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-241-1.png" width="672" /></p>
 <div id="lag-regression" class="section level3" number="9.3.1">
 <h3><span class="header-section-number">9.3.1</span> lag regression</h3>
 <p>We’ll explore solar radiation and temperature data for Bugac, Hungary, and Manaus, Brazil, maintained by the European Fluxes Database <span class="citation">(<a href="references.html#ref-icos" role="doc-biblioref"><em>European Fluxes Database</em>, n.d.</a>)</span>. (Create a <strong><code>SolarRad_Temp</code></strong> project for this.)</p>
@@ -577,7 +577,7 @@ that might be best understand by decomposition.</p>
 <span id="cb474-5"><a href="time-series-visualization-analysis.html#cb474-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(SolarRad, Tair)</span>
 <span id="cb474-6"><a href="time-series-visualization-analysis.html#cb474-6" aria-hidden="true" tabindex="-1"></a>BugacSolsticeTS <span class="ot">&lt;-</span> <span class="fu">ts</span>(BugacSolstice, <span class="at">frequency =</span> <span class="dv">48</span>)</span>
 <span id="cb474-7"><a href="time-series-visualization-analysis.html#cb474-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(BugacSolstice, <span class="at">main=</span><span class="st">&quot;a simple scatter plot that illustrates hysteresis&quot;</span>); <span class="fu">plot</span>(BugacSolsticeTS)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-220-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-220-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-242-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-242-2.png" width="672" /></p>
 <div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="time-series-visualization-analysis.html#cb475-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {<span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="fu">lm</span>(Tair<span class="sc">~</span><span class="fu">lag</span>(SolarRad,i), <span class="at">data=</span>BugacSolsticeTS)<span class="sc">$</span>resid<span class="sc">**</span><span class="dv">2</span>))}</span>
 <span id="cb475-2"><a href="time-series-visualization-analysis.html#cb475-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>){<span class="fu">print</span>(<span class="fu">paste</span>(i,<span class="st">&quot;:&quot;</span>,<span class="fu">mod</span>(i),<span class="at">sep=</span><span class="st">&quot;&quot;</span>))}</span></code></pre></div>
 <pre><code>## [1] &quot;0:64.0135215060866&quot;
@@ -593,7 +593,7 @@ that might be best understand by decomposition.</p>
 <span id="cb477-5"><a href="time-series-visualization-analysis.html#cb477-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">seq_along</span>(Rad), <span class="at">y=</span>Rad<span class="sc">/</span><span class="dv">50</span>), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb477-6"><a href="time-series-visualization-analysis.html#cb477-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">seq_along</span>(Temp), <span class="at">y=</span>Temp), <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>,<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb477-7"><a href="time-series-visualization-analysis.html#cb477-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">480</span>,<span class="dv">12</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-220-3.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-242-3.png" width="672" /></p>
 <div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="time-series-visualization-analysis.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(seasonals<span class="sc">$</span>Rad)</span></code></pre></div>
 <pre><code>## [1] 23</code></pre>
 <div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="time-series-visualization-analysis.html#cb480-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(seasonals<span class="sc">$</span>Temp)</span></code></pre></div>
@@ -605,7 +605,7 @@ that might be best understand by decomposition.</p>
 <span id="cb482-5"><a href="time-series-visualization-analysis.html#cb482-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(SolarRad, Tair)</span>
 <span id="cb482-6"><a href="time-series-visualization-analysis.html#cb482-6" aria-hidden="true" tabindex="-1"></a>ManausSolsticeTS <span class="ot">&lt;-</span> <span class="fu">ts</span>(ManausSolstice, <span class="at">frequency =</span> <span class="dv">48</span>)</span>
 <span id="cb482-7"><a href="time-series-visualization-analysis.html#cb482-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ManausSolstice, <span class="at">main=</span><span class="st">&quot;Manaus Brazil&quot;</span>); <span class="fu">plot</span>(ManausSolsticeTS)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-221-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-221-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-243-1.png" width="672" /><img src="EnvDataSci_files/figure-html/unnamed-chunk-243-2.png" width="672" /></p>
 <div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="time-series-visualization-analysis.html#cb483-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {<span class="fu">sqrt</span>(<span class="fu">sum</span>(<span class="fu">lm</span>(Tair<span class="sc">~</span><span class="fu">lag</span>(SolarRad,i), <span class="at">data=</span>ManausSolsticeTS)<span class="sc">$</span>resid<span class="sc">**</span><span class="dv">2</span>))}</span>
 <span id="cb483-2"><a href="time-series-visualization-analysis.html#cb483-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>){<span class="fu">print</span>(<span class="fu">paste</span>(i,<span class="st">&quot;:&quot;</span>,<span class="fu">mod</span>(i),<span class="at">sep=</span><span class="st">&quot;&quot;</span>))}</span></code></pre></div>
 <pre><code>## [1] &quot;0:36.6765871805181&quot;
@@ -621,7 +621,7 @@ that might be best understand by decomposition.</p>
 <span id="cb485-5"><a href="time-series-visualization-analysis.html#cb485-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">seq_along</span>(Rad), <span class="at">y=</span>Rad<span class="sc">/</span><span class="dv">50</span>), <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb485-6"><a href="time-series-visualization-analysis.html#cb485-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">seq_along</span>(Temp), <span class="at">y=</span>Temp), <span class="at">col=</span><span class="st">&quot;darkgreen&quot;</span>,<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb485-7"><a href="time-series-visualization-analysis.html#cb485-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">480</span>,<span class="dv">12</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-221-3.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-243-3.png" width="672" /></p>
 <div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="time-series-visualization-analysis.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(seasonals<span class="sc">$</span>Rad)</span></code></pre></div>
 <pre><code>## [1] 30</code></pre>
 <div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="time-series-visualization-analysis.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which.max</span>(seasonals<span class="sc">$</span>Temp)</span></code></pre></div>
@@ -651,7 +651,7 @@ standard deviations of the distribution – might be a useful figure.</p>
 <span id="cb490-13"><a href="time-series-visualization-analysis.html#cb490-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax=</span>meanTemp<span class="sc">+</span>sdTemp, <span class="at">ymin=</span>meanTemp<span class="sc">-</span>sdTemp)) <span class="sc">+</span></span>
 <span id="cb490-14"><a href="time-series-visualization-analysis.html#cb490-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Manaus 2005 ensemble air temperature&quot;</span>)</span>
 <span id="cb490-15"><a href="time-series-visualization-analysis.html#cb490-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(<span class="at">plotlist=</span><span class="fu">list</span>(p1,p2), <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">align=</span><span class="st">&#39;v&#39;</span>) <span class="co"># from cowplot</span></span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-222-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-244-1.png" width="672" /></p>
 <div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="time-series-visualization-analysis.html#cb491-1" aria-hidden="true" tabindex="-1"></a>Bugac <span class="ot">&lt;-</span> <span class="fu">read_xls</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;SolarRad_Temp.xls&quot;</span>,<span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>), </span>
 <span id="cb491-2"><a href="time-series-visualization-analysis.html#cb491-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sheet=</span><span class="st">&quot;BugacHungary&quot;</span>, <span class="at">col_types =</span> <span class="st">&quot;numeric&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb491-3"><a href="time-series-visualization-analysis.html#cb491-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Year<span class="sc">:</span>Tair) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">!=</span> <span class="st">&quot;YYYY&quot;</span>)</span>
@@ -666,7 +666,7 @@ standard deviations of the distribution – might be a useful figure.</p>
 <span id="cb491-12"><a href="time-series-visualization-analysis.html#cb491-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymax=</span>meanTemp<span class="sc">+</span>sdTemp, <span class="at">ymin=</span>meanTemp<span class="sc">-</span>sdTemp)) <span class="sc">+</span></span>
 <span id="cb491-13"><a href="time-series-visualization-analysis.html#cb491-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Bugac 2005 ensemble air temperature&quot;</span>)</span>
 <span id="cb491-14"><a href="time-series-visualization-analysis.html#cb491-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(<span class="at">plotlist=</span><span class="fu">list</span>(p1,p2), <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">align=</span><span class="st">&#39;v&#39;</span>) <span class="co"># from cowplot</span></span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-222-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-244-2.png" width="672" /></p>
 </div>
 <div id="julian-dates" class="section level3" number="9.3.3">
 <h3><span class="header-section-number">9.3.3</span> Julian Dates</h3>
@@ -767,7 +767,8 @@ gitbook.start({
 "download": ["EnvDataSci.pdf", "EnvDataSci.epub"],
 "toc": {
 "collapse": "subsection"
-}
+},
+"book_filename": "envdatasci"
 });
 });
 </script>

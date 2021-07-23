@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-05-23" />
+<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,7 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -364,15 +364,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> Visualization</h1>
 <p>In this section we’ll explore visualization methods in R. Visualization has been a key element of R since its inception, since visualization is central to the exploratory philosophy of the language. The base <em>plot</em> system generally does a good job in coming up with the most likely graphical output based on the data you provide.</p>
 <div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="visualization.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(penguins<span class="sc">$</span>body_mass_g, penguins<span class="sc">$</span>flipper_length_mm)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-89-1"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-89-1.png" alt="Flipper length by species" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-111-1"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-111-1.png" alt="Flipper length by species" width="672" />
 <p class="caption">
 Figure 4.1: Flipper length by species
 </p>
 </div>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="visualization.html#cb275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(penguins<span class="sc">$</span>species, penguins<span class="sc">$</span>flipper_length_mm)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-89-2"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-89-2.png" alt="Flipper length by species" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-111-2"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-111-2.png" alt="Flipper length by species" width="672" />
 <p class="caption">
 Figure 4.2: Flipper length by species
 </p>
@@ -409,23 +409,16 @@ Figure 4.2: Flipper length by species
 <div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="visualization.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(iGIScData)</span>
 <span id="cb276-2"><a href="visualization.html#cb276-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb276-3"><a href="visualization.html#cb276-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(XSptsNDVI)</span></code></pre></div>
-<pre><code>##     DistNtoS       elevation     vegetation          geometry        
-##  Min.   :  0.0   Min.   :1510   Length:29          Length:29         
-##  1st Qu.: 37.0   1st Qu.:1510   Class :character   Class :character  
-##  Median :175.0   Median :1511   Mode  :character   Mode  :character  
-##  Mean   :164.7   Mean   :1511                                        
-##  3rd Qu.:275.5   3rd Qu.:1511                                        
-##  Max.   :298.8   Max.   :1511                                        
-##   NDVIgrowing     NDVIsenescent   
-##  Min.   :0.3255   Min.   :0.1402  
-##  1st Qu.:0.5052   1st Qu.:0.2418  
-##  Median :0.6169   Median :0.2817  
-##  Mean   :0.5901   Mean   :0.3662  
-##  3rd Qu.:0.6768   3rd Qu.:0.5407  
-##  Max.   :0.7683   Max.   :0.7578</code></pre>
+<pre><code>##     DistNtoS       elevation     vegetation          geometry          NDVIgrowing     NDVIsenescent   
+##  Min.   :  0.0   Min.   :1510   Length:29          Length:29          Min.   :0.3255   Min.   :0.1402  
+##  1st Qu.: 37.0   1st Qu.:1510   Class :character   Class :character   1st Qu.:0.5052   1st Qu.:0.2418  
+##  Median :175.0   Median :1511   Mode  :character   Mode  :character   Median :0.6169   Median :0.2817  
+##  Mean   :164.7   Mean   :1511                                         Mean   :0.5901   Mean   :0.3662  
+##  3rd Qu.:275.5   3rd Qu.:1511                                         3rd Qu.:0.6768   3rd Qu.:0.5407  
+##  Max.   :298.8   Max.   :1511                                         Max.   :0.7683   Max.   :0.7578</code></pre>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="visualization.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(XSptsNDVI, <span class="fu">aes</span>(vegetation)) <span class="sc">+</span> </span>
 <span id="cb278-2"><a href="visualization.html#cb278-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <div id="histogram" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Histogram</h3>
 <p><strong>First, to prepare the data, we need to use a pivot_longer on XSptsNDVI:</strong></p>
@@ -437,8 +430,8 @@ Figure 4.2: Flipper length by species
 <span id="cb280-2"><a href="visualization.html#cb280-2" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span></span>
 <span id="cb280-3"><a href="visualization.html#cb280-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI)) <span class="sc">+</span> </span>
 <span id="cb280-4"><a href="visualization.html#cb280-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth=</span><span class="fl">0.05</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-92"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-92-1.png" alt="Distribution of NDVI, Knuthson Meadow" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-114"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-114-1.png" alt="Distribution of NDVI, Knuthson Meadow" width="672" />
 <p class="caption">
 Figure 4.3: Distribution of NDVI, Knuthson Meadow
 </p>
@@ -447,8 +440,8 @@ Figure 4.3: Distribution of NDVI, Knuthson Meadow
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="visualization.html#cb281-1" aria-hidden="true" tabindex="-1"></a>sierraData <span class="sc">%&gt;%</span></span>
 <span id="cb281-2"><a href="visualization.html#cb281-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(TEMPERATURE)) <span class="sc">+</span></span>
 <span id="cb281-3"><a href="visualization.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill=</span><span class="st">&quot;dark green&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-93"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-93-1.png" alt="Distribution of Average Monthly Temperatures, Sierra Nevada" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-115"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-115-1.png" alt="Distribution of Average Monthly Temperatures, Sierra Nevada" width="672" />
 <p class="caption">
 Figure 4.4: Distribution of Average Monthly Temperatures, Sierra Nevada
 </p>
@@ -458,8 +451,8 @@ Figure 4.4: Distribution of Average Monthly Temperatures, Sierra Nevada
 <span id="cb282-2"><a href="visualization.html#cb282-2" aria-hidden="true" tabindex="-1"></a>sierraData <span class="sc">%&gt;%</span></span>
 <span id="cb282-3"><a href="visualization.html#cb282-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(TEMPERATURE)) <span class="sc">+</span></span>
 <span id="cb282-4"><a href="visualization.html#cb282-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">cumsum</span>(..count..)<span class="sc">/</span>n), <span class="at">fill=</span><span class="st">&quot;dark goldenrod&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-94"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-94-1.png" alt="Cumulative Distribution of Average Monthly Temperatures, Sierra Nevada" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-116"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-116-1.png" alt="Cumulative Distribution of Average Monthly Temperatures, Sierra Nevada" width="672" />
 <p class="caption">
 Figure 4.5: Cumulative Distribution of Average Monthly Temperatures, Sierra Nevada
 </p>
@@ -471,8 +464,8 @@ Figure 4.5: Cumulative Distribution of Average Monthly Temperatures, Sierra Neva
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="visualization.html#cb283-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span> </span>
 <span id="cb283-2"><a href="visualization.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI)) <span class="sc">+</span> </span>
 <span id="cb283-3"><a href="visualization.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-95"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-95-1.png" alt="Density plot of NDVI, Knuthson Meadow" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-117"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-117-1.png" alt="Density plot of NDVI, Knuthson Meadow" width="672" />
 <p class="caption">
 Figure 4.6: Density plot of NDVI, Knuthson Meadow
 </p>
@@ -486,13 +479,13 @@ Figure 4.6: Density plot of NDVI, Knuthson Meadow
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="visualization.html#cb284-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span></span>
 <span id="cb284-2"><a href="visualization.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI, <span class="at">fill=</span>phenology)) <span class="sc">+</span></span>
 <span id="cb284-3"><a href="visualization.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-96-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <p>[<strong><code>eucoak</code></strong>]</p>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="visualization.html#cb285-1" aria-hidden="true" tabindex="-1"></a>tidy_eucoak <span class="sc">%&gt;%</span></span>
 <span id="cb285-2"><a href="visualization.html#cb285-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
 <span id="cb285-3"><a href="visualization.html#cb285-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-98"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-98-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-120"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-120-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
 <p class="caption">
 Figure 4.7: Runoff under Eucalyptus and Oak in Bay Area sites
 </p>
@@ -502,8 +495,8 @@ Figure 4.7: Runoff under Eucalyptus and Oak in Bay Area sites
 <h3><span class="header-section-number">4.2.3</span> boxplot</h3>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="visualization.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tidy_eucoak) <span class="sc">+</span></span>
 <span id="cb286-2"><a href="visualization.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> site, <span class="at">y =</span> runoff_L))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-99"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-99-1.png" alt="Runoff under Eucalyptus and Oak, Bay Area Sites" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-121"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-121-1.png" alt="Runoff under Eucalyptus and Oak, Bay Area Sites" width="672" />
 <p class="caption">
 Figure 4.8: Runoff under Eucalyptus and Oak, Bay Area Sites
 </p>
@@ -511,8 +504,8 @@ Figure 4.8: Runoff under Eucalyptus and Oak, Bay Area Sites
 <p><strong>Get color from tree within <code>aes()</code></strong></p>
 <div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="visualization.html#cb287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tidy_eucoak) <span class="sc">+</span></span>
 <span id="cb287-2"><a href="visualization.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>runoff_L, <span class="at">color=</span>tree))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-100"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-100-1.png" alt="Runoff at Bay Area Sites, colored as Eucalyptus and Oak" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-122"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-122-1.png" alt="Runoff at Bay Area Sites, colored as Eucalyptus and Oak" width="672" />
 <p class="caption">
 Figure 4.9: Runoff at Bay Area Sites, colored as Eucalyptus and Oak
 </p>
@@ -521,14 +514,14 @@ Figure 4.9: Runoff at Bay Area Sites, colored as Eucalyptus and Oak
 <p>[<strong><code>soilCO2</code></strong>] In a study of soil CO_2_ in the Marble Mountains of California, we
 sampled extracted soil air in a 11-point transect across Marble Valley in 1997. <span class="citation">(<a href="references.html#ref-marblesCO2" role="doc-biblioref">J. D. Davis, Kiefer, and Amato 2001</a>)</span></p>
 <p><img src="img/marbleGap.png"></p>
-<div id="htmlwidget-5687001d71a8cc29c40e" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5687001d71a8cc29c40e">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[41.57046352,41.56930262,41.56832546,41.56582769,41.56519238,41.56437466,41.56448066,41.56330965,41.56281164,41.56241216,41.56188349],[-123.2031783,-123.2025832,-123.2025071,-123.2015001,-123.1990814,-123.1979523,-123.1991655,-123.199196,-123.1995624,-123.1987266,-123.1983262],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["co2_01","co2_02","co2_03","co2_04","co2_05","co2_06","co2_07","co2_08","co2_09","co2_10","co2_11"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.56188349,41.57046352],"lng":[-123.2031783,-123.1979523]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6be057377a8379571be2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6be057377a8379571be2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addMarkers","args":[[41.57046352,41.56930262,41.56832546,41.56582769,41.56519238,41.56437466,41.56448066,41.56330965,41.56281164,41.56241216,41.56188349],[-123.2031783,-123.2025832,-123.2025071,-123.2015001,-123.1990814,-123.1979523,-123.1991655,-123.199196,-123.1995624,-123.1987266,-123.1983262],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,["co2_01","co2_02","co2_03","co2_04","co2_05","co2_06","co2_07","co2_08","co2_09","co2_10","co2_11"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[41.56188349,41.57046352],"lng":[-123.2031783,-123.1979523]}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="visualization.html#cb288-1" aria-hidden="true" tabindex="-1"></a>soilCO2 <span class="ot">&lt;-</span> soilCO2_97</span>
 <span id="cb288-2"><a href="visualization.html#cb288-2" aria-hidden="true" tabindex="-1"></a>soilCO2<span class="sc">$</span>SITE <span class="ot">&lt;-</span> <span class="fu">factor</span>(soilCO2<span class="sc">$</span>SITE)  <span class="co"># in order to make the numeric field a factor</span></span>
 <span id="cb288-3"><a href="visualization.html#cb288-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> soilCO2, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> SITE, <span class="at">y =</span> <span class="st">`</span><span class="at">CO2%</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb288-4"><a href="visualization.html#cb288-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-102"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-102-1.png" alt="Visualizing soil CO_2_ data with a Tukey box plot" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-124"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-124-1.png" alt="Visualizing soil CO_2_ data with a Tukey box plot" width="672" />
 <p class="caption">
 Figure 4.10: Visualizing soil CO_2_ data with a Tukey box plot
 </p>
@@ -542,8 +535,8 @@ Figure 4.10: Visualizing soil CO_2_ data with a Tukey box plot
 <p>[<strong><code>sierra</code></strong>] We’ve looked at this before – the scatterplot</p>
 <div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="visualization.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sierraFeb) <span class="sc">+</span> </span>
 <span id="cb289-2"><a href="visualization.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(TEMPERATURE, ELEVATION))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-103"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-103-1.png" alt="Scatter plot of February temperature vs elevation" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-125"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-125-1.png" alt="Scatter plot of February temperature vs elevation" width="672" />
 <p class="caption">
 Figure 4.11: Scatter plot of February temperature vs elevation
 </p>
@@ -555,7 +548,7 @@ Figure 4.11: Scatter plot of February temperature vs elevation
 <p><strong>Set color for all (<em>not</em> in aes())</strong></p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="visualization.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sierraFeb) <span class="sc">+</span> </span>
 <span id="cb290-2"><a href="visualization.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(TEMPERATURE, ELEVATION), <span class="at">color=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <ul>
 <li>color is defined outside of aes, so is applies to all points.</li>
 <li>mapping is first argument of geom_point, so <code>mapping =</code> is not needed.</li>
@@ -566,8 +559,8 @@ Figure 4.11: Scatter plot of February temperature vs elevation
 <p>[<strong><code>eucoak</code></strong>]</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="visualization.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_eucoak) <span class="sc">+</span></span>
 <span id="cb291-2"><a href="visualization.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(site, runoff_L), <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-105"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-105-1.png" alt="Two variables, one discrete" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-127"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-127-1.png" alt="Two variables, one discrete" width="672" />
 <p class="caption">
 Figure 4.12: Two variables, one discrete
 </p>
@@ -584,8 +577,8 @@ Figure 4.12: Two variables, one discrete
 <p>In this graph, color is defined inside aes, so is based on COUNTY [<strong><code>sierra</code></strong>]</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="visualization.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>sierraFeb) <span class="sc">+</span> </span>
 <span id="cb292-2"><a href="visualization.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(TEMPERATURE, ELEVATION, <span class="at">color=</span>COUNTY))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-106"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-106-1.png" alt="Color set within aes()" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-128"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-128-1.png" alt="Color set within aes()" width="672" />
 <p class="caption">
 Figure 4.13: Color set within aes()
 </p>
@@ -595,8 +588,8 @@ Figure 4.13: Color set within aes()
 <span id="cb293-2"><a href="visualization.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(TEMPERATURE,ELEVATION)) <span class="sc">+</span></span>
 <span id="cb293-3"><a href="visualization.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb293-4"><a href="visualization.html#cb293-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-107"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-107-1.png" alt="Using aesthetics settings for both points and lines" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-129"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-129-1.png" alt="Using aesthetics settings for both points and lines" width="672" />
 <p class="caption">
 Figure 4.14: Using aesthetics settings for both points and lines
 </p>
@@ -621,8 +614,8 @@ Figure 4.14: Using aesthetics settings for both points and lines
 <span id="cb294-16"><a href="visualization.html#cb294-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">col=</span>s, <span class="at">size=</span>z)) <span class="sc">+</span></span>
 <span id="cb294-17"><a href="visualization.html#cb294-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">ratio=</span><span class="dv">1</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="st">&quot;green&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
 <span id="cb294-18"><a href="visualization.html#cb294-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Simulated river path, elevations and slopes&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-108-1"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-108-1.png" alt="Longitudinal Profiles" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-130-1"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-130-1.png" alt="Longitudinal Profiles" width="672" />
 <p class="caption">
 Figure 4.15: Longitudinal Profiles
 </p>
@@ -630,8 +623,8 @@ Figure 4.15: Longitudinal Profiles
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="visualization.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(longprofile, <span class="fu">aes</span>(longd,z)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">col=</span>s), <span class="at">size=</span><span class="fl">1.5</span>) <span class="sc">+</span> <span class="fu">geom_point</span>()  <span class="sc">+</span></span>
 <span id="cb295-2"><a href="visualization.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="st">&quot;green&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
 <span id="cb295-3"><a href="visualization.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Elevation over longitudinal distance upstream&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-108-2"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-108-2.png" alt="Longitudinal Profiles" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-130-2"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-130-2.png" alt="Longitudinal Profiles" width="672" />
 <p class="caption">
 Figure 4.16: Longitudinal Profiles
 </p>
@@ -639,8 +632,8 @@ Figure 4.16: Longitudinal Profiles
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="visualization.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(longprofile, <span class="fu">aes</span>(longd,s)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col=</span>s), <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb296-2"><a href="visualization.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient</span>(<span class="at">low=</span><span class="st">&quot;green&quot;</span>, <span class="at">high=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
 <span id="cb296-3"><a href="visualization.html#cb296-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Slope over longitudinal distance upstream&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-109"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-109-1.png" alt="Slope by longitudinal distance" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-131"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-131-1.png" alt="Slope by longitudinal distance" width="672" />
 <p class="caption">
 Figure 4.17: Slope by longitudinal distance
 </p>
@@ -653,8 +646,8 @@ Figure 4.17: Slope by longitudinal distance
 <span id="cb297-2"><a href="visualization.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(TEMPERATURE,ELEVATION)) <span class="sc">+</span></span>
 <span id="cb297-3"><a href="visualization.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
 <span id="cb297-4"><a href="visualization.html#cb297-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-110"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-110-1.png" alt="Trend line using geom_smooth with a linear model" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-132"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-132-1.png" alt="Trend line using geom_smooth with a linear model" width="672" />
 <p class="caption">
 Figure 4.18: Trend line using geom_smooth with a linear model
 </p>
@@ -696,8 +689,8 @@ Figure 4.18: Trend line using geom_smooth with a linear model
 <span id="cb298-4"><a href="visualization.html#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> TRI, <span class="fu">aes</span>(<span class="fu">log</span>(<span class="st">`</span><span class="at">5.2_STACK_AIR</span><span class="st">`</span>), <span class="fu">log</span>(<span class="st">`</span><span class="at">5.1_FUGITIVE_AIR</span><span class="st">`</span>), </span>
 <span id="cb298-5"><a href="visualization.html#cb298-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> INDUSTRY_SECTOR)) <span class="sc">+</span></span>
 <span id="cb298-6"><a href="visualization.html#cb298-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-111"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-111-1.png" alt="EPA Toxic Release Inventory, as a big data set needing symbology clarification" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-133"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-133-1.png" alt="EPA Toxic Release Inventory, as a big data set needing symbology clarification" width="672" />
 <p class="caption">
 Figure 4.19: EPA Toxic Release Inventory, as a big data set needing symbology clarification
 </p>
@@ -712,8 +705,8 @@ Figure 4.19: EPA Toxic Release Inventory, as a big data set needing symbology cl
 <span id="cb299-4"><a href="visualization.html#cb299-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb299-5"><a href="visualization.html#cb299-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(elevation, NDVI, </span>
 <span id="cb299-6"><a href="visualization.html#cb299-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>) </span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-112"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-112-1.png" alt="NDVI symbolized by vegetation in two seasons" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-134"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-134-1.png" alt="NDVI symbolized by vegetation in two seasons" width="672" />
 <p class="caption">
 Figure 4.20: NDVI symbolized by vegetation in two seasons
 </p>
@@ -724,8 +717,8 @@ Figure 4.20: NDVI symbolized by vegetation in two seasons
 <span id="cb300-3"><a href="visualization.html#cb300-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> rain_mm, <span class="at">y=</span> runoff_L, <span class="at">color =</span> tree), </span>
 <span id="cb300-4"><a href="visualization.html#cb300-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb300-5"><a href="visualization.html#cb300-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;seagreen4&quot;</span>, <span class="st">&quot;orange3&quot;</span>))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-113"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-113-1.png" alt="Eucalyptus and Oak: rainfall and runoff" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-135"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-135-1.png" alt="Eucalyptus and Oak: rainfall and runoff" width="672" />
 <p class="caption">
 Figure 4.21: Eucalyptus and Oak: rainfall and runoff
 </p>
@@ -738,8 +731,8 @@ Figure 4.21: Eucalyptus and Oak: rainfall and runoff
 <span id="cb301-2"><a href="visualization.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>rain_mm,<span class="at">y=</span>runoff_L)) <span class="sc">+</span></span>
 <span id="cb301-3"><a href="visualization.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>rain_mm,<span class="at">y=</span>runoff_L), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb301-4"><a href="visualization.html#cb301-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(tree <span class="sc">~</span> .)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-114"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-114-1.png" alt="Faceted graph alternative" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-136"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-136-1.png" alt="Faceted graph alternative" width="672" />
 <p class="caption">
 Figure 4.22: Faceted graph alternative
 </p>
@@ -755,8 +748,8 @@ Figure 4.22: Faceted graph alternative
 <span id="cb302-4"><a href="visualization.html#cb302-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;seagreen4&quot;</span>,<span class="st">&quot;orange3&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb302-5"><a href="visualization.html#cb302-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;rainfall ~ runoff&quot;</span>, </span>
 <span id="cb302-6"><a href="visualization.html#cb302-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;eucalyptus &amp; oak sites, 2016&quot;</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-115"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-115-1.png" alt="Titles added" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-137"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-137-1.png" alt="Titles added" width="672" />
 <p class="caption">
 Figure 4.23: Titles added
 </p>
@@ -772,8 +765,8 @@ maybe use a helper function like is.numeric with dplyr::select_if:</p>
 <span id="cb303-2"><a href="visualization.html#cb303-2" aria-hidden="true" tabindex="-1"></a>     dplyr<span class="sc">::</span><span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span></span>
 <span id="cb303-3"><a href="visualization.html#cb303-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    dplyr::select(LATITUDE, ELEVATION, TEMPERATURE, PRECIPITATION) %&gt;%</span></span>
 <span id="cb303-4"><a href="visualization.html#cb303-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pairs</span>()</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-116"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-116-1.png" alt="Pairs plot for Sierra Nevada stations variables" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-138"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-138-1.png" alt="Pairs plot for Sierra Nevada stations variables" width="672" />
 <p class="caption">
 Figure 4.24: Pairs plot for Sierra Nevada stations variables
 </p>
@@ -847,7 +840,8 @@ gitbook.start({
 "download": ["EnvDataSci.pdf", "EnvDataSci.epub"],
 "toc": {
 "collapse": "subsection"
-}
+},
+"book_filename": "envdatasci"
 });
 });
 </script>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-05-23" />
+<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,7 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
 <script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -395,7 +395,7 @@ see ?family to see those supported, including binomial, gaussian, poisson, etc.<
 ## Multiple R-squared:  0.8757, Adjusted R-squared:  0.8736 
 ## F-statistic: 422.6 on 1 and 60 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Probably the most important statistic is the p value for the predictor variable ELEVATION, which in this case is very small &lt;2e-16.</p>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
 <pre><code>## 
 ## Call:
 ## lm(formula = TEMPERATURE ~ ELEVATION, data = sierraFeb)
@@ -457,7 +457,7 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ##                     Max.   :100000   Max.   :0.009500</code></pre>
 <div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="modeling-in-r.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
 <span id="cb442-2"><a href="modeling-in-r.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-223-1.png" width="672" /></p>
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modeling-in-r.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># needed for the trans_format function below</span></span>
 <span id="cb443-2"><a href="modeling-in-r.html#cb443-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
 <span id="cb443-3"><a href="modeling-in-r.html#cb443-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
@@ -465,7 +465,7 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 <span id="cb443-5"><a href="modeling-in-r.html#cb443-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))) <span class="sc">+</span></span>
 <span id="cb443-6"><a href="modeling-in-r.html#cb443-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
 <span id="cb443-7"><a href="modeling-in-r.html#cb443-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x)))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-201-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-223-2.png" width="672" /></p>
 <div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modeling-in-r.html#cb444-1" aria-hidden="true" tabindex="-1"></a>ancova <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">*</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
 <span id="cb444-2"><a href="modeling-in-r.html#cb444-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ancova)</span></code></pre></div>
 <pre><code>## 
@@ -609,7 +609,7 @@ spatial patterns are generally highly relevant. We might ask:</p>
 <li>What is the effect of scale?</li>
 <li>Relationships among variables – do they vary spatially?</li>
 </ul>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-224-1.png" width="672" /></p>
 <div id="spatial-autocorrelation" class="section level3" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> Spatial Autocorrelation</h3>
 <p>[Need to add a Moran’s I section here]</p>
@@ -649,7 +649,7 @@ spatial patterns are generally highly relevant. We might ask:</p>
 <span id="cb457-30"><a href="modeling-in-r.html#cb457-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Residuals&quot;</span>, <span class="at">subtitle=</span>eqn) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>)) <span class="sc">+</span> </span>
 <span id="cb457-31"><a href="modeling-in-r.html#cb457-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">&#39;cm&#39;</span>), </span>
 <span id="cb457-32"><a href="modeling-in-r.html#cb457-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -708,7 +708,8 @@ gitbook.start({
 "download": ["EnvDataSci.pdf", "EnvDataSci.epub"],
 "toc": {
 "collapse": "subsection"
-}
+},
+"book_filename": "envdatasci"
 });
 });
 </script>
