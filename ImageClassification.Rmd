@@ -162,6 +162,16 @@ rcv_PCA$model
 
 ```
 
+## Create an NDVI raster
+The normalized difference vegetation index is widely used to look at vegetation health, and for this we can use all 10m bands.
+
+```{r NDVI}
+red <- brick_for_prediction$B04
+nir <- brick_for_prediction$B07
+ndvi <- (nir - red)/(nir + red)
+mapview(ndvi)
+```
+
 ## Normalize (Center & scale) raster images:
 Subtract the mean and divide by the standard deviation for each variable/feature/band.
 While the data don't need normalization to convert to normal distribution,

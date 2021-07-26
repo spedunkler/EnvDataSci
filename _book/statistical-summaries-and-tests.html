@@ -75,16 +75,17 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/ndvi-1/data_stars_ndvi657243.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
 <script src="libs/FlatGeoBuf-3.3.3/fgb.js"></script>
 <script src="libs/FlatGeoBuf-3.3.3/flatgeobuf-geojson.min.js"></script>
 <script src="libs/chromajs-2.1.0/chroma.min.js"></script>
 <link id="AOI-1-attachment" rel="attachment" href="libs/AOI-0.0.1/AOI_layer.fgb"/>
 <link id="poly-class-1-attachment" rel="attachment" href="libs/poly-class-0.0.1/poly-class_layer.fgb"/>
-<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
-<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
 <script src="libs/predict_svm-1/data_stars_predict_svm5f1cb2.txt"></script>
-<script src="libs/joda-0.0.1/joda.js"></script>
-<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -341,28 +342,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-prediction-raster-brick"><i class="fa fa-check"></i><b>9.5</b> Set up prediction raster brick</a></li>
 <li class="chapter" data-level="9.6" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#resample-20-m-bands-to-10-m"><i class="fa fa-check"></i><b>9.6</b> Resample 20 m bands to 10 m</a></li>
 <li class="chapter" data-level="9.7" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>9.7</b> Principle Component Analysis (PCA)</a></li>
-<li class="chapter" data-level="9.8" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#normalize-center-scale-raster-images"><i class="fa fa-check"></i><b>9.8</b> Normalize (Center &amp; scale) raster images:</a></li>
-<li class="chapter" data-level="9.9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes"><i class="fa fa-check"></i><b>9.9</b> Create the same AOI that was used to crop the image, for display purposes</a></li>
-<li class="chapter" data-level="9.10" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#training-polygons"><i class="fa fa-check"></i><b>9.10</b> Training polygons</a></li>
-<li class="chapter" data-level="9.11" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#extract-training-values-from-polygons-at-10-m-resolution"><i class="fa fa-check"></i><b>9.11</b> Extract training values from polygons at 10 m resolution</a></li>
-<li class="chapter" data-level="9.12" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#histograms-of-predictors"><i class="fa fa-check"></i><b>9.12</b> Histograms of predictors</a></li>
-<li class="chapter" data-level="9.13" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#split-into-training-and-testing-subsets"><i class="fa fa-check"></i><b>9.13</b> Split into training and testing subsets</a></li>
-<li class="chapter" data-level="9.14" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#fit-models"><i class="fa fa-check"></i><b>9.14</b> Fit models</a>
+<li class="chapter" data-level="9.8" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-an-ndvi-raster"><i class="fa fa-check"></i><b>9.8</b> Create an NDVI raster</a></li>
+<li class="chapter" data-level="9.9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#normalize-center-scale-raster-images"><i class="fa fa-check"></i><b>9.9</b> Normalize (Center &amp; scale) raster images:</a></li>
+<li class="chapter" data-level="9.10" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes"><i class="fa fa-check"></i><b>9.10</b> Create the same AOI that was used to crop the image, for display purposes</a></li>
+<li class="chapter" data-level="9.11" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#training-polygons"><i class="fa fa-check"></i><b>9.11</b> Training polygons</a></li>
+<li class="chapter" data-level="9.12" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#extract-training-values-from-polygons-at-10-m-resolution"><i class="fa fa-check"></i><b>9.12</b> Extract training values from polygons at 10 m resolution</a></li>
+<li class="chapter" data-level="9.13" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#histograms-of-predictors"><i class="fa fa-check"></i><b>9.13</b> Histograms of predictors</a></li>
+<li class="chapter" data-level="9.14" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#split-into-training-and-testing-subsets"><i class="fa fa-check"></i><b>9.14</b> Split into training and testing subsets</a></li>
+<li class="chapter" data-level="9.15" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#fit-models"><i class="fa fa-check"></i><b>9.15</b> Fit models</a>
 <ul>
-<li class="chapter" data-level="9.14.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-model-training-controls-for-all-models"><i class="fa fa-check"></i><b>9.14.1</b> Set up model training controls (for all models)</a></li>
+<li class="chapter" data-level="9.15.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-model-training-controls-for-all-models"><i class="fa fa-check"></i><b>9.15.1</b> Set up model training controls (for all models)</a></li>
 </ul></li>
-<li class="chapter" data-level="9.15" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.15</b> Support Vector Machine (SVM) model</a>
+<li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.16</b> Support Vector Machine (SVM) model</a>
 <ul>
-<li class="chapter" data-level="9.15.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.15.1</b> Train model</a></li>
-<li class="chapter" data-level="9.15.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.15.2</b> Model summary &amp; confusion matrix</a></li>
-<li class="chapter" data-level="9.15.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.15.3</b> Prediction map</a></li>
-<li class="chapter" data-level="9.15.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.15.4</b> Compare training vs predicted % cover</a></li>
+<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.16.1</b> Train model</a></li>
+<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> Model summary &amp; confusion matrix</a></li>
+<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.16.3</b> Prediction map</a></li>
+<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.16.4</b> Compare training vs predicted % cover</a></li>
 </ul></li>
-<li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.16</b> Random Forest</a>
+<li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.17</b> Random Forest</a>
 <ul>
-<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.16.1</b> Predictor Importance</a></li>
+<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.17.1</b> Predictor Importance</a></li>
 </ul></li>
-<li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.17</b> Neural Network</a></li>
+<li class="chapter" data-level="9.18" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.18</b> Neural Network</a></li>
 </ul></li>
 <li class="part"><span><b>IV Time Series</b></span></li>
 <li class="chapter" data-level="10" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html"><i class="fa fa-check"></i><b>10</b> Time Series Visualization &amp; Analysis</a>
@@ -420,7 +422,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="statistical-summaries-and-tests" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Statistical Summaries and Tests</h1>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
 <div id="goals-of-statistical-analysis" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Goals of statistical analysis</h2>
 <p>To frame how we might approach statistical analysis and modeling, there are
@@ -536,7 +538,7 @@ tended to be low vs high:</p>
 <div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="statistical-summaries-and-tests.html#cb376-1" aria-hidden="true" tabindex="-1"></a>soilCO2_97<span class="sc">$</span>SITE <span class="ot">&lt;-</span> <span class="fu">factor</span>(soilCO2_97<span class="sc">$</span>SITE)</span>
 <span id="cb376-2"><a href="statistical-summaries-and-tests.html#cb376-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> soilCO2_97, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> SITE, <span class="at">y =</span> <span class="st">`</span><span class="at">CO2%</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb376-3"><a href="statistical-summaries-and-tests.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <p><img src="img/marblesCO2map.png">
 <img src="img/marblesCO2ortho.png"></p>
 </div>
@@ -554,16 +556,16 @@ need a lot of these, such as in Monte Carlo simulation. The two most commonly us
 <div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="statistical-summaries-and-tests.html#cb377-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">min=</span><span class="dv">10</span>, <span class="at">max=</span><span class="dv">20</span>))</span>
 <span id="cb377-2"><a href="statistical-summaries-and-tests.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="st">&#39;x&#39;</span></span>
 <span id="cb377-3"><a href="statistical-summaries-and-tests.html#cb377-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(x, <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="statistical-summaries-and-tests.html#cb378-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">10</span>))</span>
 <span id="cb378-2"><a href="statistical-summaries-and-tests.html#cb378-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">&lt;-</span> <span class="st">&#39;y&#39;</span></span>
 <span id="cb378-3"><a href="statistical-summaries-and-tests.html#cb378-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-183-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-186-2.png" width="672" /></p>
 <div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="statistical-summaries-and-tests.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-183-3.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-186-3.png" width="672" /></p>
 <div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="statistical-summaries-and-tests.html#cb380-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(x,y)</span>
 <span id="cb380-2"><a href="statistical-summaries-and-tests.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(xy, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-183-4.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-186-4.png" width="672" /></p>
 </div>
 </div>
 <div id="statistical-tests" class="section level2" number="7.3">
@@ -579,8 +581,8 @@ the appropriate methods for your research.</p>
 <div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="statistical-summaries-and-tests.html#cb381-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span></span>
 <span id="cb381-2"><a href="statistical-summaries-and-tests.html#cb381-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI, <span class="at">fill=</span>phenology)) <span class="sc">+</span></span>
 <span id="cb381-3"><a href="statistical-summaries-and-tests.html#cb381-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-185"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-185-1.png" alt="NDVI by phenology" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-188"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-188-1.png" alt="NDVI by phenology" width="672" />
 <p class="caption">
 Figure 7.1: NDVI by phenology
 </p>
@@ -643,8 +645,8 @@ test:</p>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="statistical-summaries-and-tests.html#cb396-1" aria-hidden="true" tabindex="-1"></a>tidy_eucoak <span class="sc">%&gt;%</span></span>
 <span id="cb396-2"><a href="statistical-summaries-and-tests.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
 <span id="cb396-3"><a href="statistical-summaries-and-tests.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-190"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-190-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-193"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-193-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
 <p class="caption">
 Figure 7.2: Runoff under Eucalyptus and Oak in Bay Area sites
 </p>
@@ -652,8 +654,8 @@ Figure 7.2: Runoff under Eucalyptus and Oak in Bay Area sites
 <p>However, some of this may result from major variations among sites, which is apparent in this boxplot:</p>
 <div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="statistical-summaries-and-tests.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tidy_eucoak) <span class="sc">+</span></span>
 <span id="cb397-2"><a href="statistical-summaries-and-tests.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>runoff_L, <span class="at">color=</span>tree))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-191"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-191-1.png" alt="runoff at various sites contrasting euc and oak" width="672" />
+<div class="figure"><span id="fig:unnamed-chunk-194"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-194-1.png" alt="runoff at various sites contrasting euc and oak" width="672" />
 <p class="caption">
 Figure 7.3: runoff at various sites contrasting euc and oak
 </p>
@@ -663,7 +665,7 @@ Figure 7.3: runoff at various sites contrasting euc and oak
 <span id="cb398-2"><a href="statistical-summaries-and-tests.html#cb398-2" aria-hidden="true" tabindex="-1"></a>tilden <span class="sc">%&gt;%</span></span>
 <span id="cb398-3"><a href="statistical-summaries-and-tests.html#cb398-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
 <span id="cb398-4"><a href="statistical-summaries-and-tests.html#cb398-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="statistical-summaries-and-tests.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tilden<span class="sc">$</span>runoff_L[tilden<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
@@ -733,12 +735,12 @@ Figure 7.3: runoff at various sites contrasting euc and oak
 <span id="cb409-5"><a href="statistical-summaries-and-tests.html#cb409-5" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
 <span id="cb409-6"><a href="statistical-summaries-and-tests.html#cb409-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(trtype, sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
 <span id="cb409-7"><a href="statistical-summaries-and-tests.html#cb409-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 <div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="statistical-summaries-and-tests.html#cb410-1" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
 <span id="cb410-2"><a href="statistical-summaries-and-tests.html#cb410-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
 <span id="cb410-3"><a href="statistical-summaries-and-tests.html#cb410-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
 <span id="cb410-4"><a href="statistical-summaries-and-tests.html#cb410-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(trtype <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-195-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-198-2.png" width="672" /></p>
 <div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="statistical-summaries-and-tests.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>fines_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
@@ -833,7 +835,7 @@ total sediment yield not significantly different.</p>
 <span id="cb423-31"><a href="statistical-summaries-and-tests.html#cb423-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_legend</span>() <span class="sc">+</span></span>
 <span id="cb423-32"><a href="statistical-summaries-and-tests.html#cb423-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb423-33"><a href="statistical-summaries-and-tests.html#cb423-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lines=</span>F)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 <div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="statistical-summaries-and-tests.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(TH<span class="sc">~</span>siteType, <span class="at">data =</span> wChemData))</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## siteType     2  79172   39586   20.59 1.07e-07 ***
@@ -850,7 +852,7 @@ total sediment yield not significantly different.</p>
 <span id="cb428-2"><a href="statistical-summaries-and-tests.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TH, <span class="at">fill=</span>siteType)) <span class="sc">+</span></span>
 <span id="cb428-3"><a href="statistical-summaries-and-tests.html#cb428-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb428-4"><a href="statistical-summaries-and-tests.html#cb428-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Lithology <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-196-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-199-2.png" width="672" /></p>
 <p>Some observations and caveats from the above:</p>
 <ul>
 <li><p>There’s pretty clearly a difference between surface waters (trunk and tributary) and cave dripwaters (from stalactites) in terms of solutes. Analysis of variance simply confirms the obvious.</p></li>
@@ -866,7 +868,7 @@ total sediment yield not significantly different.</p>
 <span id="cb429-2"><a href="statistical-summaries-and-tests.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Elevation, <span class="at">y=</span>TH, <span class="at">col=</span>Lithology)) <span class="sc">+</span> </span>
 <span id="cb429-3"><a href="statistical-summaries-and-tests.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb429-4"><a href="statistical-summaries-and-tests.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
 </div>
 </div>
 <div id="correlation" class="section level3" number="7.3.2">
@@ -877,7 +879,7 @@ total sediment yield not significantly different.</p>
 <p>Here’s an easier method from the psych package [<strong><code>sierra</code></strong>]</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="statistical-summaries-and-tests.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
 <span id="cb430-2"><a href="statistical-summaries-and-tests.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(sierraFeb <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(LATITUDE, LONGITUDE, ELEVATION, PRECIPITATION, TEMPERATURE))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
 </div>
 </div>
 </div>

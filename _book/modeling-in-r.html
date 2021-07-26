@@ -75,16 +75,17 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/ndvi-1/data_stars_ndvi657243.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
 <script src="libs/FlatGeoBuf-3.3.3/fgb.js"></script>
 <script src="libs/FlatGeoBuf-3.3.3/flatgeobuf-geojson.min.js"></script>
 <script src="libs/chromajs-2.1.0/chroma.min.js"></script>
 <link id="AOI-1-attachment" rel="attachment" href="libs/AOI-0.0.1/AOI_layer.fgb"/>
 <link id="poly-class-1-attachment" rel="attachment" href="libs/poly-class-0.0.1/poly-class_layer.fgb"/>
-<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
-<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
 <script src="libs/predict_svm-1/data_stars_predict_svm5f1cb2.txt"></script>
-<script src="libs/joda-0.0.1/joda.js"></script>
-<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
@@ -341,28 +342,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-prediction-raster-brick"><i class="fa fa-check"></i><b>9.5</b> Set up prediction raster brick</a></li>
 <li class="chapter" data-level="9.6" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#resample-20-m-bands-to-10-m"><i class="fa fa-check"></i><b>9.6</b> Resample 20 m bands to 10 m</a></li>
 <li class="chapter" data-level="9.7" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>9.7</b> Principle Component Analysis (PCA)</a></li>
-<li class="chapter" data-level="9.8" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#normalize-center-scale-raster-images"><i class="fa fa-check"></i><b>9.8</b> Normalize (Center &amp; scale) raster images:</a></li>
-<li class="chapter" data-level="9.9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes"><i class="fa fa-check"></i><b>9.9</b> Create the same AOI that was used to crop the image, for display purposes</a></li>
-<li class="chapter" data-level="9.10" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#training-polygons"><i class="fa fa-check"></i><b>9.10</b> Training polygons</a></li>
-<li class="chapter" data-level="9.11" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#extract-training-values-from-polygons-at-10-m-resolution"><i class="fa fa-check"></i><b>9.11</b> Extract training values from polygons at 10 m resolution</a></li>
-<li class="chapter" data-level="9.12" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#histograms-of-predictors"><i class="fa fa-check"></i><b>9.12</b> Histograms of predictors</a></li>
-<li class="chapter" data-level="9.13" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#split-into-training-and-testing-subsets"><i class="fa fa-check"></i><b>9.13</b> Split into training and testing subsets</a></li>
-<li class="chapter" data-level="9.14" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#fit-models"><i class="fa fa-check"></i><b>9.14</b> Fit models</a>
+<li class="chapter" data-level="9.8" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-an-ndvi-raster"><i class="fa fa-check"></i><b>9.8</b> Create an NDVI raster</a></li>
+<li class="chapter" data-level="9.9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#normalize-center-scale-raster-images"><i class="fa fa-check"></i><b>9.9</b> Normalize (Center &amp; scale) raster images:</a></li>
+<li class="chapter" data-level="9.10" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes"><i class="fa fa-check"></i><b>9.10</b> Create the same AOI that was used to crop the image, for display purposes</a></li>
+<li class="chapter" data-level="9.11" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#training-polygons"><i class="fa fa-check"></i><b>9.11</b> Training polygons</a></li>
+<li class="chapter" data-level="9.12" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#extract-training-values-from-polygons-at-10-m-resolution"><i class="fa fa-check"></i><b>9.12</b> Extract training values from polygons at 10 m resolution</a></li>
+<li class="chapter" data-level="9.13" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#histograms-of-predictors"><i class="fa fa-check"></i><b>9.13</b> Histograms of predictors</a></li>
+<li class="chapter" data-level="9.14" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#split-into-training-and-testing-subsets"><i class="fa fa-check"></i><b>9.14</b> Split into training and testing subsets</a></li>
+<li class="chapter" data-level="9.15" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#fit-models"><i class="fa fa-check"></i><b>9.15</b> Fit models</a>
 <ul>
-<li class="chapter" data-level="9.14.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-model-training-controls-for-all-models"><i class="fa fa-check"></i><b>9.14.1</b> Set up model training controls (for all models)</a></li>
+<li class="chapter" data-level="9.15.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-model-training-controls-for-all-models"><i class="fa fa-check"></i><b>9.15.1</b> Set up model training controls (for all models)</a></li>
 </ul></li>
-<li class="chapter" data-level="9.15" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.15</b> Support Vector Machine (SVM) model</a>
+<li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.16</b> Support Vector Machine (SVM) model</a>
 <ul>
-<li class="chapter" data-level="9.15.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.15.1</b> Train model</a></li>
-<li class="chapter" data-level="9.15.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.15.2</b> Model summary &amp; confusion matrix</a></li>
-<li class="chapter" data-level="9.15.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.15.3</b> Prediction map</a></li>
-<li class="chapter" data-level="9.15.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.15.4</b> Compare training vs predicted % cover</a></li>
+<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.16.1</b> Train model</a></li>
+<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> Model summary &amp; confusion matrix</a></li>
+<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.16.3</b> Prediction map</a></li>
+<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.16.4</b> Compare training vs predicted % cover</a></li>
 </ul></li>
-<li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.16</b> Random Forest</a>
+<li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.17</b> Random Forest</a>
 <ul>
-<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.16.1</b> Predictor Importance</a></li>
+<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.17.1</b> Predictor Importance</a></li>
 </ul></li>
-<li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.17</b> Neural Network</a></li>
+<li class="chapter" data-level="9.18" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.18</b> Neural Network</a></li>
 </ul></li>
 <li class="part"><span><b>IV Time Series</b></span></li>
 <li class="chapter" data-level="10" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html"><i class="fa fa-check"></i><b>10</b> Time Series Visualization &amp; Analysis</a>
@@ -453,7 +455,7 @@ see ?family to see those supported, including binomial, gaussian, poisson, etc.<
 ## Multiple R-squared:  0.8757, Adjusted R-squared:  0.8736 
 ## F-statistic: 422.6 on 1 and 60 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Probably the most important statistic is the p value for the predictor variable ELEVATION, which in this case is very small &lt;2e-16.</p>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
 <pre><code>## 
 ## Call:
 ## lm(formula = TEMPERATURE ~ ELEVATION, data = sierraFeb)
@@ -515,7 +517,7 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ##                     Max.   :100000   Max.   :0.009500</code></pre>
 <div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="modeling-in-r.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
 <span id="cb442-2"><a href="modeling-in-r.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-202-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modeling-in-r.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># needed for the trans_format function below</span></span>
 <span id="cb443-2"><a href="modeling-in-r.html#cb443-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
 <span id="cb443-3"><a href="modeling-in-r.html#cb443-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
@@ -523,7 +525,7 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 <span id="cb443-5"><a href="modeling-in-r.html#cb443-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))) <span class="sc">+</span></span>
 <span id="cb443-6"><a href="modeling-in-r.html#cb443-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
 <span id="cb443-7"><a href="modeling-in-r.html#cb443-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x)))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-202-2.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-205-2.png" width="672" /></p>
 <div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modeling-in-r.html#cb444-1" aria-hidden="true" tabindex="-1"></a>ancova <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">*</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
 <span id="cb444-2"><a href="modeling-in-r.html#cb444-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ancova)</span></code></pre></div>
 <pre><code>## 
@@ -667,7 +669,7 @@ spatial patterns are generally highly relevant. We might ask:</p>
 <li>What is the effect of scale?</li>
 <li>Relationships among variables – do they vary spatially?</li>
 </ul>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
 <div id="spatial-autocorrelation" class="section level3" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> Spatial Autocorrelation</h3>
 <p>[Need to add a Moran’s I section here]</p>
@@ -707,7 +709,7 @@ spatial patterns are generally highly relevant. We might ask:</p>
 <span id="cb457-30"><a href="modeling-in-r.html#cb457-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Residuals&quot;</span>, <span class="at">subtitle=</span>eqn) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>)) <span class="sc">+</span> </span>
 <span id="cb457-31"><a href="modeling-in-r.html#cb457-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">&#39;cm&#39;</span>), </span>
 <span id="cb457-32"><a href="modeling-in-r.html#cb457-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-204-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
 
 </div>
 </div>
