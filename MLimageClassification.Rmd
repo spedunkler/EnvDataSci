@@ -9,29 +9,29 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r libraries}
-library(rgdal)        # [readOGR]
+```{r libraries message=F, warning=F}
+library(rgdal)         # [readOGR]
 library(gdalUtils)
-library(raster)       # [writeRaster, brick, beginCluster, unique, projection, rasterToPoints]
+library(raster)        # [writeRaster, brick, beginCluster, unique, projection, rasterToPoints]
 library(sf)
-library(sp)           # [spTransform]
-library(RStoolbox)    # Remote Sensing toolbox.  [normImage]
-library(getSpatialData)   # for reading Sentinel, Landsat, MODIS, SRTM [set_aoi, view_aoi]
+library(sp)            # [spTransform]
+library(RStoolbox)     # Remote Sensing toolbox.  [normImage]
+library(getSpatialData)# for reading Sentinel, Landsat, MODIS, SRTM [set_aoi, view_aoi]
 # library(rasterVis)   # terra required, creates error in module
                        # "spat" -- function 'Rcpp_precious_remove' not provided by package 'Rcpp'
-library(mapview)  # [viewRGB, mapview]
+library(mapview)       # [viewRGB, mapview]
 library(RColorBrewer)
-library(plotly)       # [plot_ly]
+library(plotly)        # [plot_ly]
 library(grDevices)
 
-library(caret)          # [createDataPartition, createFolds, trainControl, train, confusionMatrix]
+library(caret)         # [createDataPartition, createFolds, trainControl, train, confusionMatrix]
 
-library(data.table)   # [setDT, setnames]
+library(data.table)    # [setDT, setnames]
 library(dplyr)
 library(stringr)
-library(doParallel)  # [registerDoParallel]
-library(snow)       # [makeCluster, stopCluster]
-library(parallel)   # [makeCluster, stopCluster, detectCores]
+library(doParallel)    # [registerDoParallel]
+library(snow)          # [makeCluster, stopCluster]
+library(parallel)      # [makeCluster, stopCluster, detectCores]
 
 # set the temporary folder for raster package operations
 rasterOptions(tmpdir = "./cache/temp")
@@ -51,11 +51,11 @@ rasterOptions(tmpdir = "./cache/temp")
 -B07 - Red Edge	0.783	$\mu m
 -B11 - SWIR	1.610	$\mu m
 -B12 - SWIR	2.190	$\mu m
--B8A - Red Edge	0.865	$\mu m
+-B8A - NIR	0.865	$\mu m
 
 ```{r}
 dtaPath <- system.file("extdata", "RCVimagery", package="iGIScData")
-imgList <- list.files(paste0(dtaPath,"/crop"), pattern = "*.tif", full.names = TRUE)
+imgList <- list.files(paste0(dtaPath,"/crop20210708"), pattern = "*.tif", full.names = TRUE)
 rst_lst <- lapply(imgList, FUN = raster) # Apply the raster() function over the list of 10 bands
 names(rst_lst) <- str_extract(sapply(rst_lst, names), "B.{2}")
    # sapply here returns a vector using the names() function, 
@@ -70,24 +70,6 @@ str_extract(sapply(rst_lst, names), "B.{2}") # shows the order of bands, with B0
 viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
 ```
 
-## Create an NDVI raster
-I couldn't figure out how to pull the bands out of the list, so I'm reading them in again.
-
-```{r}
-red <- raster(paste0(dtaPath, "/crop/B04.tif"))
-nir <- raster(paste0(dtaPath, "/crop/B08.tif"))
-ndvi <- (nir - red)/(nir + red)
-mapview(ndvi)
-# This also works but requires some redundancy (list id number + name)
-redL <- rst_lst[3]$B04
-nirL <- rst_lst[7]$B08
-ndviL <- (nirL - redL)/(nirL + redL)
-mapview(ndviL)
-```
-
-
-
-
 ## Set up prediction raster brick
 Needed to build a brick raster object to be used for prediction result
 [see raster::brick, etc.]
@@ -98,20 +80,39 @@ names(rst_for_prediction) <- names(rst_lst)
 ```
 
 ## Resample 20 m bands to 10 m
+In addition to the 4 bands at 10 m resolution (B02, B03, B04, B08),
+there are 5 bands at 20 m resolution (B05, B06, B07, B8A, B11, B12) 
+which provide red edge and SWIR useful for vegetation and moisture indices 
+beyond NDVI. To be useful in R as a composite, we need to get these all 
+to the same extent and cell size, so we'll resample the 20 m bands to 10, 
+and end up with a brick (composite) of all 10 rasters.  
 
 ```{r resample}
 for (b in c("B05", "B06", "B07", "B8A", "B11", "B12")){
   beginCluster(n = round(3/4 * detectCores()))  # [raster]
   try(
     rst_for_prediction[[b]] <- raster::resample(x = rst_lst[[b]],
-                                                y = rst_lst$B02)
-  )
+                                                y = rst_lst$B02)  
+  )         # y is raster object with parameters that x should be resampled to
   endCluster()
 }
 
 b_10m <- c("B02", "B03", "B04", "B08")
 rst_for_prediction[b_10m] <- rst_lst[b_10m]
 brick_for_prediction <- brick(rst_for_prediction)  # [raster]
+
+```
+
+## Principle Component Analysis (PCA)
+
+PCA creates new uncorrelated variables from correlated variables (bands in this case), 
+with the purpose of identifying the key dimensions that provide the most information.
+
+```{r}
+rcv_PCA <- rasterPCA(brick_for_prediction, nSamples=NULL, nComp = nlayers(brick_for_prediction), spca = FALSE)
+rcv_PCA_stack <- stack(rcv_PCA$map)
+plotRGB(rcv_PCA_stack, r=1, g=2, b=3, stretch="lin")
+rcv_PCA$model
 
 ```
 
@@ -141,7 +142,8 @@ view_aoi()     # [getSpatialData]
 
 
 ## Training polygons
-Polygons to points
+We'll derive points from these polygons 
+(digitized in ArcGIS, but could be created with other GIS programs)
 Read the training polygons in shapefiles with 'class' field
 digitized from multispectral drone imagery.
 

@@ -279,6 +279,11 @@ head(stackrate)
 
 1. Create a tibble with 20 rows of two variables `norm` and `unif` with `norm` created with `rnorm()` and `unif` created with `runif()`. [**`generic_methods`**]
 
+```{r include = TRUE}
+
+```
+
+
 2. Read in "TRI_2017_CA.csv" [**`air_quality`**] in two ways, as a normal data frame assigned to df and as a tibble assigned to tb. What field names result for what's listed in the CSV as `5.1_FUGITIVE_AIR`?
 
 3. Use the summary function to investigate the variables in either the data.frame or tibble you just created. What type of field and what values are assigned to BIA_CODE?

@@ -1,0 +1,14 @@
+<PAMDataset>
+  <PAMRasterBand band="1">
+    <CategoryNames>
+      <Category></Category>
+      <Category>bare</Category>
+      <Category>forest</Category>
+      <Category>hydric</Category>
+      <Category>mesic</Category>
+      <Category>water</Category>
+      <Category>willow</Category>
+      <Category>xeric</Category>
+    </CategoryNames>
+  </PAMRasterBand>
+</PAMDataset>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-23" />
+<meta name="date" content="2021-07-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -71,6 +71,26 @@
 <script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
 <script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/FlatGeoBuf-3.3.3/fgb.js"></script>
+<script src="libs/FlatGeoBuf-3.3.3/flatgeobuf-geojson.min.js"></script>
+<script src="libs/chromajs-2.1.0/chroma.min.js"></script>
+<link id="AOI-1-attachment" rel="attachment" href="libs/AOI-0.0.1/AOI_layer.fgb"/>
+<link id="poly-class-1-attachment" rel="attachment" href="libs/poly-class-0.0.1/poly-class_layer.fgb"/>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+<script src="libs/predict_svm-1/data_stars_predict_svm5f1cb2.txt"></script>
+<script src="libs/joda-0.0.1/joda.js"></script>
+<script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
+<script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/predict_rf-1/data_stars_predict_rf7c906e.txt"></script>
+<script src="libs/predict_nnet-1/data_stars_predict_nnete589a4.txt"></script>
 
 
 <style type="text/css">
@@ -306,29 +326,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.4.2" data-path="modeling-in-r.html"><a href="modeling-in-r.html#mapping-residuals"><i class="fa fa-check"></i><b>8.4.2</b> Mapping Residuals</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html"><i class="fa fa-check"></i><b>9</b> Machine Learning for Imagery Classification</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#introduction"><i class="fa fa-check"></i><b>9.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#validation-creating-a-training-set-and-the-overfit-model-problem"><i class="fa fa-check"></i><b>9.1.1</b> Validation, creating a training set and the “overfit model” problem</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#methods"><i class="fa fa-check"></i><b>9.2</b> Methods</a></li>
+<li class="chapter" data-level="9.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#read-all-10m-20m-bands-into-a-list-of-10-bands"><i class="fa fa-check"></i><b>9.3</b> Read all 10m &amp; 20m bands into a list of 10 bands</a></li>
+<li class="chapter" data-level="9.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#visualize-the-original-imagery"><i class="fa fa-check"></i><b>9.4</b> Visualize the original imagery</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#visualize-the-image-in-false-color-ir-r-g-as-r-g-b."><i class="fa fa-check"></i><b>9.4.1</b> Visualize the image in false color (IR-R-G as R-G-B).</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-prediction-raster-brick"><i class="fa fa-check"></i><b>9.5</b> Set up prediction raster brick</a></li>
+<li class="chapter" data-level="9.6" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#resample-20-m-bands-to-10-m"><i class="fa fa-check"></i><b>9.6</b> Resample 20 m bands to 10 m</a></li>
+<li class="chapter" data-level="9.7" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#principle-component-analysis-pca"><i class="fa fa-check"></i><b>9.7</b> Principle Component Analysis (PCA)</a></li>
+<li class="chapter" data-level="9.8" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#normalize-center-scale-raster-images"><i class="fa fa-check"></i><b>9.8</b> Normalize (Center &amp; scale) raster images:</a></li>
+<li class="chapter" data-level="9.9" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes"><i class="fa fa-check"></i><b>9.9</b> Create the same AOI that was used to crop the image, for display purposes</a></li>
+<li class="chapter" data-level="9.10" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#training-polygons"><i class="fa fa-check"></i><b>9.10</b> Training polygons</a></li>
+<li class="chapter" data-level="9.11" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#extract-training-values-from-polygons-at-10-m-resolution"><i class="fa fa-check"></i><b>9.11</b> Extract training values from polygons at 10 m resolution</a></li>
+<li class="chapter" data-level="9.12" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#histograms-of-predictors"><i class="fa fa-check"></i><b>9.12</b> Histograms of predictors</a></li>
+<li class="chapter" data-level="9.13" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#split-into-training-and-testing-subsets"><i class="fa fa-check"></i><b>9.13</b> Split into training and testing subsets</a></li>
+<li class="chapter" data-level="9.14" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#fit-models"><i class="fa fa-check"></i><b>9.14</b> Fit models</a>
+<ul>
+<li class="chapter" data-level="9.14.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#set-up-model-training-controls-for-all-models"><i class="fa fa-check"></i><b>9.14.1</b> Set up model training controls (for all models)</a></li>
+</ul></li>
+<li class="chapter" data-level="9.15" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.15</b> Support Vector Machine (SVM) model</a>
+<ul>
+<li class="chapter" data-level="9.15.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.15.1</b> Train model</a></li>
+<li class="chapter" data-level="9.15.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.15.2</b> Model summary &amp; confusion matrix</a></li>
+<li class="chapter" data-level="9.15.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.15.3</b> Prediction map</a></li>
+<li class="chapter" data-level="9.15.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.15.4</b> Compare training vs predicted % cover</a></li>
+</ul></li>
+<li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.16</b> Random Forest</a>
+<ul>
+<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.16.1</b> Predictor Importance</a></li>
+</ul></li>
+<li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.17</b> Neural Network</a></li>
+</ul></li>
 <li class="part"><span><b>IV Time Series</b></span></li>
-<li class="chapter" data-level="9" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html"><i class="fa fa-check"></i><b>9</b> Time Series Visualization &amp; Analysis</a>
+<li class="chapter" data-level="10" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html"><i class="fa fa-check"></i><b>10</b> Time Series Visualization &amp; Analysis</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#creation-of-time-series-ts-data"><i class="fa fa-check"></i><b>9.1</b> Creation of time series (ts) data</a>
+<li class="chapter" data-level="10.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#creation-of-time-series-ts-data"><i class="fa fa-check"></i><b>10.1</b> Creation of time series (ts) data</a>
 <ul>
-<li class="chapter" data-level="9.1.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#frequency-setting"><i class="fa fa-check"></i><b>9.1.1</b> frequency setting</a></li>
-<li class="chapter" data-level="9.1.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#data-logger-data-from-marble-mountains-resurgence"><i class="fa fa-check"></i><b>9.1.2</b> Data logger data from Marble Mountains resurgence</a></li>
+<li class="chapter" data-level="10.1.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#frequency-setting"><i class="fa fa-check"></i><b>10.1.1</b> frequency setting</a></li>
+<li class="chapter" data-level="10.1.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#data-logger-data-from-marble-mountains-resurgence"><i class="fa fa-check"></i><b>10.1.2</b> Data logger data from Marble Mountains resurgence</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#data-smoothing-methods"><i class="fa fa-check"></i><b>9.2</b> Data smoothing methods</a>
+<li class="chapter" data-level="10.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#data-smoothing-methods"><i class="fa fa-check"></i><b>10.2</b> Data smoothing methods</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#moving-average-ma"><i class="fa fa-check"></i><b>9.2.1</b> moving average (ma)</a></li>
-<li class="chapter" data-level="9.2.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#loess-local-regression-smoothing"><i class="fa fa-check"></i><b>9.2.2</b> loess (local regression) smoothing</a></li>
+<li class="chapter" data-level="10.2.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#moving-average-ma"><i class="fa fa-check"></i><b>10.2.1</b> moving average (ma)</a></li>
+<li class="chapter" data-level="10.2.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#loess-local-regression-smoothing"><i class="fa fa-check"></i><b>10.2.2</b> loess (local regression) smoothing</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#decomposing-time-series"><i class="fa fa-check"></i><b>9.3</b> Decomposing time series</a>
+<li class="chapter" data-level="10.3" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#decomposing-time-series"><i class="fa fa-check"></i><b>10.3</b> Decomposing time series</a>
 <ul>
-<li class="chapter" data-level="9.3.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#lag-regression"><i class="fa fa-check"></i><b>9.3.1</b> lag regression</a></li>
-<li class="chapter" data-level="9.3.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#ensemble-average"><i class="fa fa-check"></i><b>9.3.2</b> Ensemble Average</a></li>
-<li class="chapter" data-level="9.3.3" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#julian-dates"><i class="fa fa-check"></i><b>9.3.3</b> Julian Dates</a></li>
+<li class="chapter" data-level="10.3.1" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#lag-regression"><i class="fa fa-check"></i><b>10.3.1</b> lag regression</a></li>
+<li class="chapter" data-level="10.3.2" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#ensemble-average"><i class="fa fa-check"></i><b>10.3.2</b> Ensemble Average</a></li>
+<li class="chapter" data-level="10.3.3" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#julian-dates"><i class="fa fa-check"></i><b>10.3.3</b> Julian Dates</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#learning-more-about-time-series-in-r"><i class="fa fa-check"></i><b>9.4</b> Learning more about time series in R</a></li>
+<li class="chapter" data-level="10.4" data-path="time-series-visualization-analysis.html"><a href="time-series-visualization-analysis.html#learning-more-about-time-series-in-r"><i class="fa fa-check"></i><b>10.4</b> Learning more about time series in R</a></li>
 </ul></li>
 <li class="part"><span><b>V Communication &amp; Special Topics</b></span></li>
-<li class="chapter" data-level="10" data-path="communication.html"><a href="communication.html"><i class="fa fa-check"></i><b>10</b> Communication</a></li>
+<li class="chapter" data-level="11" data-path="communication.html"><a href="communication.html"><i class="fa fa-check"></i><b>11</b> Communication</a></li>
 <li class="chapter" data-level="" data-path="appendix-building-a-data-package-for-github.html"><a href="appendix-building-a-data-package-for-github.html"><i class="fa fa-check"></i>Appendix: Building a Data Package for GitHub</a>
 <ul>
 <li><a href="appendix-building-a-data-package-for-github.html#rda-files"><code>rda</code> files</a>
@@ -363,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Introduction to Environmental Data Science</h1>
 <p class="author"><em>Jerry Davis, SFSU Institute for Geographic Information Science</em></p>
-<p class="date"><em>2021-07-23</em></p>
+<p class="date"><em>2021-07-25</em></p>
 </div>
 <div id="chapter00.chapter_section" class="section level1 intro_section" number="1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
@@ -513,7 +571,7 @@ remotes::install_github(&quot;iGISc/iGIScData&quot;)</code></pre>
 <p>For instance, the following is a map of California counties using the CA_counties sf (simple features) data:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse); <span class="fu">library</span>(iGIScData); <span class="fu">library</span>(sf)</span>
 <span id="cb6-2"><a href="index.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>CA_counties) <span class="sc">+</span> <span class="fu">geom_sf</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>The package datasets can be used directly as sf data (if the sf library is installed) or data frames (all tibbles). Raw data can also be read from the <code>extdata</code> folder that is installed on your computer when you install the package, using code such as:</p>
 <pre><code>csvPath &lt;- system.file(&quot;extdata&quot;,&quot;TRI_1987_BaySites.csv&quot;, package=&quot;iGIScData&quot;)
 TRI87 &lt;- read_csv(csvPath)</code></pre>
