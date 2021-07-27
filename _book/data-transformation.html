@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Data Transformation | Introduction to Environmental Data Science</title>
   <meta name="description" content="Background, concepts and exercises for using R for environmental data science. The focus is on applying the R language and various libraries for data abstraction, transformation, data analysis, spatial data/mapping, statistical modeling, and time series, applied to environmental research. Applies exploratory data analysis methods and tidyverse approaches in R, and includes contributed chapters presenting research applications, with associated data and code packages." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Data Transformation | Introduction to Environmental Data Science" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-25" />
+<meta name="date" content="2021-07-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="visualization.html"/>
 <link rel="next" href="spatial-data-and-maps.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,8 +50,8 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
@@ -60,38 +60,33 @@
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
 <script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
-<script src="libs/ndvi-1/data_stars_ndvi657243.txt"></script>
+<script src="libs/ndvi_5cad19-1/data_stars_ndvi584b19.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
 <link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
-<script src="libs/FlatGeoBuf-3.3.3/fgb.js"></script>
-<script src="libs/FlatGeoBuf-3.3.3/flatgeobuf-geojson.min.js"></script>
-<script src="libs/chromajs-2.1.0/chroma.min.js"></script>
-<link id="AOI-1-attachment" rel="attachment" href="libs/AOI-0.0.1/AOI_layer.fgb"/>
-<link id="poly-class-1-attachment" rel="attachment" href="libs/poly-class-0.0.1/poly-class_layer.fgb"/>
-<script src="libs/predict_svm-1/data_stars_predict_svm5f1cb2.txt"></script>
 <script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
-<script src="libs/predict_rf-1/data_stars_predict_rf7c906e.txt"></script>
-<script src="libs/predict_nnet-1/data_stars_predict_nnete589a4.txt"></script>
+<script src="libs/predict_svm_201dc7-1/data_stars_predict_svm47652f.txt"></script>
+<script src="libs/predict_rf_bfde18-1/data_stars_predict_rf3d85f6.txt"></script>
+<script src="libs/predict_nnet_3dbc85-1/data_stars_predict_nnet638bc7.txt"></script>
 
 
 <style type="text/css">
@@ -157,6 +152,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -355,14 +373,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.16</b> Support Vector Machine (SVM) model</a>
 <ul>
-<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.16.1</b> Train model</a></li>
-<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> Model summary &amp; confusion matrix</a></li>
-<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.16.3</b> Prediction map</a></li>
-<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.16.4</b> Compare training vs predicted % cover</a></li>
+<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-svm-model"><i class="fa fa-check"></i><b>9.16.1</b> Train SVM model</a></li>
+<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> SVM model summary &amp; confusion matrix</a></li>
+<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-variable-importance"><i class="fa fa-check"></i><b>9.16.3</b> SVM variable importance</a></li>
+<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-prediction-map"><i class="fa fa-check"></i><b>9.16.4</b> SVM prediction map</a></li>
+<li class="chapter" data-level="9.16.5" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-svm-predicted-cover"><i class="fa fa-check"></i><b>9.16.5</b> Compare training vs SVM predicted % cover</a></li>
 </ul></li>
 <li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.17</b> Random Forest</a>
 <ul>
-<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.17.1</b> Predictor Importance</a></li>
+<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#rf-confusion-matrix"><i class="fa fa-check"></i><b>9.17.1</b> RF confusion matrix</a></li>
+<li class="chapter" data-level="9.17.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#rf-predictor-importance"><i class="fa fa-check"></i><b>9.17.2</b> RF predictor importance</a></li>
 </ul></li>
 <li class="chapter" data-level="9.18" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.18</b> Neural Network</a></li>
 </ul></li>
@@ -514,13 +534,15 @@ are the same for each, or not the same. The three set methods are:</p>
 <span id="cb309-3"><a href="data-transformation.html#cb309-3" aria-hidden="true" tabindex="-1"></a>squares</span></code></pre></div>
 <pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-transformation.html#cb311-1" aria-hidden="true" tabindex="-1"></a>evens</span></code></pre></div>
-<pre><code>##  [1]   0   2   4   6   8  10  12  14  16  18  20  22  24  26  28  30  32  34  36  38  40  42  44  46  48  50  52  54  56
-## [30]  58  60  62  64  66  68  70  72  74  76  78  80  82  84  86  88  90  92  94  96  98 100</code></pre>
+<pre><code>##  [1]   0   2   4   6   8  10  12  14  16  18  20  22  24  26  28  30  32  34  36  38  40  42  44  46
+## [25]  48  50  52  54  56  58  60  62  64  66  68  70  72  74  76  78  80  82  84  86  88  90  92  94
+## [49]  96  98 100</code></pre>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-transformation.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(squares,evens)</span></code></pre></div>
 <pre><code>## [1]   4  16  36  64 100</code></pre>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-transformation.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">union</span>(squares,evens))</span></code></pre></div>
-<pre><code>##  [1]   0   1   2   4   6   8   9  10  12  14  16  18  20  22  24  25  26  28  30  32  34  36  38  40  42  44  46  48  49
-## [30]  50  52  54  56  58  60  62  64  66  68  70  72  74  76  78  80  81  82  84  86  88  90  92  94  96  98 100</code></pre>
+<pre><code>##  [1]   0   1   2   4   6   8   9  10  12  14  16  18  20  22  24  25  26  28  30  32  34  36  38  40
+## [25]  42  44  46  48  49  50  52  54  56  58  60  62  64  66  68  70  72  74  76  78  80  81  82  84
+## [49]  86  88  90  92  94  96  98 100</code></pre>
 <div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-transformation.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">setdiff</span>(squares,evens))</span></code></pre></div>
 <pre><code>## [1]  1  9 25 49 81</code></pre>
 </div>
@@ -553,14 +575,14 @@ which would require manipulating them into factors:</p>
 <span id="cb321-5"><a href="data-transformation.html#cb321-5" aria-hidden="true" tabindex="-1"></a>                          state.x77))</span>
 <span id="cb321-6"><a href="data-transformation.html#cb321-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(states)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 12
-##   abb   name       region division Population Income Illiteracy `Life Exp` Murder `HS Grad` Frost Area  
-##   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; 
-## 1 AL    Alabama    2      4        3615       3624   2.1        69.05      15.1   41.3      20    50708 
-## 2 AK    Alaska     4      9        365        6315   1.5        69.31      11.3   66.7      152   566432
-## 3 AZ    Arizona    4      8        2212       4530   1.8        70.55      7.8    58.1      15    113417
-## 4 AR    Arkansas   2      5        2110       3378   1.9        70.66      10.1   39.9      65    51945 
-## 5 CA    California 4      9        21198      5114   1.1        71.71      10.3   62.6      20    156361
-## 6 CO    Colorado   4      8        2541       4884   0.7        72.06      6.8    63.9      166   103766</code></pre>
+##   abb   name     region division Population Income Illiteracy `Life Exp` Murder `HS Grad` Frost Area 
+##   &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1 AL    Alabama  2      4        3615       3624   2.1        69.05      15.1   41.3      20    50708
+## 2 AK    Alaska   4      9        365        6315   1.5        69.31      11.3   66.7      152   5664~
+## 3 AZ    Arizona  4      8        2212       4530   1.8        70.55      7.8    58.1      15    1134~
+## 4 AR    Arkansas 2      5        2110       3378   1.9        70.66      10.1   39.9      65    51945
+## 5 CA    Califor~ 4      9        21198      5114   1.1        71.71      10.3   62.6      20    1563~
+## 6 CO    Colorado 4      8        2541       4884   0.7        72.06      6.8    63.9      166   1037~</code></pre>
 </div>
 <div id="pivotting-data-frames" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Pivotting data frames</h2>
@@ -570,7 +592,7 @@ useful in a particular analysis. A common need to pivot is 2+ variables with the
 <li><strong><code>pivot_wider</code></strong> pivots rows into variables.</li>
 <li><strong><code>pivot_longer</code></strong> pivots variables into rows, creating factors.</li>
 </ul>
-<p>In our meadows study cross-section <span class="citation">(<a href="references.html#ref-NDVI" role="doc-biblioref">J. D. Davis et al. 2020</a>)</span> created by intersecting normalized difference vegetation index (NDVI) values from multispectral drone imagery with surveyed elevation and vegetation types (xeric, mesic, and hydric), we have fields <code>NDVIgrowing</code> from a July 2019 growing season and <code>NDVIsenescent</code> from a September 2020 dry season, but would like ‘growing’ and ‘senescent’ to be factors with a single <code>NDVI</code> variable. This is how we used <code>pivot_longer</code> to accomplish this, using data from the <code>iGIScData</code> data package [<strong><code>NDVI</code></strong>]:</p>
+<p>In our meadows study cross-section <span class="citation">(<a href="#ref-NDVI" role="doc-biblioref">J. D. Davis et al. 2020</a>)</span> created by intersecting normalized difference vegetation index (NDVI) values from multispectral drone imagery with surveyed elevation and vegetation types (xeric, mesic, and hydric), we have fields <code>NDVIgrowing</code> from a July 2019 growing season and <code>NDVIsenescent</code> from a September 2020 dry season, but would like ‘growing’ and ‘senescent’ to be factors with a single <code>NDVI</code> variable. This is how we used <code>pivot_longer</code> to accomplish this, using data from the <code>iGIScData</code> data package [<strong><code>NDVI</code></strong>]:</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="data-transformation.html#cb323-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="ot">&lt;-</span> XSptsNDVI <span class="sc">%&gt;%</span></span>
 <span id="cb323-2"><a href="data-transformation.html#cb323-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;NDVI&quot;</span>), </span>
 <span id="cb323-3"><a href="data-transformation.html#cb323-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">names_to =</span> <span class="st">&quot;phenology&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;NDVI&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -614,8 +636,8 @@ useful in a particular analysis. A common need to pivot is 2+ variables with the
 <span id="cb328-4"><a href="data-transformation.html#cb328-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb328-5"><a href="data-transformation.html#cb328-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(elevation, NDVI, </span>
 <span id="cb328-6"><a href="data-transformation.html#cb328-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
-<p>Pivots turn out to be commonly useful. Runoff graphing from the Eucalyptus/Oak study <span class="citation">(<a href="references.html#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span> also benefited
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p>Pivots turn out to be commonly useful. Runoff graphing from the Eucalyptus/Oak study <span class="citation">(<a href="#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span> also benefited
 from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="data-transformation.html#cb329-1" aria-hidden="true" tabindex="-1"></a>eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
 <span id="cb329-2"><a href="data-transformation.html#cb329-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;runoffL&quot;</span>),</span>
@@ -623,7 +645,7 @@ from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <span id="cb329-4"><a href="data-transformation.html#cb329-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tree =</span> <span class="fu">str_sub</span>(tree, <span class="fu">str_length</span>(tree)<span class="sc">-</span><span class="dv">2</span>, <span class="fu">str_length</span>(tree))) <span class="sc">%&gt;%</span></span>
 <span id="cb329-5"><a href="data-transformation.html#cb329-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(site, runoffL)) <span class="sc">+</span></span>
 <span id="cb329-6"><a href="data-transformation.html#cb329-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(tree <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
 <p><strong>Combining a pivot with bind_rows to create a runoff/rainfall scatterplot colored by tree</strong></p>
 <div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-transformation.html#cb330-1" aria-hidden="true" tabindex="-1"></a>runoffPivot <span class="ot">&lt;-</span> eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
 <span id="cb330-2"><a href="data-transformation.html#cb330-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;runoffL&quot;</span>),</span>
@@ -654,8 +676,8 @@ from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <span id="cb330-27"><a href="data-transformation.html#cb330-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> rain_mm, <span class="at">y=</span> runoffL, <span class="at">color =</span> tree), </span>
 <span id="cb330-28"><a href="data-transformation.html#cb330-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb330-29"><a href="data-transformation.html#cb330-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;seagreen4&quot;</span>, <span class="st">&quot;orange3&quot;</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
-<p><strong>Using pivot_wider with traffic stop data</strong> <span class="citation">(<a href="references.html#ref-Engel" role="doc-biblioref">Engel 2020</a>)</span></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<p><strong>Using pivot_wider with traffic stop data</strong> <span class="citation">(<a href="#ref-Engel" role="doc-biblioref">Engel 2020</a>)</span></p>
 <div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="data-transformation.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb331-2"><a href="data-transformation.html#cb331-2" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;MS_trafficstops_bw_age.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
 <span id="cb331-3"><a href="data-transformation.html#cb331-3" aria-hidden="true" tabindex="-1"></a>trafficStops <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath) <span class="sc">%&gt;%</span></span>
@@ -694,6 +716,18 @@ from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 
 
 
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-NDVI" class="csl-entry">
+Davis, J. D., L. Blesius, M. Slocombe, S. Maher, M. Vasey, P. Christian, and P. Lynch. 2020. <span>“Unpiloted Aerial System (UAS)-Supported Biogeomorphic Analysis of Restored Sierra Nevada Montane Meadows.”</span> <em>Remote Sensing</em> 12. <a href="https://www.mdpi.com/2072-4292/12/11/1828">https://www.mdpi.com/2072-4292/12/11/1828</a>.
+</div>
+<div id="ref-Engel" class="csl-entry">
+Engel, Claudia. 2020. <em>Data Wrangling with r</em>. cengel.github.io. <a href="https://cengel.github.io/R-data-wrangling/">https://cengel.github.io/R-data-wrangling/</a>.
+</div>
+<div id="ref-eucoak" class="csl-entry">
+Thompson, A., J. D. Davis, and A. J. Oliphant. 2016. <span>“Surface Runoff and Soil Erosion Under Eucalyptus and Oak Canopy.”</span> <em>Earth Surface Processes and Landforms</em>. <a href="https://doi.org/10.1002/esp.3881">https://doi.org/10.1002/esp.3881</a>.
+</div>
+</div>
             </section>
 
           </div>
@@ -723,6 +757,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

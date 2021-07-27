@@ -106,7 +106,7 @@ knitr::include_graphics(here::here("img", "instrumentationLower.png"))
 ```{r message=F, warning=F}
 library(tidyverse); library(lubridate)
 resurg <- read_csv(system.file("extdata","resurgenceData.csv",package="iGIScData")) %>%
-  mutate(date_time = mdy_hms(paste(date, time))) %>%
+  mutate(date_time = mdy_hm(paste(date, time))) %>%
   dplyr::select(date_time, ATemp, BTemp, wlevelm, EC, InputV)
 resurgTS <- ts(resurg, frequency = 12*365, start = c(1994, 266*12+7))
 plot(resurgTS)

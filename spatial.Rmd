@@ -129,21 +129,22 @@ plot(sierraFebpts)
 ```
 
 [**`air_quality`**]
+[Leave out:  need new BayAreaTracts data]
 ```{r, message=FALSE, warning=FALSE, fig.cap="ggplot map of Bay Area TRI sites, census centroids, freeways"}
-library(tidyverse)
-library(sf)
-library(iGIScData)
-censusCentroids <- st_centroid(BayAreaTracts)
-TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), 
-        crs=4326) # simple way to specify coordinate reference
-bnd <- st_bbox(censusCentroids)
-ggplot() +
-  geom_sf(data = BayAreaCounties, aes(fill = NAME)) +
-  geom_sf(data = censusCentroids) +
-  geom_sf(data = CAfreeways, color = "grey") +
-  geom_sf(data = TRI_sp, color = "yellow") +
-  coord_sf(xlim = c(bnd[1], bnd[3]), ylim = c(bnd[2], bnd[4])) +
-  labs(title="Bay Area Counties, Freeways and Census Tract Centroids")
+# library(tidyverse)
+# library(sf)
+# library(iGIScData)
+# censusCentroids <- st_centroid(BayAreaTracts)
+# TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), 
+#         crs=4326) # simple way to specify coordinate reference
+# bnd <- st_bbox(censusCentroids)
+# ggplot() +
+#   geom_sf(data = BayAreaCounties, aes(fill = NAME)) +
+#   geom_sf(data = censusCentroids) +
+#   geom_sf(data = CAfreeways, color = "grey") +
+#   geom_sf(data = TRI_sp, color = "yellow") +
+#   coord_sf(xlim = c(bnd[1], bnd[3]), ylim = c(bnd[2], bnd[4])) +
+#   labs(title="Bay Area Counties, Freeways and Census Tract Centroids")
 ```
 
 ### Coordinate Referencing System
@@ -182,11 +183,11 @@ One way to remove geometry:
 
 A spatial join with st_join
 joins data from census where TRI points occur [**`air_quality`**]
-
+[left out:  need new BayAreaTracts]
 ```{r, message=FALSE}
-TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
-  st_join(BayAreaTracts) %>%
-  filter(CNTY_FIPS %in% c("013", "095"))
+# TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
+  # st_join(BayAreaTracts) %>%
+  # filter(CNTY_FIPS %in% c("013", "095"))
 ```
 
 
@@ -325,24 +326,24 @@ ggplot(CA_counties) + geom_sf(aes(fill=MED_AGE)) +
 
 
 **Map in ggplot2, zoomed into two counties [`air_quality`]:** [@TRI]
-
+[Leave out:  need new BayAreaTracts]
 ```{r warning=FALSE}
-library(tidyverse); library(sf); library(iGIScData)
-census <- BayAreaTracts %>%
-   filter(CNTY_FIPS %in% c("013", "095"))
-TRI <- TRI_2017_CA %>%
-  st_as_sf(coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
-  st_join(census) %>%
-  filter(CNTY_FIPS %in% c("013", "095"),
-         (`5.1_FUGITIVE_AIR` + `5.2_STACK_AIR`) > 0)
-bnd = st_bbox(census)
-ggplot() +
-  geom_sf(data = BayAreaCounties, aes(fill = NAME)) +
-  geom_sf(data = census, color="grey40", fill = NA) +
-  geom_sf(data = TRI) +
-  coord_sf(xlim = c(bnd[1], bnd[3]), ylim = c(bnd[2], bnd[4])) +
-  labs(title="Census Tracts and TRI air-release sites") +
-  theme(legend.position = "none")
+# library(tidyverse); library(sf); library(iGIScData)
+# census <- BayAreaTracts %>%
+#    filter(CNTY_FIPS %in% c("013", "095"))
+# TRI <- TRI_2017_CA %>%
+#   st_as_sf(coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
+#   st_join(census) %>%
+#   filter(CNTY_FIPS %in% c("013", "095"),
+#          (`5.1_FUGITIVE_AIR` + `5.2_STACK_AIR`) > 0)
+# bnd = st_bbox(census)
+# ggplot() +
+#   geom_sf(data = BayAreaCounties, aes(fill = NAME)) +
+#   geom_sf(data = census, color="grey40", fill = NA) +
+#   geom_sf(data = TRI) +
+#   coord_sf(xlim = c(bnd[1], bnd[3]), ylim = c(bnd[2], bnd[4])) +
+#   labs(title="Census Tracts and TRI air-release sites") +
+#   theme(legend.position = "none")
 
 ```
 
@@ -380,11 +381,11 @@ tm_shape(world) + tm_fill() + tm_borders()
 ```
 
 **Color by variable [`air_quality`]**
-
+[Leave out: need new BayAreaTracts]
 ```{r}
-library(sf)
-library(tmap)
-tm_shape(BayAreaTracts) + tm_fill(col = "MED_AGE")
+# library(sf)
+# library(tmap)
+# tm_shape(BayAreaTracts) + tm_fill(col = "MED_AGE")
 
 ```
 
@@ -485,10 +486,10 @@ tm_basemap(leaflet::providers$Esri.WorldTopoMap) +
 ```
 
 [**`air_quality`**]
-
+[Leave out:  need new BayAreaTracts]
 ```{r}
-tmap_mode("view")
-tm_shape(BayAreaTracts) + tm_fill(col = "MED_AGE", alpha = 0.5)
+# tmap_mode("view")
+# tm_shape(BayAreaTracts) + tm_fill(col = "MED_AGE", alpha = 0.5)
 ```
 
 

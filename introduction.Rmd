@@ -112,7 +112,7 @@ Note that some of those expressions used previously assigned variables -- x, a, 
 
 An expression can be entered in the console to display its current value, and this is commonly done in R for objects of many types and complexity.
 
-```{r}
+```{r intro.Pi}
 cos(pi)
 print(cos(pi))
 Nile
@@ -122,7 +122,7 @@ A **statement** in R *does something*. It represents a directive we're assigning
 maybe the environment we're running on the computer (like RStudio, which then runs R). A simple
 `print()` *statement* seems a lot like what we just did when we entered an expression in the console, but recognize that it *does something*:
 
-```{r}
+```{r intro.Hello}
 print("Hello, World")
 ```
 
@@ -130,12 +130,12 @@ Which is the same as just typing "Hello, World", but that's just because the job
 
 Statements in R are usually put on one line, but you can use a semicolon to have multiple statements on one line, if desired:
 
-```{r}
+```{r intro.print}
 x <- 5; print(x); print(x**2)
 ```
 
 Many (perhaps most) statements don't actually display anything. For instance:
-```{r}
+```{r intro.nodisplay}
 x <- 5
 ```
 doesn't display anything, but it does assign the value 5 to the variable x, so it simply *does something*. It's an **assignment statement** and uses that special assignment operator `<-` .  Most languages just use `=` which the designers of R didn't want to use, to avoid confusing it with the equal sign meaning "is equal to". 
@@ -152,7 +152,7 @@ The `**` part is interpreted as *raise to a power*.  What is to the left of the 
 ## Data Types
 Variables, constants and other data elements in R have data types.
 Common types are numeric and character.
-```{r}
+```{r intro.class}
 x <- 5
 class(x)
 class(4.5)
@@ -168,12 +168,12 @@ but we should look at `as.integer()` now.  Most other languages use `int()` for 
 and what it does is converts *any number* into an integer, *truncating* it to an
 integer, not rounding it. 
 
-```{r}
+```{r intro.as.integer}
 as.integer(5)
 as.integer(4.5)
 ```
 To round a number, there's a `round()` function or you can easily use `as.integer` adding 0.5:
-```{r}
+```{r intro.round}
 x <- 4.8
 y <- 4.2
 as.integer(x + 0.5)
@@ -184,11 +184,11 @@ round(y)
 
 
 Integer divison:
-```{r}
+```{r intro.div}
 5 %/% 2
 ```
 Integer remainder from division (the modulus, using a `%%` to represent the modulo):
-```{r}
+```{r intro.mod}
 5 %% 2
 ```
 Surprisingly, the values returned by integer division or the remainder are not stored as integers.  R seems to prefer floating point...
@@ -198,7 +198,7 @@ A common data format used in most types of research is **rectangular** data such
 with rows and columns, where rows might be **observations** and columns might be **variables**.
 We'll read this type of data in from spreadsheets or even more commonly from comma-separated-variable (CSV)
 
-```{r}
+```{r intro.iGIScData}
 library(iGIScData)
 sierraFeb
 ```
@@ -213,7 +213,7 @@ that they be *homogeneous* sets of whatever type we're referring to, such as a v
 or a vector of strings, or a vector of dates/times.
 
 You can create a simple vector with the `c()` function:
-```{r}
+```{r intro.vector}
 lats <- c(37.5,47.4,29.4,33.4)
 lats
 states = c("VA", "WA", "TX", "AZ")
@@ -228,12 +228,12 @@ The class of a vector is the type of data it holds
 ```
 
 
-```{r}
+```{r intro.vectorClass}
 temp <- c(10.7, 9.7, 7.7, 9.2, 7.3, 6.7)
 class(temp)
 ```
 Vectors can only have one data class, and if mixed with character types, numeric elements will become character:
-```{r}
+```{r intro.mixed}
 mixed <- c(1, "fred", 7)
 class(mixed)
 mixed[3]   # gets a subset, example of coercion
@@ -244,20 +244,20 @@ Data science requires dealing with missing data by storing some sort of null val
 - null
 - nodata
 - NA "not available" or "not applicable"
-```{r}
+```{r intro.as.numeric}
 as.numeric(c("1","Fred","5")) # note NA introduced by coercion
 ```
 Ignoring NA in statistical summaries is commonly used. Where normally the summary statistic can only return NA...
-```{r}
+```{r intro.as.numeric.na}
 mean(as.numeric(c("1", "Fred", "5")))
 ```
 ... with `na.rm=T` you can still get the result for all actual data:
-```{r}
+```{r intro.as.numeric.na.rm}
 mean(as.numeric(c("1", "Fred", "5")), na.rm=T)
 ```
 Don't confuse with `nan` ("not a number") which is used for things like imaginary numbers (explore the help for more on this)
 
-```{r}
+```{r is.na}
 is.na(NA)
 is.nan(NA)
 is.na(as.numeric(''))
@@ -274,19 +274,19 @@ c(1:10)
 c(1,2,3,4,5,6,7,8,9,10)
 ```
 The seq() function has special uses like using a step parameter:
-```{r}
+```{r intro.seq}
 seq(2,10,2)
 ```
 #### Vectorization and vector arithmetic
 Arithmetic on vectors operates element-wise
-```{r}
+```{r intro.vectorization}
 elev <- c(52,394,510,564,725,848,1042,1225,1486,1775,1899,2551)
 elevft <- elev / 0.3048
 elevft
 
 ```
 Another example, with 2 vectors:
-```{r}
+```{r intro.2vectors}
 temp03 <- c(13.1,11.4,9.4,10.9,8.9,8.4,6.7,7.6,2.8,1.6,1.2,-2.1)
 temp02 <- c(10.7,9.7,7.7,9.2,7.3,6.7,4.0,5.0,0.9,-1.1,-0.8,-4.4)
 tempdiff <- temp03 - temp02
@@ -295,7 +295,7 @@ tempdiff
 ```
 #### Plotting vectors
 Vectors of Feb temperature, elevation and latitude at stations in the Sierra:
-```{r}
+```{r intro.plotVectors}
 temp <- c(10.7, 9.7, 7.7, 9.2, 7.3, 6.7, 4.0, 5.0, 0.9, -1.1, -0.8, -4.4)
 elev <- c(52, 394, 510, 564, 725, 848, 1042, 1225, 1486, 1775, 1899, 2551)
 lat <- c(39.52, 38.91, 37.97, 38.70, 39.09, 39.25, 39.94, 37.75, 40.35, 39.33, 39.17, 38.21)
@@ -303,23 +303,23 @@ lat <- c(39.52, 38.91, 37.97, 38.70, 39.09, 39.25, 39.94, 37.75, 40.35, 39.33, 3
 ```
 
 **Plot individually**
-```{r fig.cap="Temperature"}
+```{r intro.plot1, fig.cap="Temperature"}
 plot(temp)
 ```
-```{r fig.cap="Elevation"}
+```{r intro.plot2, fig.cap="Elevation"}
 plot(elev)
 ```
-```{r fig.cap="Latitude"}
+```{r intro.plot3, fig.cap="Latitude"}
 plot(lat)
 ```
 
 **Then plot as a scatterplot**
-```{r fig.cap="Temperature~Elevation"}
+```{r intro.scatter, fig.cap="Temperature~Elevation"}
 plot(elev,temp)
 ```
 #### Named indices
 Vector indices can be named.
-```{r}
+```{r intro.namedIndices}
 codes <- c(380, 124, 818)
 codes
 codes <- c(italy = 380, canada = 124, egypt = 818)
@@ -328,7 +328,7 @@ str(codes)
 ```
 Why?  I guess so you can refer to observations by name instead of index. 
 The following are equivalent:
-```{r}
+```{r intro.namedIndices.equiv}
 codes[1]
 codes["italy"]
 ```
@@ -338,24 +338,24 @@ Lists can be heterogeneous, with multiple class types. Lists are actually used a
 
 ### Matrices
 Vectors are commonly used as a column in a matrix (or as we'll see, a data frame), like a variable
-```{r}
+```{r intro.matrix}
 temp <- c(10.7, 9.7, 7.7, 9.2, 7.3, 6.7, 4.0, 5.0, 0.9, -1.1, -0.8, -4.4)
 elev <- c(52, 394, 510, 564, 725, 848, 1042, 1225, 1486, 1775, 1899, 2551)
 lat <- c(39.52, 38.91, 37.97, 38.70, 39.09, 39.25, 39.94, 37.75, 40.35, 39.33, 39.17, 38.21)
 ```
 **Building a matrix from vectors as columns**
-```{r}
+```{r intro.cbind}
 sierradata <- cbind(temp, elev, lat)
 class(sierradata)
 ```
 
 #### Dimensions for arrays and matrices
 Note:  a matrix is just a 2D array.  Arrays have 1, 3, or more dimensions.
-```{r}
+```{r intro.dim}
 dim(sierradata)
 ```
 
-```{r}
+```{r intro.matrixArray}
 a <- 1:12
 dim(a) <- c(3, 4)   # matrix
 class(a)
@@ -369,7 +369,7 @@ b <- matrix(1:12, ncol=1)  # 1 column matrix is allowed
 ### Data frames
 A data frame is a database with fields (as vectors) with records (rows), so is very important for data analysis and GIS.  They're kind of like a spreadsheet with rules (first row is field names, fields all one type). So even though they're more complex than a list, we use them so frequently they become quite familiar. We'll use a couple of alternative table display methods, though as we've seen we can also display them by entering the data frame name, or use head().
 
-```{r}
+```{r intro.dataframes}
 library(palmerpenguins); library(kableExtra)
 knitr::kable(
   head(penguins, 10), booktabs = TRUE,
@@ -380,7 +380,7 @@ knitr::kable(
 This `palmerpenguins` data frame is from @palmer.
 
 **Creating a data frame out of a matrix**
-```{r fig.cap="Temperature~Elevation", warning=F}
+```{r intro.plotSierra, fig.cap="Temperature~Elevation", warning=F}
 mydata <- as.data.frame(sierradata)
 DT::datatable(mydata)
 plot(data = mydata, x = elev, y = temp)
@@ -392,7 +392,7 @@ We'll be looking at this more in the next chapter, but a common need is to read 
 
 Reading a csv in `readr` (part of the tidyverse that we'll be looking at in the next chapter) is done with `read_csv()`:
 
-```{r message=F}
+```{r intro.DT, message=F}
 library(readr)
 csvPath <- system.file("extdata","TRI_1987_BaySites.csv", package="iGIScData")
 TRI87 <- read_csv(csvPath)
@@ -401,7 +401,7 @@ DT::datatable(TRI87, options=list(scrollX=T))
 
 **Sort, Index, & Max/Min**
 
-```{r}
+```{r intro.sort}
 head(sort(TRI87$air_releases))
 index <- order(TRI87$air_releases)
 head(TRI87$FACILITY_NAME[index])   # displays facilities in order of their air releases
@@ -416,7 +416,7 @@ Factors are vectors with predefined values
 - Built on an *integer* vector
 - Levels are the set of predefined values.
 
-```{r}
+```{r intro.fruit}
 fruit <- factor(c("apple", "banana", "orange", "banana"))
 fruit   # note that levels will be in alphabetical order
 class(fruit)
@@ -425,7 +425,7 @@ typeof(fruit)
 
 An equivalent conversion:
 
-```{r}
+```{r intro.fruitConv}
 fruitint <- c(1, 2, 3, 2) # equivalent conversion
 fruit <- factor(fruitint, labels = c("apple", "banana", "orange"))
 str(fruit)
@@ -436,7 +436,7 @@ str(fruit)
 
 While character data might be seen as categorical (e.g. "urban", "agricultural", "forest" land covers), to be used as categorical variables they must be made into factors.
 
-```{r}
+```{r intro.grainsize}
 grain_order <- c("clay", "silt", "sand")
 grain_char <- sample(grain_order, 36, replace = TRUE)
 grain_fact <- factor(grain_char, levels = grain_order)
@@ -445,7 +445,7 @@ grain_fact
 ```
 
 To make a categorical variable a factor:
-```{r}
+```{r intro.factor}
 fruit <- c("apples", "oranges", "bananas", "oranges")
 farm <- c("organic", "conventional", "organic", "organic")
 ag <- as.data.frame(cbind(fruit, farm))
@@ -453,7 +453,7 @@ ag$fruit <- factor(ag$fruit)
 ag$fruit
 ```
 **Factor example**
-```{r}
+```{r intro.factorExample}
 sierraFeb$COUNTY <- factor(sierraFeb$COUNTY)
 str(sierraFeb$COUNTY)
 ```
@@ -481,7 +481,7 @@ operational structures are used in all computer programming languages:
 
 - Functions (defining your own then using it in your main script)
 
-```{r}
+```{r intro.function}
 turnright <- function(ang){(ang + 90) %% 360}
 turnright(c(260, 270, 280))
 ```
@@ -510,7 +510,7 @@ We'll use a package that includes data from
 Identify all states with murder rates ≤ that of Italy. [Start by creating a **new `murders` project**.]
 
 
-```{r message=F, warning=F}
+```{r murders, message=F, warning=F}
 library(dslabs)
 data(murders)
 murder_rate <- murders$total / murders$population * 100000
@@ -519,7 +519,7 @@ murders$abb[i]
 ```
 **which** [in a **new `air_quality` project**]
 
-```{r message=F}
+```{r intro.air_releases, message=F}
 library(readr)
 TRI87 <- read_csv("data/TRI_1987_BaySites.csv")
 i <- which(TRI87$air_releases > 1e6)
@@ -528,7 +528,7 @@ TRI87$FACILITY_NAME[i]
 
 **%in%**
 
-```{r message=F}
+```{r intro.in, message=F}
 library(readr)
 csvPath = system.file("extdata","TRI_1987_BaySites.csv", package="iGIScData")
 TRI87 <- read_csv(csvPath)
@@ -543,7 +543,7 @@ There are many apply functions in R, and they largely obviate the need for loopi
 
 - `apply` derives values at margins of rows and columns, e.g. to sum across rows or down columns [create the following in a **new `generic_methods` project** which you'll use for a variety of generic methods]
 
-```{r}
+```{r intro.apply}
 # matrix apply – the same would apply to data frames
 matrix12 <- 1:12
 dim(matrix12) <- c(3,4)
@@ -562,17 +562,17 @@ Apply functions satisfy one of the needs that spreadsheets are used for.  Consid
 sapply applies functions to either:
 
 - all elements of a vector – unary functions only
-```{r}
+```{r intro.sapply}
 sapply(1:12, sqrt)
 ```
 
 - or all variables of a data frame (not a matrix), where it works much like a column-based apply (since variables are columns) but more easily interpreted without the need of specifying columns with 2:
 
-```{r}
+```{r intro.sapplycars}
 sapply(cars,mean)  # same as apply(cars,2,mean)
 ```
 
-```{r}
+```{r intro.sapplyTemp}
 temp02 <- c(10.7,9.7,7.7,9.2,7.3,6.7,4.0,5.0,0.9,-1.1,-0.8,-4.4)
 temp03 <- c(13.1,11.4,9.4,10.9,8.9,8.4,6.7,7.6,2.8,1.6,1.2,-2.1)
 sapply(as.data.frame(cbind(temp02,temp03)),mean) # has to be a data frame

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Data Abstraction | Introduction to Environmental Data Science</title>
   <meta name="description" content="Background, concepts and exercises for using R for environmental data science. The focus is on applying the R language and various libraries for data abstraction, transformation, data analysis, spatial data/mapping, statistical modeling, and time series, applied to environmental research. Applies exploratory data analysis methods and tidyverse approaches in R, and includes contributed chapters presenting research applications, with associated data and code packages." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Data Abstraction | Introduction to Environmental Data Science" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-25" />
+<meta name="date" content="2021-07-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +32,8 @@
   
 <link rel="prev" href="introduction-to-r.html"/>
 <link rel="next" href="visualization.html"/>
-<script src="libs/header-attrs-2.5/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,8 +50,8 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
@@ -60,38 +60,33 @@
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
 <script src="libs/leaflet-1.3.1/leaflet.js"></script>
 <link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
-<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
 <script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
 <link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
-<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
 <script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
-<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
 <script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
-<script src="libs/ndvi-1/data_stars_ndvi657243.txt"></script>
+<script src="libs/ndvi_5cad19-1/data_stars_ndvi584b19.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
 <link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
-<script src="libs/FlatGeoBuf-3.3.3/fgb.js"></script>
-<script src="libs/FlatGeoBuf-3.3.3/flatgeobuf-geojson.min.js"></script>
-<script src="libs/chromajs-2.1.0/chroma.min.js"></script>
-<link id="AOI-1-attachment" rel="attachment" href="libs/AOI-0.0.1/AOI_layer.fgb"/>
-<link id="poly-class-1-attachment" rel="attachment" href="libs/poly-class-0.0.1/poly-class_layer.fgb"/>
-<script src="libs/predict_svm-1/data_stars_predict_svm5f1cb2.txt"></script>
 <script src="libs/plotly-binding-4.9.4.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
-<script src="libs/predict_rf-1/data_stars_predict_rf7c906e.txt"></script>
-<script src="libs/predict_nnet-1/data_stars_predict_nnete589a4.txt"></script>
+<script src="libs/predict_svm_201dc7-1/data_stars_predict_svm47652f.txt"></script>
+<script src="libs/predict_rf_bfde18-1/data_stars_predict_rf3d85f6.txt"></script>
+<script src="libs/predict_nnet_3dbc85-1/data_stars_predict_nnet638bc7.txt"></script>
 
 
 <style type="text/css">
@@ -157,6 +152,29 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -355,14 +373,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.16" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#support-vector-machine-svm-model"><i class="fa fa-check"></i><b>9.16</b> Support Vector Machine (SVM) model</a>
 <ul>
-<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-model"><i class="fa fa-check"></i><b>9.16.1</b> Train model</a></li>
-<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> Model summary &amp; confusion matrix</a></li>
-<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#prediction-map"><i class="fa fa-check"></i><b>9.16.3</b> Prediction map</a></li>
-<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-predicted-cover"><i class="fa fa-check"></i><b>9.16.4</b> Compare training vs predicted % cover</a></li>
+<li class="chapter" data-level="9.16.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#train-svm-model"><i class="fa fa-check"></i><b>9.16.1</b> Train SVM model</a></li>
+<li class="chapter" data-level="9.16.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-model-summary-confusion-matrix"><i class="fa fa-check"></i><b>9.16.2</b> SVM model summary &amp; confusion matrix</a></li>
+<li class="chapter" data-level="9.16.3" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-variable-importance"><i class="fa fa-check"></i><b>9.16.3</b> SVM variable importance</a></li>
+<li class="chapter" data-level="9.16.4" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#svm-prediction-map"><i class="fa fa-check"></i><b>9.16.4</b> SVM prediction map</a></li>
+<li class="chapter" data-level="9.16.5" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#compare-training-vs-svm-predicted-cover"><i class="fa fa-check"></i><b>9.16.5</b> Compare training vs SVM predicted % cover</a></li>
 </ul></li>
 <li class="chapter" data-level="9.17" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#random-forest"><i class="fa fa-check"></i><b>9.17</b> Random Forest</a>
 <ul>
-<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#predictor-importance"><i class="fa fa-check"></i><b>9.17.1</b> Predictor Importance</a></li>
+<li class="chapter" data-level="9.17.1" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#rf-confusion-matrix"><i class="fa fa-check"></i><b>9.17.1</b> RF confusion matrix</a></li>
+<li class="chapter" data-level="9.17.2" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#rf-predictor-importance"><i class="fa fa-check"></i><b>9.17.2</b> RF predictor importance</a></li>
 </ul></li>
 <li class="chapter" data-level="9.18" data-path="machine-learning-for-imagery-classification.html"><a href="machine-learning-for-imagery-classification.html#neural-network"><i class="fa fa-check"></i><b>9.18</b> Neural Network</a></li>
 </ul></li>
@@ -423,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="data-abstraction" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Data Abstraction</h1>
 <p>At this point, we’ve learned the basics of working with the R language. From here we’ll want to explore how to analyze data, both statistically and spatially. One part of this is abstracting information from existing data sets by selecting variables and observations and summarizing their statistics.</p>
-<p>Some useful methods for data abstraction can be found in the various packages of “The Tidyverse” <span class="citation">(<a href="references.html#ref-wickham2017tidyverse" role="doc-biblioref">Wickham 2017</a>)</span> which can be included all at once with the <strong><code>tidyverse</code></strong> package. We’ll start with <strong><code>dplyr</code></strong>, which includes an array of data manipulation tools, including <strong><code>select</code></strong> for selecting variables, <strong><code>filter</code></strong> for subsetting observations, <strong><code>summarize</code></strong> for reducing variables to summary statistics, typically stratified by groups, and <strong><code>mutate</code></strong> for creating new variables from mathematical expressions from existing variables. Some dplyr tools such as data joins we’ll look at later in the data transformation chapter.</p>
+<p>Some useful methods for data abstraction can be found in the various packages of “The Tidyverse” <span class="citation">(<a href="#ref-wickham2017tidyverse" role="doc-biblioref">Wickham 2017</a>)</span> which can be included all at once with the <strong><code>tidyverse</code></strong> package. We’ll start with <strong><code>dplyr</code></strong>, which includes an array of data manipulation tools, including <strong><code>select</code></strong> for selecting variables, <strong><code>filter</code></strong> for subsetting observations, <strong><code>summarize</code></strong> for reducing variables to summary statistics, typically stratified by groups, and <strong><code>mutate</code></strong> for creating new variables from mathematical expressions from existing variables. Some dplyr tools such as data joins we’ll look at later in the data transformation chapter.</p>
 <div id="background-exploratory-data-analysis" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Background: Exploratory Data Analysis</h2>
 <p>In 1961, John Tukey proposed a new approach to data analysis, defining it as “Procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.”<br />
@@ -473,7 +493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>read.csv</code> creates a regular data frame</li>
 </ul></li>
 </ul>
-<p>[<strong><code>air_quality</code> project</strong>] <span class="citation">(<a href="references.html#ref-TRI" role="doc-biblioref"><em>Toxic Release Inventory (TRI) Program</em>, n.d.</a>)</span></p>
+<p>[<strong><code>air_quality</code> project</strong>] <span class="citation">(<a href="#ref-TRI" role="doc-biblioref"><em>Toxic Release Inventory (TRI) Program</em>, n.d.</a>)</span></p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="data-abstraction.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># includes readr, ggplot2, and dplyr which we&#39;ll use in this chapter</span></span>
 <span id="cb181-2"><a href="data-abstraction.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(iGIScData)</span>
 <span id="cb181-3"><a href="data-abstraction.html#cb181-3" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;TRI_1987_BaySites.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
@@ -486,18 +506,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb182-3"><a href="data-abstraction.html#cb182-3" aria-hidden="true" tabindex="-1"></a>ab <span class="ot">&lt;-</span> <span class="fu">tibble</span>(a,b)</span>
 <span id="cb182-4"><a href="data-abstraction.html#cb182-4" aria-hidden="true" tabindex="-1"></a>ab</span></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
-##         a     b
-##     &lt;dbl&gt; &lt;dbl&gt;
-##  1  1.77  0.864
-##  2 -2.40  0.644
-##  3  1.13  0.571
-##  4  0.494 0.133
-##  5  1.35  0.563
-##  6  0.470 0.925
-##  7  0.382 0.644
-##  8 -1.20  0.402
-##  9  0.488 0.196
-## 10 -1.49  0.711</code></pre>
+##           a      b
+##       &lt;dbl&gt;  &lt;dbl&gt;
+##  1 -0.291   0.748 
+##  2  0.745   0.244 
+##  3 -1.32    0.714 
+##  4 -1.08    0.606 
+##  5 -0.686   0.516 
+##  6 -1.14    0.0361
+##  7  0.354   0.0515
+##  8  0.00959 0.0971
+##  9  0.250   0.138 
+## 10  1.83    0.0838</code></pre>
 <div id="read_csv-vs.-read.csv" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> <code>read_csv</code> vs. <code>read.csv</code></h3>
 <p>You might be tempted to use read.csv from base R</p>
@@ -519,41 +539,49 @@ problematic field names like <code>MLY-TAVG-NORMAL</code> become <code>MLY.TAVG
 </div>
 <div id="statistical-summary-of-variables" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Statistical summary of variables</h2>
-<p>A simple statistical summary is very easy to do, and we’ll use <strong><code>eucoak</code></strong> data in the <code>iGIScData</code> package from a study of comparative runoff and erosion under Eucalyptus and oak canopies <span class="citation">(<a href="references.html#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span>:</p>
+<p>A simple statistical summary is very easy to do, and we’ll use <strong><code>eucoak</code></strong> data in the <code>iGIScData</code> package from a study of comparative runoff and erosion under Eucalyptus and oak canopies <span class="citation">(<a href="#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span>:</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="data-abstraction.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(eucoakrainfallrunoffTDR)</span></code></pre></div>
-<pre><code>##      site               site #          date              month              rain_mm         rain_oak        rain_euc    
-##  Length:90          Min.   :1.000   Length:90          Length:90          Min.   : 1.00   Min.   : 1.00   Min.   : 1.00  
-##  Class :character   1st Qu.:2.000   Class :character   Class :character   1st Qu.:16.00   1st Qu.:16.00   1st Qu.:14.75  
-##  Mode  :character   Median :4.000   Mode  :character   Mode  :character   Median :28.50   Median :30.50   Median :30.00  
-##                     Mean   :4.422                                         Mean   :37.99   Mean   :35.08   Mean   :34.60  
-##                     3rd Qu.:6.000                                         3rd Qu.:63.25   3rd Qu.:50.50   3rd Qu.:50.00  
-##                     Max.   :8.000                                         Max.   :99.00   Max.   :98.00   Max.   :96.00  
-##                                                                           NA&#39;s   :18      NA&#39;s   :2       NA&#39;s   :2      
-##   runoffL_oak      runoffL_euc      slope_oak       slope_euc       aspect_oak      aspect_euc    surface_tension_oak
-##  Min.   : 0.000   Min.   : 0.00   Min.   : 9.00   Min.   : 9.00   Min.   :100.0   Min.   :106.0   Min.   :37.40      
-##  1st Qu.: 0.000   1st Qu.: 0.07   1st Qu.:12.00   1st Qu.:12.00   1st Qu.:143.0   1st Qu.:175.0   1st Qu.:72.75      
-##  Median : 0.450   Median : 1.20   Median :24.50   Median :23.00   Median :189.0   Median :196.5   Median :72.75      
-##  Mean   : 2.032   Mean   : 2.45   Mean   :21.62   Mean   :19.34   Mean   :181.9   Mean   :191.2   Mean   :68.35      
-##  3rd Qu.: 2.800   3rd Qu.: 3.30   3rd Qu.:30.50   3rd Qu.:25.00   3rd Qu.:220.0   3rd Qu.:224.0   3rd Qu.:72.75      
-##  Max.   :14.000   Max.   :16.00   Max.   :32.00   Max.   :31.00   Max.   :264.0   Max.   :296.0   Max.   :72.75      
-##  NA&#39;s   :5        NA&#39;s   :3                                                                       NA&#39;s   :22         
-##  surface_tension_euc runoff_rainfall_ratio_oak runoff_rainfall_ratio_euc
-##  Min.   :28.51       Min.   :0.00000           Min.   :0.000000         
-##  1st Qu.:32.79       1st Qu.:0.00000           1st Qu.:0.003027         
-##  Median :37.40       Median :0.02046           Median :0.047619         
-##  Mean   :43.11       Mean   :0.05357           Mean   :0.065902         
-##  3rd Qu.:56.41       3rd Qu.:0.08485           3rd Qu.:0.083603         
-##  Max.   :72.75       Max.   :0.42000           Max.   :0.335652         
-##  NA&#39;s   :22          NA&#39;s   :5                 NA&#39;s   :3</code></pre>
+<pre><code>##      site               site #          date              month              rain_mm     
+##  Length:90          Min.   :1.000   Length:90          Length:90          Min.   : 1.00  
+##  Class :character   1st Qu.:2.000   Class :character   Class :character   1st Qu.:16.00  
+##  Mode  :character   Median :4.000   Mode  :character   Mode  :character   Median :28.50  
+##                     Mean   :4.422                                         Mean   :37.99  
+##                     3rd Qu.:6.000                                         3rd Qu.:63.25  
+##                     Max.   :8.000                                         Max.   :99.00  
+##                                                                           NA&#39;s   :18     
+##     rain_oak        rain_euc      runoffL_oak      runoffL_euc      slope_oak       slope_euc    
+##  Min.   : 1.00   Min.   : 1.00   Min.   : 0.000   Min.   : 0.00   Min.   : 9.00   Min.   : 9.00  
+##  1st Qu.:16.00   1st Qu.:14.75   1st Qu.: 0.000   1st Qu.: 0.07   1st Qu.:12.00   1st Qu.:12.00  
+##  Median :30.50   Median :30.00   Median : 0.450   Median : 1.20   Median :24.50   Median :23.00  
+##  Mean   :35.08   Mean   :34.60   Mean   : 2.032   Mean   : 2.45   Mean   :21.62   Mean   :19.34  
+##  3rd Qu.:50.50   3rd Qu.:50.00   3rd Qu.: 2.800   3rd Qu.: 3.30   3rd Qu.:30.50   3rd Qu.:25.00  
+##  Max.   :98.00   Max.   :96.00   Max.   :14.000   Max.   :16.00   Max.   :32.00   Max.   :31.00  
+##  NA&#39;s   :2       NA&#39;s   :2       NA&#39;s   :5        NA&#39;s   :3                                      
+##    aspect_oak      aspect_euc    surface_tension_oak surface_tension_euc runoff_rainfall_ratio_oak
+##  Min.   :100.0   Min.   :106.0   Min.   :37.40       Min.   :28.51       Min.   :0.00000          
+##  1st Qu.:143.0   1st Qu.:175.0   1st Qu.:72.75       1st Qu.:32.79       1st Qu.:0.00000          
+##  Median :189.0   Median :196.5   Median :72.75       Median :37.40       Median :0.02046          
+##  Mean   :181.9   Mean   :191.2   Mean   :68.35       Mean   :43.11       Mean   :0.05357          
+##  3rd Qu.:220.0   3rd Qu.:224.0   3rd Qu.:72.75       3rd Qu.:56.41       3rd Qu.:0.08485          
+##  Max.   :264.0   Max.   :296.0   Max.   :72.75       Max.   :72.75       Max.   :0.42000          
+##                                  NA&#39;s   :22          NA&#39;s   :22          NA&#39;s   :5                
+##  runoff_rainfall_ratio_euc
+##  Min.   :0.000000         
+##  1st Qu.:0.003027         
+##  Median :0.047619         
+##  Mean   :0.065902         
+##  3rd Qu.:0.083603         
+##  Max.   :0.335652         
+##  NA&#39;s   :3</code></pre>
 <p>In this study, we looked at the amount of runoff and erosion captured in Gerlach troughs on paired eucalyptus and oak sites in the San Francisco Bay Area.</p>
 <p><img src="img/eucoak.png"></p>
-<div id="htmlwidget-2c6b5e0b475239091c89" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2c6b5e0b475239091c89">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[37.91183415,37.91150014,37.91485299,37.89731097,37.91594025,37.91740547,37.93910878,37.79047764],[-122.2614695,-122.2657047,-122.2700627,-122.2452933,-122.5246292,-122.5214456,-122.539559,-122.4715086],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["TP1","TP2","TP3","TP4","AB1","AB2","KM1","PR1"],null,null,null,["TP1","TP2","TP3","TP4","AB1","AB2","KM1","PR1"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[37.79047764,37.93910878],"lng":[-122.539559,-122.2452933]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-70352ee5ed7dc9b12f7b" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-70352ee5ed7dc9b12f7b">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[37.91183415,37.91150014,37.91485299,37.89731097,37.91594025,37.91740547,37.93910878,37.79047764],[-122.2614695,-122.2657047,-122.2700627,-122.2452933,-122.5246292,-122.5214456,-122.539559,-122.4715086],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["TP1","TP2","TP3","TP4","AB1","AB2","KM1","PR1"],null,null,null,["TP1","TP2","TP3","TP4","AB1","AB2","KM1","PR1"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[37.79047764,37.93910878],"lng":[-122.539559,-122.2452933]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="visualizing-data-with-a-tukey-box-plot" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Visualizing data with a Tukey box plot</h2>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="data-abstraction.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> eucoakrainfallrunoffTDR) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>runoffL_euc))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 </div>
 <div id="database-operations-with-dplyr" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Database operations with <code>dplyr</code></h2>
@@ -576,8 +604,8 @@ The following methods are quickly discovered to be essential as part of explorin
 <span id="cb187-5"><a href="data-abstraction.html#cb187-5" aria-hidden="true" tabindex="-1"></a>         runoffL_oak, runoffL_euc, slope_oak, slope_euc)</span>
 <span id="cb187-6"><a href="data-abstraction.html#cb187-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
 <span id="cb187-7"><a href="data-abstraction.html#cb187-7" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(runoff,<span class="at">options=</span><span class="fu">list</span>(<span class="at">scrollX=</span>T))</span></code></pre></div>
-<div id="htmlwidget-06e8793d293b47331ff9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-06e8793d293b47331ff9">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90"],["AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4"],["2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2006-11-14","2006-12-07","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07"],[29,22,85,82,43,7,56,63,null,null,null,null,24,11,50,99,49,4,37,43,57,1,23,11,31,19,65,null,null,null,87,68,84,2,null,28,null,null,70,43,null,null,null,null,null,null,20,21,17,70,43,16,99,74,18,32,12,16,null,null,71,41,8,84,53,10,19,7,15,18,15,57,37,17,94,66,17,14,3,23,17,10,68,32,17,90,64,10,20,7],[29,18.5,65,87.5,54,54,44,42.5,56,2,33.5,31,23.5,16,62,76.5,42.5,3.5,41.5,49.5,47.5,1,35.5,25.5,28,11,43,76.5,37.5,10.5,52.5,49,62.5,4,37,22,null,null,95,49,3.5,24,68,18,31.5,11.5,19,14.5,12,63,34.5,11,74,52,12.5,25,13,17,18,15,62,36.5,13.5,78,58,17,32.5,14,21,24,12,41.5,30,21.5,68,39,12,26.5,10,24.5,19.5,10.5,69,37,26,89,51,20.5,32,14],[4.79,3.2,9.7,14,9.7472,1.4,10.0518,3.89888,4.75176,null,6.94488,6.33568,3.48,1.8,11.8,null,6.6,1.26,6.3,6.78,6.6,0.105,4.32,4.98,1.49,0.135,3.7,4.8,2.46,0.125,2.4,2.58,2.64,0.025,1.56,1.32,null,null,3.2,0.01,0,0,0,0,null,0,0.45,0,0,2.6,1.4,0,2.8,1.5,0.225,0.525,0.15,0.52,0,0,0,0,0,0,0,0,0,0.53,0.06,0.2,0.8,2.4,0.35,0,0,0.05,0.01,0.175,0.15,0.5,0,0,0,0,0,2.04,0,0,0,0],[6.7,4.3,16,14.2,4.32532,0,0,1.40116,8.65064,0.11,9.19892,7.43224,7.72,5.1,12,null,2.34,0.05,3.3,1.14,2.1,0.27,2.88,3.3,0.09,0,0,0,0,0,1.8,1.68,0.18,0,2.04,1.32,null,null,6.8,2.76,0,1.2,4.5,0.7,1.32,1.2,0.2,0,0,7.2,3.5,0.005,3.9,2.4,0.025,0.4,0.6,0.59,0,0.26,2.7,1.68,0,4.8,2.88,0.85,2.28,0.74,0.38,0,0,1.9,0.875,0,2.4,0.8,0.315,1.7,0.6,3.81,1,0,9.24,4.14,0,9.12,0,0.475,1.8,1.5],[32,32,32,32,32,32,32,32,32,32,32,32,24,24,24,24,24,24,24,24,24,24,24,24,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,27,27,27,27,27,27,27,27,27,27,9,9,9,9,9,9,9,9,9,9,9,12,12,12,12,12,12,12,12,12,12,12,25,25,25,25,25,25,25,25,25,25,25,12,12,12,12,12,12,12,12,12,12,12],[31,31,31,31,31,31,31,31,31,31,31,31,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,23,23,23,23,23,23,23,23,23,23,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,18,18,18,18,18,18,18,18,18,18,18,12,12,12,12,12,12,12,12,12,12,12]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>site<\/th>\n      <th>Date<\/th>\n      <th>rain_mm<\/th>\n      <th>rain_subcanopy<\/th>\n      <th>runoffL_oak<\/th>\n      <th>runoffL_euc<\/th>\n      <th>slope_oak<\/th>\n      <th>slope_euc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-84f54f83de8a68ba0029" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-84f54f83de8a68ba0029">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90"],["AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","AB2","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","KM1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","PR1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP1","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP2","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP3","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4","TP4"],["2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2006-11-08","2006-11-12","2006-11-29","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2006-11-14","2006-12-07","2006-12-12","2006-12-28","2007-01-29","2007-02-09","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2006-11-09","2006-11-14","2006-12-01","2006-12-14","2006-12-29","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07"],[29,22,85,82,43,7,56,63,null,null,null,null,24,11,50,99,49,4,37,43,57,1,23,11,31,19,65,null,null,null,87,68,84,2,null,28,null,null,70,43,null,null,null,null,null,null,20,21,17,70,43,16,99,74,18,32,12,16,null,null,71,41,8,84,53,10,19,7,15,18,15,57,37,17,94,66,17,14,3,23,17,10,68,32,17,90,64,10,20,7],[29,18.5,65,87.5,54,54,44,42.5,56,2,33.5,31,23.5,16,62,76.5,42.5,3.5,41.5,49.5,47.5,1,35.5,25.5,28,11,43,76.5,37.5,10.5,52.5,49,62.5,4,37,22,null,null,95,49,3.5,24,68,18,31.5,11.5,19,14.5,12,63,34.5,11,74,52,12.5,25,13,17,18,15,62,36.5,13.5,78,58,17,32.5,14,21,24,12,41.5,30,21.5,68,39,12,26.5,10,24.5,19.5,10.5,69,37,26,89,51,20.5,32,14],[4.79,3.2,9.7,14,9.7472,1.4,10.0518,3.89888,4.75176,null,6.94488,6.33568,3.48,1.8,11.8,null,6.6,1.26,6.3,6.78,6.6,0.105,4.32,4.98,1.49,0.135,3.7,4.8,2.46,0.125,2.4,2.58,2.64,0.025,1.56,1.32,null,null,3.2,0.01,0,0,0,0,null,0,0.45,0,0,2.6,1.4,0,2.8,1.5,0.225,0.525,0.15,0.52,0,0,0,0,0,0,0,0,0,0.53,0.06,0.2,0.8,2.4,0.35,0,0,0.05,0.01,0.175,0.15,0.5,0,0,0,0,0,2.04,0,0,0,0],[6.7,4.3,16,14.2,4.32532,0,0,1.40116,8.65064,0.11,9.19892,7.43224,7.72,5.1,12,null,2.34,0.05,3.3,1.14,2.1,0.27,2.88,3.3,0.09,0,0,0,0,0,1.8,1.68,0.18,0,2.04,1.32,null,null,6.8,2.76,0,1.2,4.5,0.7,1.32,1.2,0.2,0,0,7.2,3.5,0.005,3.9,2.4,0.025,0.4,0.6,0.59,0,0.26,2.7,1.68,0,4.8,2.88,0.85,2.28,0.74,0.38,0,0,1.9,0.875,0,2.4,0.8,0.315,1.7,0.6,3.81,1,0,9.24,4.14,0,9.12,0,0.475,1.8,1.5],[32,32,32,32,32,32,32,32,32,32,32,32,24,24,24,24,24,24,24,24,24,24,24,24,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,30.5,27,27,27,27,27,27,27,27,27,27,9,9,9,9,9,9,9,9,9,9,9,12,12,12,12,12,12,12,12,12,12,12,25,25,25,25,25,25,25,25,25,25,25,12,12,12,12,12,12,12,12,12,12,12],[31,31,31,31,31,31,31,31,31,31,31,31,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,23,23,23,23,23,23,23,23,23,23,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,18,18,18,18,18,18,18,18,18,18,18,12,12,12,12,12,12,12,12,12,12,12]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>site<\/th>\n      <th>Date<\/th>\n      <th>rain_mm<\/th>\n      <th>rain_subcanopy<\/th>\n      <th>runoffL_oak<\/th>\n      <th>runoffL_euc<\/th>\n      <th>slope_oak<\/th>\n      <th>slope_euc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p><em>Note: to just rename a variable, use <code>rename</code> instead of <code>mutate</code>. It will stay in position.</em></p>
 <p><strong>Helper functions for <code>select()</code></strong></p>
 <p>In the <code>select()</code> example above, we listed all of the variables, but there are a variety
@@ -600,9 +628,9 @@ of helper functions for using logic to specify which variables to select:</p>
 <div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="data-abstraction.html#cb188-1" aria-hidden="true" tabindex="-1"></a>runoff2007 <span class="ot">&lt;-</span> runoff <span class="sc">%&gt;%</span></span>
 <span id="cb188-2"><a href="data-abstraction.html#cb188-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;01/01/2007&quot;</span>, <span class="st">&quot;%m/%d/%Y&quot;</span>))</span>
 <span id="cb188-3"><a href="data-abstraction.html#cb188-3" aria-hidden="true" tabindex="-1"></a>DT<span class="sc">::</span><span class="fu">datatable</span>(runoff2007,<span class="at">options=</span><span class="fu">list</span>(<span class="at">scrollX=</span>T))</span></code></pre></div>
-<p><div id="htmlwidget-aef7ec9972842cd73712" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-aef7ec9972842cd73712">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51"],["AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB2","AB2","AB2","AB2","AB2","AB2","AB2","KM1","KM1","KM1","KM1","KM1","KM1","KM1","PR1","PR1","PR1","PR1","PR1","PR1","TP1","TP1","TP1","TP1","TP1","TP1","TP2","TP2","TP2","TP2","TP2","TP2","TP3","TP3","TP3","TP3","TP3","TP3","TP4","TP4","TP4","TP4","TP4","TP4"],["2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07"],[7,56,63,null,null,null,null,4,37,43,57,1,23,11,null,87,68,84,2,null,28,null,null,null,null,null,null,16,99,74,18,32,12,8,84,53,10,19,7,17,94,66,17,14,3,17,90,64,10,20,7],[54,44,42.5,56,2,33.5,31,3.5,41.5,49.5,47.5,1,35.5,25.5,10.5,52.5,49,62.5,4,37,22,3.5,24,68,18,31.5,11.5,11,74,52,12.5,25,13,13.5,78,58,17,32.5,14,21.5,68,39,12,26.5,10,26,89,51,20.5,32,14],[1.4,10.0518,3.89888,4.75176,null,6.94488,6.33568,1.26,6.3,6.78,6.6,0.105,4.32,4.98,0.125,2.4,2.58,2.64,0.025,1.56,1.32,0,0,0,0,null,0,0,2.8,1.5,0.225,0.525,0.15,0,0,0,0,0,0.53,0,0,0.05,0.01,0.175,0.15,0,2.04,0,0,0,0],[0,0,1.40116,8.65064,0.11,9.19892,7.43224,0.05,3.3,1.14,2.1,0.27,2.88,3.3,0,1.8,1.68,0.18,0,2.04,1.32,0,1.2,4.5,0.7,1.32,1.2,0.005,3.9,2.4,0.025,0.4,0.6,0,4.8,2.88,0.85,2.28,0.74,0,2.4,0.8,0.315,1.7,0.6,0,9.12,0,0.475,1.8,1.5],[32,32,32,32,32,32,32,24,24,24,24,24,24,24,30.5,30.5,30.5,30.5,30.5,30.5,30.5,27,27,27,27,27,27,9,9,9,9,9,9,12,12,12,12,12,12,25,25,25,25,25,25,12,12,12,12,12,12],[31,31,31,31,31,31,31,25,25,25,25,25,25,25,25,25,25,25,25,25,25,23,23,23,23,23,23,9,9,9,9,9,9,10,10,10,10,10,10,18,18,18,18,18,18,12,12,12,12,12,12]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>site<\/th>\n      <th>Date<\/th>\n      <th>rain_mm<\/th>\n      <th>rain_subcanopy<\/th>\n      <th>runoffL_oak<\/th>\n      <th>runoffL_euc<\/th>\n      <th>slope_oak<\/th>\n      <th>slope_euc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<strong>Filtering out NA with <code>!is.na</code></strong></p>
+<div id="htmlwidget-da769ad44096cac8329f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-da769ad44096cac8329f">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51"],["AB1","AB1","AB1","AB1","AB1","AB1","AB1","AB2","AB2","AB2","AB2","AB2","AB2","AB2","KM1","KM1","KM1","KM1","KM1","KM1","KM1","PR1","PR1","PR1","PR1","PR1","PR1","TP1","TP1","TP1","TP1","TP1","TP1","TP2","TP2","TP2","TP2","TP2","TP2","TP3","TP3","TP3","TP3","TP3","TP3","TP4","TP4","TP4","TP4","TP4","TP4"],["2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-22","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-13","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2007-01-29","2007-02-09","2007-02-28","2007-03-30","2007-04-23","2007-05-05","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07","2007-01-30","2007-02-14","2007-03-02","2007-03-28","2007-04-24","2007-05-07"],[7,56,63,null,null,null,null,4,37,43,57,1,23,11,null,87,68,84,2,null,28,null,null,null,null,null,null,16,99,74,18,32,12,8,84,53,10,19,7,17,94,66,17,14,3,17,90,64,10,20,7],[54,44,42.5,56,2,33.5,31,3.5,41.5,49.5,47.5,1,35.5,25.5,10.5,52.5,49,62.5,4,37,22,3.5,24,68,18,31.5,11.5,11,74,52,12.5,25,13,13.5,78,58,17,32.5,14,21.5,68,39,12,26.5,10,26,89,51,20.5,32,14],[1.4,10.0518,3.89888,4.75176,null,6.94488,6.33568,1.26,6.3,6.78,6.6,0.105,4.32,4.98,0.125,2.4,2.58,2.64,0.025,1.56,1.32,0,0,0,0,null,0,0,2.8,1.5,0.225,0.525,0.15,0,0,0,0,0,0.53,0,0,0.05,0.01,0.175,0.15,0,2.04,0,0,0,0],[0,0,1.40116,8.65064,0.11,9.19892,7.43224,0.05,3.3,1.14,2.1,0.27,2.88,3.3,0,1.8,1.68,0.18,0,2.04,1.32,0,1.2,4.5,0.7,1.32,1.2,0.005,3.9,2.4,0.025,0.4,0.6,0,4.8,2.88,0.85,2.28,0.74,0,2.4,0.8,0.315,1.7,0.6,0,9.12,0,0.475,1.8,1.5],[32,32,32,32,32,32,32,24,24,24,24,24,24,24,30.5,30.5,30.5,30.5,30.5,30.5,30.5,27,27,27,27,27,27,9,9,9,9,9,9,12,12,12,12,12,12,25,25,25,25,25,25,12,12,12,12,12,12],[31,31,31,31,31,31,31,25,25,25,25,25,25,25,25,25,25,25,25,25,25,23,23,23,23,23,23,9,9,9,9,9,9,10,10,10,10,10,10,18,18,18,18,18,18,12,12,12,12,12,12]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>site<\/th>\n      <th>Date<\/th>\n      <th>rain_mm<\/th>\n      <th>rain_subcanopy<\/th>\n      <th>runoffL_oak<\/th>\n      <th>runoffL_euc<\/th>\n      <th>slope_oak<\/th>\n      <th>slope_euc<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p><strong>Filtering out NA with <code>!is.na</code></strong></p>
 <p>Here’s an important one. There are many times you need to avoid NAs.<br />
 We commonly see summary statistics using <code>na.rm = TRUE</code> in order to <em>ignore</em> NAs when calculating a statistic like <code>mean</code>.</p>
 <p>To simply filter out NAs from a vector or a variable use a filter:
@@ -640,7 +668,7 @@ We commonly see summary statistics using <code>na.rm = TRUE</code> in order to <
 ## 6 TP2    34.3           32.9      0.0955       1.53       12          10
 ## 7 TP3    32.1           27.8      0.381        0.815      25          18
 ## 8 TP4    32.5           35.7      0.231        2.83       12          12</code></pre>
-<p><strong>Summarizing by group with TRI data [<code>air_quality</code> project]</strong> <span class="citation">(<a href="references.html#ref-TRI" role="doc-biblioref"><em>Toxic Release Inventory (TRI) Program</em>, n.d.</a>)</span></p>
+<p><strong>Summarizing by group with TRI data [<code>air_quality</code> project]</strong> <span class="citation">(<a href="#ref-TRI" role="doc-biblioref"><em>Toxic Release Inventory (TRI) Program</em>, n.d.</a>)</span></p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="data-abstraction.html#cb191-1" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;TRI_2017_CA.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
 <span id="cb191-2"><a href="data-abstraction.html#cb191-2" aria-hidden="true" tabindex="-1"></a>TRI_BySite <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath) <span class="sc">%&gt;%</span></span>
 <span id="cb191-3"><a href="data-abstraction.html#cb191-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">all_air =</span> <span class="st">`</span><span class="at">5.1_FUGITIVE_AIR</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">5.2_STACK_AIR</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
@@ -673,7 +701,7 @@ We commonly see summary statistics using <code>na.rm = TRUE</code> in order to <
 </div>
 <div id="sorting-after-summarizing" class="section level3" number="3.6.6">
 <h3><span class="header-section-number">3.6.6</span> Sorting after summarizing</h3>
-<p>Using the marine debris data from the <em>Marine Debris Monitoring and Assessment Project</em> <span class="citation">(<a href="references.html#ref-marineDebris" role="doc-biblioref"><em>Marine Debris Program</em>, n.d.</a>)</span> [in a <strong>new <code>litter</code> project</strong>]</p>
+<p>Using the marine debris data from the <em>Marine Debris Monitoring and Assessment Project</em> <span class="citation">(<a href="#ref-marineDebris" role="doc-biblioref"><em>Marine Debris Program</em>, n.d.</a>)</span> [in a <strong>new <code>litter</code> project</strong>]</p>
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="data-abstraction.html#cb196-1" aria-hidden="true" tabindex="-1"></a>shorelineLatLong <span class="ot">&lt;-</span> ConcentrationReport <span class="sc">%&gt;%</span></span>
 <span id="cb196-2"><a href="data-abstraction.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Shoreline Name</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb196-3"><a href="data-abstraction.html#cb196-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
@@ -723,7 +751,7 @@ We commonly see summary statistics using <code>na.rm = TRUE</code> in order to <
 <li><p>Create a tibble with 20 rows of two variables <code>norm</code> and <code>unif</code> with <code>norm</code> created with <code>rnorm()</code> and <code>unif</code> created with <code>runif()</code>. [<strong><code>generic_methods</code></strong>]</p></li>
 <li><p>Read in “TRI_2017_CA.csv” [<strong><code>air_quality</code></strong>] in two ways, as a normal data frame assigned to df and as a tibble assigned to tb. What field names result for what’s listed in the CSV as <code>5.1_FUGITIVE_AIR</code>?</p></li>
 <li><p>Use the summary function to investigate the variables in either the data.frame or tibble you just created. What type of field and what values are assigned to BIA_CODE?</p></li>
-<li><p>Create a boxplot of <code>body_mass_g</code> by <code>species</code> from the <code>penguins</code> data frame in the palmerpenguins package [in a <strong><code>penguins</code> project</strong>] <span class="citation">(<a href="references.html#ref-palmer" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span>. Access the data with data(package = ‘palmerpenguins’), and also remember <code>library(ggplot2)</code> or <code>library(tidyverse)</code>.</p></li>
+<li><p>Create a boxplot of <code>body_mass_g</code> by <code>species</code> from the <code>penguins</code> data frame in the palmerpenguins package [in a <strong><code>penguins</code> project</strong>] <span class="citation">(<a href="#ref-palmer" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span>. Access the data with data(package = ‘palmerpenguins’), and also remember <code>library(ggplot2)</code> or <code>library(tidyverse)</code>.</p></li>
 <li><p>Use select, mutate, and the pipe to create a penguinMass tibble where the only original variable retained is species, but with body_mass_kg created as <span class="math inline">\(\frac{1}{1000}\)</span> the body_mass_g. The statement should start with <code>penguinMass &lt;- penguins</code> and use a pipe plus the other functions after that.</p></li>
 <li><p>Now, also with penguins, create FemaleChinstaps to include only the female Chinstrap penguins. Start with <code>FemaleChinstraps &lt;- penguins %&gt;%</code></p></li>
 <li><p>Now, summarize by <code>species</code> groups to create mean and standard deviation variables from <code>bill_length_mm</code>, <code>bill_depth_mm</code>, <code>flipper_length_mm</code>, and <code>body_mass_g</code>. Preface the variable names with either <code>avg.</code> or <code>sd.</code> Include <code>na.rm=T</code> with all statistics function calls.</p></li>
@@ -910,6 +938,24 @@ Sometimes you need to specify the package and function name this way, for instan
 
 </div>
 </div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-palmer" class="csl-entry">
+Horst, Allison Marie, Alison Presmanes Hill, and Kristen B Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://allisonhorst.github.io/palmerpenguins/">https://allisonhorst.github.io/palmerpenguins/</a>.
+</div>
+<div id="ref-marineDebris" class="csl-entry">
+<em>Marine Debris Program</em>. n.d. NOAA Office of Response; Restoration. <a href="https://marinedebris.noaa.gov/">https://marinedebris.noaa.gov/</a>.
+</div>
+<div id="ref-eucoak" class="csl-entry">
+Thompson, A., J. D. Davis, and A. J. Oliphant. 2016. <span>“Surface Runoff and Soil Erosion Under Eucalyptus and Oak Canopy.”</span> <em>Earth Surface Processes and Landforms</em>. <a href="https://doi.org/10.1002/esp.3881">https://doi.org/10.1002/esp.3881</a>.
+</div>
+<div id="ref-TRI" class="csl-entry">
+<em>Toxic Release Inventory (TRI) Program</em>. n.d. U.S. Environmental Protection Agency. <a href="https://www.epa.gov/toxics-release-inventory-tri-program">https://www.epa.gov/toxics-release-inventory-tri-program</a>.
+</div>
+<div id="ref-wickham2017tidyverse" class="csl-entry">
+Wickham, Hadley. 2017. <span>“The Tidyverse.”</span> <em>R Package Ver</em> 1 (1): 1.
+</div>
+</div>
             </section>
 
           </div>
@@ -939,6 +985,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

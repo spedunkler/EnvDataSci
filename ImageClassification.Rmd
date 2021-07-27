@@ -25,14 +25,17 @@ In thinking about the concept of overfit models and selecting out training (and 
 
 ## Methods
 
-Methods based on various sources:
+Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
 - Valentin Stefan (2019) [https://valentinitnelav.github.io/satellite-image-classification-r]
 - Maxwell wvview.org [http://www.wvview.org/Open_Source_Spatial_Analytics.html]
-- many updates, conversion to tidyverse and sf options.
+- The `caret` ("Classification And REgression Training") package documentation: [https://topepo.github.io/caret]
+- various sources from Google searches on training parameters such as [https://machinelearningmastery.com/tune-machine-learning-algorithms-in-r/] 
+
+As with everything else in R, the specific coding methods used vary with the coder and what they're used to using. If a method works, it's certainly ok to keep using it, but where it can be clarified with clearer code such as from the tidyverse or sf, it may make it easier to understand and improve on. 
 
 This code accesses Sentinel-2 imagery downloaded from [https://scihub.copernicus.eu/] covering 
 Red Clover Valley, and then cropped to that site in a previous script, and saved to 
-folders named in the form cropYYYYMMDD, such as "crop20210708".  
+folders named in the form cropYYYYMMDD, such as "crop20210708".
 The following code chunk specifies the date, with multiple cropped images stored in iGIScData.
 
 ```{r}
@@ -65,6 +68,9 @@ library(snow)          # [makeCluster, stopCluster]
 library(parallel)      # [makeCluster, stopCluster, detectCores]
 
 # set the temporary folder for raster package operations
+unlink("./cache", recursive = T) # Deletes crop folder if it already exists
+dir.create(file.path(".", "cache")) # will create warning if it already exists
+dir.create(file.path("./cache", "temp"))
 rasterOptions(tmpdir = "./cache/temp")
 ```
 
@@ -198,33 +204,34 @@ view_aoi()     # [getSpatialData]
 
 
 ## Training polygons
-We'll derive points from these polygons 
-(digitized in ArcGIS, but could be created with other GIS programs)
-Read the training polygons in shapefiles with 'class' field
-digitized from multispectral drone imagery.
+We'll derive points from these polygons (digitized in ArcGIS, but could be created with other GIS programs). Later in the code, we'll write out the resulting predicted class counts percentages which we can compare with training point class percentages; if these differ significantly we might want to go in and edit the polygons, adding additional ones in classes under-represented by the training set.
 
+Read the training polygons in shapefiles with 'class' field digitized from multispectral drone imagery, and assign colors using hex codes. 
 
 ```{r training}
 
 poly <- read_sf(file.path(dtaPath, "train_polys.shp")) %>% 
-  mutate(id = as.integer(factor(class))) %>%  # creates a numeric id useful for rasterization
-  filter(!st_is_empty(geometry)) # one polygon was empty, remove it
+  mutate(id = as.integer(factor(class)))# %>%  # creates a numeric id useful for rasterization
+  #filter(!st_is_empty(geometry)) # one polygon was empty, remove it
 #setDT(poly@data)
 # Prepare colors for each class.
 cls_dt <- poly %>% 
   st_drop_geometry() %>% 
   distinct(class, id) %>%   # [raster]
-  arrange(id) %>%
-  mutate(hex = c(bare        = "#cccccc",
-                 forest      = "#006600",
+  arrange(id) %>%  # sorting required for the next step to work
+  mutate(hex = c(bare        = "#ffebaf",
+                 forest      = "#008800",
                  hydric      = "#99ffcc",
                  mesic       = "#ffff66",
-                 water       = "#003366",
+                 outcrop     = "#222222",
+                 pavement    = "#999999",
+                 water       = "#0033AA",
                  willow      = "#66ff33",
                  xeric       = "#ff7f7f"))
 
-view_aoi(color = "#a1d99b") +
-  mapView(poly, zcol = "class", col.regions = cls_dt$hex)
+#view_aoi() +
+#mapview.Options(basemaps = c("OpenTopoMap", "Esri.WorldImagery"))
+mapview(poly, zcol = "class", col.regions = cls_dt$hex)
 poly_utm <- st_transform(poly, crs = st_crs(rst_lst[[1]]))
 ```
 
@@ -236,6 +243,9 @@ poly_utm <- st_transform(poly, crs = st_crs(rst_lst[[1]]))
 
 ```{r extractTraining}
 # convert the training polygons to points on the raster grid
+rasterpolys <- rasterize(poly_utm, rst_lst$B02, field = "id")
+
+
 points <- rasterize(poly_utm, rst_lst$B02, field = "id") %>% 
   stars::st_as_stars() %>% 
   st_as_sf(as_points = TRUE) %>% 
@@ -331,9 +341,9 @@ ctrl <- trainControl(summaryFunction = defaultSummary,   # [caret]   # was multi
 
 “L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
 
-importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, I didn’t bother to make another ctrl object for SVM, so it works to recycle the one used for the random forests models with ignoring the warning: Class probabilities were requested for a model that does not implement them.
+The trainControl parameter setting importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, this doesn't create a problem, so it was easier to just leave it the same, and it will be useful for random forests.
 
-### Train model
+### Train SVM model
 [After reinstalling caret, parallel tools makeCluster or detectCores create errors, 
 but parallel processing isn't essential for this size dataset]
 
@@ -341,21 +351,18 @@ but parallel processing isn't essential for this size dataset]
 # Grid of tuning parameters
 svm_grid <- expand.grid(cost = c(0.2, 0.5, 1),
                         Loss = c("L1", "L2"))
-
-# cl <- makeCluster(3/4 * detectCores())    # [parallel]  -- NOT WORKING
-# registerDoParallel(cl)                    # [doParallel]
-
 model_svm <- caret::train(class ~ . , method = "svmLinear3", data = dt_train,
                          allowParallel = FALSE,   # since parallel now fails
                          tuneGrid = svm_grid,
                          trControl = ctrl)
-# stopCluster(cl); remove(cl)
 registerDoSEQ()   # [foreach]
-# saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
+saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
 
 ```
 
-### Model summary & confusion matrix
+### SVM model summary & confusion matrix
+The **confusion matrix** provides the number of matches and "confusions" exist between the test data and what the model predicts. The main diagonal shows the number of matches and eveywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
+
 ```{r}
 model_svm$times$everything # total computation time
 ##    user  system elapsed 
@@ -368,7 +375,18 @@ cm_svm <- confusionMatrix(data = predict(model_svm, newdata = dt_test),  # [care
 cm_svm
 ```
 
-### Prediction map
+### SVM variable importance
+Importance values indicate how much drop in performance occurs when the predictor is not used. 
+
+```{r SVMimportance}
+caret::varImp(model_svm)$importance %>%
+  as.matrix %>% 
+  plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
+          width = 350, height = 300)
+```
+
+
+### SVM prediction map
 
 ```{r PredictViewWrite}
 predict_svm <- raster::predict(object = brick_for_prediction_norm,
@@ -377,7 +395,7 @@ mapView(predict_svm, col.regions = cls_dt$hex)
 writeRaster(predict_svm, paste0(dtaPath, "/predict_svm", imgDate,".tif"), datatype = "INT2S", TFW = YES, overwrite=TRUE)
 ```
 
-### Compare training vs predicted % cover
+### Compare training vs SVM predicted % cover
 ... to see if training allocation needs adjusting to be more comparable.
 
 ```{r checkCoverPcts}
@@ -401,8 +419,10 @@ model_rf <- caret::train(class ~ . , method = "rf", data = dt_train,
                          tuneGrid = data.frame(mtry = c(2, 3, 4, 5, 8)),
                          trControl = ctrl)
 registerDoSEQ()
-#saveRDS(model_rf, file = "./cache/model_rf.rds")
+saveRDS(model_rf, file = "./cache/model_rf.rds")
 ```
+
+### RF confusion matrix
 
 ```{r rfConfusion}
 model_rf$times$everything # total computation time
@@ -413,7 +433,7 @@ cm_rf
 model_rf$finalModel
 ```
 
-### Predictor Importance
+### RF predictor importance
 
 ```{r rf_varImportance}
 caret::varImp(model_rf)$importance %>%
@@ -421,6 +441,7 @@ caret::varImp(model_rf)$importance %>%
   plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
           width = 350, height = 300)
 ```
+This method does the same thing, specific to the random forest model:
 
 ```{r rf_Importance}
 randomForest::importance(model_rf$finalModel) %>% 
@@ -461,6 +482,7 @@ model_nnet <- train(class ~ ., method = 'nnet', data = dt_train,
 registerDoSEQ()
 #saveRDS(model_nnet, file = "./cache/model_nnet.rds")
 model_nnet$times$everything # total computation time
+saveRDS(model_nnet, file = "./cache/model_nn.rds")
 ```
 
 
