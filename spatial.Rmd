@@ -185,9 +185,9 @@ A spatial join with st_join
 joins data from census where TRI points occur [**`air_quality`**]
 [left out:  need new BayAreaTracts]
 ```{r, message=FALSE}
-# TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
-  # st_join(BayAreaTracts) %>%
-  # filter(CNTY_FIPS %in% c("013", "095"))
+#TRI_sp <- st_as_sf(TRI_2017_CA, coords = c("LONGITUDE", "LATITUDE"), crs=4326) %>%
+  #st_join(BayAreaTracts) %>%
+  #filter(CNTY_FIPS %in% c("013", "095"))
 ```
 
 

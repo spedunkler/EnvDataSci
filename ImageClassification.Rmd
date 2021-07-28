@@ -26,14 +26,15 @@ In thinking about the concept of overfit models and selecting out training (and 
 ## Methods
 
 Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
-- Valentin Stefan (2019) [https://valentinitnelav.github.io/satellite-image-classification-r]
-- Maxwell wvview.org [http://www.wvview.org/Open_Source_Spatial_Analytics.html]
-- The `caret` ("Classification And REgression Training") package documentation: [https://topepo.github.io/caret]
-- various sources from Google searches on training parameters such as [https://machinelearningmastery.com/tune-machine-learning-algorithms-in-r/] 
+
+- @stefan 
+- @maxwell
+- @caret
+- various sources from Google searches such as @MLtuning
 
 As with everything else in R, the specific coding methods used vary with the coder and what they're used to using. If a method works, it's certainly ok to keep using it, but where it can be clarified with clearer code such as from the tidyverse or sf, it may make it easier to understand and improve on. 
 
-This code accesses Sentinel-2 imagery downloaded from [https://scihub.copernicus.eu/] covering 
+This code accesses Sentinel-2 imagery downloaded from @Copernicus covering 
 Red Clover Valley, and then cropped to that site in a previous script, and saved to 
 folders named in the form cropYYYYMMDD, such as "crop20210708".
 The following code chunk specifies the date, with multiple cropped images stored in iGIScData.

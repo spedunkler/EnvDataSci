@@ -60,7 +60,7 @@ How created
 
 [**`air_quality` project**] [@TRI]
  
-```{r message=F}
+```{r abstraction.readcsv, message=F}
 library(tidyverse) # includes readr, ggplot2, and dplyr which we'll use in this chapter
 library(iGIScData)
 csvPath <- system.file("extdata","TRI_1987_BaySites.csv", package="iGIScData")
@@ -69,7 +69,7 @@ TRI87 <- read_csv(csvPath)
 
 - You can also use the `tibble()` function
 
-```{r message=F, warning=F}
+```{r abstraction.tibble, message=F, warning=F}
 a <- rnorm(10)
 b <- runif(10)
 ab <- tibble(a,b)
@@ -97,7 +97,7 @@ Recommendation:  Use `read_csv` and `write_csv`.
 
 A simple statistical summary is very easy to do, and we'll use **`eucoak`** data in the `iGIScData` package from a study of comparative runoff and erosion under Eucalyptus and oak canopies [@eucoak]:
 
-```{r}
+```{r abstraction.summary}
 summary(eucoakrainfallrunoffTDR)
 ```
 
@@ -105,7 +105,7 @@ In this study, we looked at the amount of runoff and erosion captured in Gerlach
 
 <img src="img/eucoak.png">
 
-```{r echo=F}
+```{r abstraction.eucoakIntro, echo=F}
 library(tidyverse); library(sf); library(leaflet)
 sites <- read_csv(system.file("extdata","eucoakSites.csv", package="iGIScData"))
 leaflet(data = sites) %>%
@@ -115,7 +115,7 @@ leaflet(data = sites) %>%
 
 ## Visualizing data with a Tukey box plot
 
-```{r warning=F}
+```{r abstraction.Tukey, warning=F}
 ggplot(data = eucoakrainfallrunoffTDR) + geom_boxplot(mapping = aes(x=site, y=runoffL_euc))
 ```
 
@@ -134,7 +134,7 @@ The following methods are quickly discovered to be essential as part of explorin
 
 **The pipe `%>%`**:  Read `%>%` as "and then..."  This is bigger than it sounds and opens up a lot of possibilities.  See example below, and observe how the expression becomes several lines long. In the process, we'll see examples of new variables with mutate and selecting (and in the process *ordering*) variables. [If you haven't already created it, this should be in a **`eucoak` project**]
 
-```{r}
+```{r, abstraction.mutate}
 runoff <- eucoakrainfallrunoffTDR %>%
   mutate(Date = as.Date(date,"%m/%d/%Y"),
          rain_subcanopy = (rain_oak + rain_euc)/2) %>%
@@ -165,7 +165,7 @@ of helper functions for using logic to specify which variables to select:
  
  `filter` lets you select observations that meet criteria, similar to an SQL WHERE clause.
  
-```{r}
+```{r abstraction.filter}
 runoff2007 <- runoff %>%
   filter(Date >= as.Date("01/01/2007", "%m/%d/%Y"))
 DT::datatable(runoff2007,options=list(scrollX=T))
@@ -192,7 +192,7 @@ Then you do some processing to change it, maybe adding variables, reorganizing, 
 
 You'll find that you need to use this all the time with real data. You have a bunch of data where some categorical variable is defining a grouping, like our site field in the eucoak data. We'd like to just create average slope, rainfall, and runoff for each site. Note that it involves two steps, first defining which field defines the group, then the various summary statistics we'd like to store.  In this case all of the slopes under oak remain the same for a given site -- it's a *site* characteristic -- and the same applies to the euc site, so we can just grab the first value (mean would have also worked of course).
 
-```{r warning=F, message=F}
+```{r abstraction.groupSummary, warning=F, message=F}
 eucoakSiteAvg <- runoff %>%
   group_by(site) %>%
   summarize(
@@ -209,7 +209,7 @@ eucoakSiteAvg
 
 **Summarizing by group with TRI data [`air_quality` project]** [@TRI]
 
-```{r, message=FALSE, warning=F}
+```{r abstraction.summaryTRI, message=FALSE, warning=F}
 csvPath <- system.file("extdata","TRI_2017_CA.csv", package="iGIScData")
 TRI_BySite <- read_csv(csvPath) %>%
   mutate(all_air = `5.1_FUGITIVE_AIR` + `5.2_STACK_AIR`) %>%
@@ -227,14 +227,14 @@ TRI_BySite <- read_csv(csvPath) %>%
 
 Count is a simple variant on summarize by group, since the only statistic is the count of events. [**`eucoak` project**]
 
-```{r message=F, warning=F}
+```{r abstraction.count, message=F, warning=F}
 tidy_eucoak %>% count(tree)
 
 ```
 
 **Another way is to use n():**
 
-```{r message=F, warning=F}
+```{r abstraction.n, message=F, warning=F}
 tidy_eucoak %>%
   group_by(tree) %>%
   summarize(n = n())
@@ -243,7 +243,7 @@ tidy_eucoak %>%
 ### Sorting after summarizing
 
 Using the marine debris data from the *Marine Debris Monitoring and Assessment Project* [@marineDebris] [in a **new `litter` project**]
-```{r message=F, warning=F}
+```{r abstraction.sort, message=F, warning=F}
 shorelineLatLong <- ConcentrationReport %>%
   group_by(`Shoreline Name`) %>%
   summarize(
@@ -266,7 +266,7 @@ A similar specification is used in piped sequences
 - The advantage of the pipe is you don't have to keep referencing the data frame.
 - The dot is then used to connect to items inside the data frame [in **`air_quality`**]
 
-```{r message=F, warning=F}
+```{r abstraction.dot, message=F, warning=F}
 csvPath <- system.file("extdata","TRI_1987_BaySites.csv", package="iGIScData")
 TRI87 <- read_csv(csvPath)
 stackrate <- TRI87 %>%
@@ -278,11 +278,6 @@ head(stackrate)
 ## Exercises
 
 1. Create a tibble with 20 rows of two variables `norm` and `unif` with `norm` created with `rnorm()` and `unif` created with `runif()`. [**`generic_methods`**]
-
-```{r include = TRUE}
-
-```
-
 
 2. Read in "TRI_2017_CA.csv" [**`air_quality`**] in two ways, as a normal data frame assigned to df and as a tibble assigned to tb. What field names result for what's listed in the CSV as `5.1_FUGITIVE_AIR`?
 
@@ -302,7 +297,7 @@ ggplot(penguins, aes(x=species, y=body_mass_g)) + geom_boxplot()
 
 5. Use select, mutate, and the pipe to create a penguinMass tibble where the only original variable retained is species, but with body_mass_kg created as $\frac{1}{1000}$ the body_mass_g. The statement should start with `penguinMass <- penguins` and use a pipe plus the other functions after that.
 
-```{r include=FALSE}
+```{r abstraction.ex5, include=FALSE}
 penguinMass <- penguins %>%
   mutate(body_mass_kg = body_mass_g / 1000) %>%
   dplyr::select(species, body_mass_kg)
@@ -311,7 +306,7 @@ penguinMass
 
 6. Now, also with penguins, create FemaleChinstaps to include only the female Chinstrap penguins. Start with `FemaleChinstraps <- penguins %>%`
 
-```{r include=FALSE}
+```{r abstraction.ex6, include=FALSE}
 FemaleChinstraps <- penguins %>%
   filter(sex == "female") %>%
   filter(species == "Chinstrap")
@@ -320,7 +315,7 @@ FemaleChinstraps
 
 7. Now, summarize by `species` groups to create mean and standard deviation variables from `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm`, and `body_mass_g`. Preface the variable names with either `avg.` or `sd.` Include `na.rm=T` with all statistics function calls.
 
-```{r include=FALSE}
+```{r abstraction.ex7, include=FALSE}
 library(palmerpenguins); library(tidyverse)
 penguins %>%
   group_by(species, sex) %>%
@@ -337,7 +332,7 @@ penguins %>%
 
 8. Sort the penguins by `body_mass_g`.
 
-```{r include=FALSE}
+```{r abstraction.ex8, include=FALSE}
 penguins %>%
   arrange(body_mass_g)
 ```
@@ -367,7 +362,7 @@ library(tidyverse)
 library(iGIScData)
 ```
 
-```{r warning=F}
+```{r abstraction.str.matches, warning=F}
 str_detect(fruit,"qu")
 fruit[str_detect(fruit,"qu")]
 tail(str_locate(fruit, "qu"),15)
@@ -387,7 +382,7 @@ by a match (similar to a filter for data frames), or just a specified part of a 
 - **`str_extract`** returns the first (or if `str_extract_all` then all matches) pattern matches
 - **`str_match`** returns the first (or `_all`) pattern match as a matrix
 
-```{r}
+```{r abstraction.subset}
 qfruit <- str_subset(fruit, "q")
 qfruit
 str_sub(qfruit,1,2)
@@ -404,7 +399,7 @@ as an integer, or purposefully increasing or reducing it.
 - **`str_pad`** adds a specified character (typically a space " ") to either end of a string
 - **`str_trim`** removes whitespace from the either end of a string
 
-```{r}
+```{r abstraction.strlength}
 qfruit <- str_subset(fruit,"q")
 qfruit
 str_length(qfruit)
@@ -428,7 +423,7 @@ These methods range from converting case to replace substrings.
 - **`str_sub`** a special use of this function to replace substrings with a specified string
 - **`str_replace`** replaces the first matched pattern (or all with `str_replace_all`) with a specified string
 
-```{r}
+```{r abstraction.replace}
 str_to_lower(name)
 str_to_upper(name)
 str_to_title("for whom the bell tolls")
@@ -447,7 +442,7 @@ string that might need a zero or something at the left or right.
 of " ", so `str_c` is just `paste` with a default "" separator, but you can also use " ". 
 - **`str_split`** splits a string into parts based upon the detection of a specified separator like space, comma, or line end
 
-```{r message=F}
+```{r abstraction.concat, message=F}
 str_split("for whom the bell tolls", " ")
 str_c("for","whom","the","bell","tolls",sep=" ")
 csvPath <- system.file("extdata","CA_MdInc.csv",package="iGIScData")
@@ -467,7 +462,7 @@ Makes it easy to work with dates and times.
 demonstrate that it's pretty easy to use, and does a good job of making your 
 job easier.
 
-```{r}
+```{r abstraction.lubridate}
 library(lubridate)
 dmy("20 September 2020")
 dmy_hm("20 September 2020 10:45")
@@ -489,13 +484,4 @@ hms::as_hms(end704)
 Note the use of :: after the package
 Sometimes you need to specify the package and function name this way, for instance if more than one package has a function of the same name.  
 	`dplyr::select(...)`
-
-
-
-
-
-
-
-
-
 

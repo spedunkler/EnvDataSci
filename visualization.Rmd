@@ -11,7 +11,7 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
-```{r fig.cap="Flipper length by species"}
+```{r vis.penguinPlots, fig.cap="Flipper length by species"}
 plot(penguins$body_mass_g, penguins$flipper_length_mm)
 plot(penguins$species, penguins$flipper_length_mm)
 ```
@@ -46,7 +46,7 @@ The ggplot2 system provides plots of single and multiple variables, using variou
 
 We'll look at a study of Normalized Difference Vegetation Index from a transect across a montane meadow in the northern Sierra Nevada, derived from multispectral drone imagery [@NDVI].
 
-```{r message=F}
+```{r vis.ggplot.geom_bar, message=F}
 library(iGIScData)
 library(tidyverse)
 summary(XSptsNDVI)
@@ -58,14 +58,14 @@ ggplot(XSptsNDVI, aes(vegetation)) +
 
 **First, to prepare the data, we need to use a pivot_longer on XSptsNDVI:**
 
-```{r warning=F, message=F}
+```{r vis.pivot4plot, warning=F, message=F}
 XSptsPheno <- XSptsNDVI %>%
   filter(vegetation != "pine") %>%
   pivot_longer(cols = starts_with("NDVI"), names_to = "phenology", values_to = "NDVI") %>%
   mutate(phenology = str_sub(phenology, 5, str_length(phenology)))
 ```
 
-```{r warning=FALSE, message=F, fig.cap="Distribution of NDVI, Knuthson Meadow"} 
+```{r vis.histogram, warning=FALSE, message=F, fig.cap="Distribution of NDVI, Knuthson Meadow"} 
 XSptsPheno <- read_csv("data/XSptsPheno.csv")
 XSptsPheno %>%
   ggplot(aes(NDVI)) + 
@@ -73,14 +73,14 @@ XSptsPheno %>%
 ```
 
 **Normal histogram**: easier to visualize the distribution, see modes [**`sierra`**]
-```{r warning=FALSE, message=F, fig.cap="Distribution of Average Monthly Temperatures, Sierra Nevada"}
+```{r vis.histogram2, warning=FALSE, message=F, fig.cap="Distribution of Average Monthly Temperatures, Sierra Nevada"}
 sierraData %>%
     ggplot(aes(TEMPERATURE)) +
   geom_histogram(fill="dark green")
 ```
 
 **Cumulative histogram with proportions**: easier to see percentiles, median
-```{r warning=FALSE, fig.cap="Cumulative Distribution of Average Monthly Temperatures, Sierra Nevada"}
+```{r vis.histogram3, warning=FALSE, fig.cap="Cumulative Distribution of Average Monthly Temperatures, Sierra Nevada"}
 n <- length(sierraData$TEMPERATURE)
 sierraData %>%
   ggplot(aes(TEMPERATURE)) +
@@ -92,7 +92,7 @@ sierraData %>%
 
 Density represents how much out of the total. The total area (sum of widths of bins times densities of that bin) adds up to 1. [**`NDVI`**]
 
-```{r warning=F, fig.cap="Density plot of NDVI, Knuthson Meadow"}
+```{r vis.density, warning=F, fig.cap="Density plot of NDVI, Knuthson Meadow"}
 XSptsPheno %>% 
   ggplot(aes(NDVI)) + 
   geom_density()
@@ -105,13 +105,13 @@ Note that NDVI values are <1 so bins are very small numbers, so in this case den
 - "mapping" a variable (phenology) to an aesthetic property (fill color of the density polygon)
 - setting a a property (alpha = 0.2) to all polygons of the density plot.  The alpha channel of colors defines its opacity, from invisible (0) to opaque (1) so is commonly used to set as its reverse, transparency.
 
-```{r}
+```{r vis.density.alpha}
 XSptsPheno %>%
   ggplot(aes(NDVI, fill=phenology)) +
   geom_density(alpha=0.2)
 ```
 
-```{r include=FALSE}
+```{r vis.notneeded, include=FALSE}
 ## DON'T REALLY NEED THIS -- STORED AS tidy_eucoak
 library(tidyverse)
 runoffPivot <- eucoakrainfallrunoffTDR %>%
@@ -146,7 +146,7 @@ write_csv(eucoak, "data/tidy_eucoak.csv")
 
 [**`eucoak`**]
 
-```{r warning=FALSE, fig.cap="Runoff under Eucalyptus and Oak in Bay Area sites"}
+```{r vis.density.eucoak, warning=FALSE, fig.cap="Runoff under Eucalyptus and Oak in Bay Area sites"}
 tidy_eucoak %>%
   ggplot(aes(log(runoff_L),fill=tree)) +
   geom_density(alpha=0.2)
@@ -154,13 +154,13 @@ tidy_eucoak %>%
 
 ### boxplot
 
-```{r warning=FALSE, fig.cap="Runoff under Eucalyptus and Oak, Bay Area Sites"}
+```{r vis.boxplot.eucoak, warning=FALSE, fig.cap="Runoff under Eucalyptus and Oak, Bay Area Sites"}
 ggplot(data = tidy_eucoak) +
   geom_boxplot(aes(x = site, y = runoff_L))
 
 ```
 **Get color from tree within `aes()`**
-```{r warning=FALSE, fig.cap="Runoff at Bay Area Sites, colored as Eucalyptus and Oak"}
+```{r vis.boxplot.eucoak.col, warning=FALSE, fig.cap="Runoff at Bay Area Sites, colored as Eucalyptus and Oak"}
 ggplot(data = tidy_eucoak) +
   geom_boxplot(aes(x=site, y=runoff_L, color=tree))
 
@@ -173,7 +173,7 @@ sampled extracted soil air in a 11-point transect across Marble Valley in 1997. 
 
 <img src="img/marbleGap.png">
 
-```{r echo=F}
+```{r vis.marbleMap, echo=F}
 library(tidyverse); library(sf); library(leaflet)
 CO2sites <- read_csv(system.file("extdata","soilCO2_sites97_gcs.csv", package="iGIScData"))
 leaflet(data = CO2sites) %>%
@@ -184,7 +184,7 @@ leaflet(data = CO2sites) %>%
 ```
 
 
-```{r warning=FALSE, fig.cap = "Visualizing soil CO_2_ data with a Tukey box plot"}
+```{r vis.marble.boxplot, warning=FALSE, fig.cap = "Visualizing soil CO_2_ data with a Tukey box plot"}
 soilCO2 <- soilCO2_97
 soilCO2$SITE <- factor(soilCO2$SITE)  # in order to make the numeric field a factor
 ggplot(data = soilCO2, mapping = aes(x = SITE, y = `CO2%`)) +
@@ -199,7 +199,7 @@ ggplot(data = soilCO2, mapping = aes(x = SITE, y = `CO2%`)) +
 
 [**`sierra`**] We've looked at this before -- the scatterplot 
 
-```{r warning=FALSE, fig.cap="Scatter plot of February temperature vs elevation"}
+```{r vis.sierra.scatterplot, warning=FALSE, fig.cap="Scatter plot of February temperature vs elevation"}
 ggplot(data=sierraFeb) + 
   geom_point(mapping = aes(TEMPERATURE, ELEVATION))
 
@@ -210,7 +210,7 @@ ggplot(data=sierraFeb) +
 
 **Set color for all (*not* in aes())**
 
-```{r warning=FALSE}
+```{r vis.sierra.scatterplot.col, warning=FALSE}
 ggplot(data=sierraFeb) + 
   geom_point(aes(TEMPERATURE, ELEVATION), color="blue")
 ```
@@ -222,7 +222,7 @@ ggplot(data=sierraFeb) +
 
 [**`eucoak`**]
 
-```{r warning=FALSE, fig.cap="Two variables, one discrete"}
+```{r vis.eucoak.bar, warning=FALSE, fig.cap="Two variables, one discrete"}
 ggplot(tidy_eucoak) +
   geom_bar(aes(site, runoff_L), stat="identity")
 ```
@@ -238,7 +238,7 @@ You can find a lot about color systems. See these sources:
 
 In this graph, color is defined inside aes, so is based on COUNTY [**`sierra`**]
 
-```{r warning=FALSE, fig.cap="Color set within aes()"}
+```{r vis.sierra.color, warning=FALSE, fig.cap="Color set within aes()"}
 ggplot(data=sierraFeb) + 
   geom_point(aes(TEMPERATURE, ELEVATION, color=COUNTY))
 
@@ -246,7 +246,7 @@ ggplot(data=sierraFeb) +
 
 **Plotting lines using the same x,y in aesthetics**
 
-```{r warning=FALSE, fig.cap="Using aesthetics settings for both points and lines"}
+```{r vis.sierra.color.line, warning=FALSE, fig.cap="Using aesthetics settings for both points and lines"}
 sierraFeb %>%
   ggplot(aes(TEMPERATURE,ELEVATION)) +
   geom_point(color="blue") +
@@ -257,7 +257,7 @@ Note the use of pipe to start with the data then apply ggplot. [**`generic_metho
 
 **River map & profile**
 
-```{r fig.cap="Longitudinal Profiles"}
+```{r vis.longprof, fig.cap="Longitudinal Profiles"}
 x <- c(1000, 1100, 1300, 1500, 1600, 1800, 1900)
 y <- c(500, 700, 800, 1000, 1200, 1300, 1500)
 z <- c(0, 1, 2, 5, 25, 75, 150)
@@ -290,7 +290,7 @@ ggplot(longprofile, aes(longd,s)) + geom_point(aes(col=s), size=3) +
 
 [**`sierra`**]
 
-```{r warning=F, message=F, fig.cap="Trend line using geom_smooth with a linear model"}
+```{r vis.sierra.trendline, warning=F, message=F, fig.cap="Trend line using geom_smooth with a linear model"}
 sierraFeb %>%
   ggplot(aes(TEMPERATURE,ELEVATION)) +
   geom_point(color="blue") +
@@ -320,7 +320,7 @@ A useful vignette accessed by `vignette("ggplot2-specs")` lets you see aesthetic
 
 One example of a "Big Data" resource is EPA's Toxic Release Inventory [**`air_quality`**] that tracks releases from a wide array of sources, from oil refineries on down.  One way of dealing with big data in terms of exploring meaning is to use symbology to try to make sense of it.
 
-```{r message=F, warning=F, fig.cap="EPA Toxic Release Inventory, as a big data set needing symbology clarification"}
+```{r vis.TRI.col, message=F, warning=F, fig.cap="EPA Toxic Release Inventory, as a big data set needing symbology clarification"}
 csvPath <- system.file("extdata","TRI_2017_CA.csv", package="iGIScData")
 TRI <- read_csv(csvPath) %>%
   filter(`5.1_FUGITIVE_AIR` > 100 & `5.2_STACK_AIR` > 100)
@@ -333,7 +333,7 @@ ggplot(data = TRI, aes(log(`5.2_STACK_AIR`), log(`5.1_FUGITIVE_AIR`),
 
 [**`NDVI`**]
 
-```{r warning=FALSE, fig.cap="NDVI symbolized by vegetation in two seasons"}
+```{r vis.phenogroup.col, warning=FALSE, fig.cap="NDVI symbolized by vegetation in two seasons"}
 XSptsPheno %>%
   ggplot() +
   geom_point(aes(elevation, NDVI, shape=vegetation, 
@@ -344,7 +344,7 @@ XSptsPheno %>%
 
 [**`eucoak`**] [@eucoak]
 
-```{r warning=FALSE, fig.cap="Eucalyptus and Oak: rainfall and runoff"}
+```{r vis.eucoak.rainrunoff.col, warning=FALSE, fig.cap="Eucalyptus and Oak: rainfall and runoff"}
 ggplot(data = tidy_eucoak) +
   geom_point(mapping = aes(x = rain_mm, y = runoff_L, color = tree)) +
   geom_smooth(mapping = aes(x = rain_mm, y= runoff_L, color = tree), 
@@ -357,7 +357,7 @@ ggplot(data = tidy_eucoak) +
 
 This is another option to displaying groups of data, with parallel graphs
 
-```{r warning=FALSE, fig.cap="Faceted graph alternative"}
+```{r vis.parallel.graphs, warning=FALSE, fig.cap="Faceted graph alternative"}
 ggplot(data = tidy_eucoak) +
   geom_point(aes(x=rain_mm,y=runoff_L)) +
   geom_smooth(aes(x=rain_mm,y=runoff_L), method="lm") +
@@ -367,7 +367,7 @@ ggplot(data = tidy_eucoak) +
 
 ## Titles and subtitles
 
-```{r warning=FALSE, fig.cap="Titles added"}
+```{r vis.titles, warning=FALSE, fig.cap="Titles added"}
 ggplot(data = tidy_eucoak) +
   geom_point(aes(x=rain_mm,y=runoff_L, color=tree)) +
   geom_smooth(aes(x=rain_mm,y=runoff_L, color=tree), method="lm") +
@@ -384,7 +384,7 @@ Since only continuous data are useful for this, and since pairs plots can quickl
 overly complex, it's good to use dplyr::select to select the continuous variables, or 
 maybe use a helper function like is.numeric with dplyr::select_if:
 
-```{r warning=FALSE, fig.cap="Pairs plot for Sierra Nevada stations variables"}
+```{r vis.pairs, warning=FALSE, fig.cap="Pairs plot for Sierra Nevada stations variables"}
 sierraFeb %>%
      dplyr::select_if(is.numeric) %>%
 #    dplyr::select(LATITUDE, ELEVATION, TEMPERATURE, PRECIPITATION) %>%
@@ -395,7 +395,7 @@ sierraFeb %>%
 
 1. Create a bar graph of the counts of the species in the **`penguins`** data frame [@palmer].  What can you say about what it shows?
 
-```{r include=F}
+```{r vis.ex1, include=F}
 library(tidyverse); library(palmerpenguins)
 ggplot(penguins, aes(species)) + geom_bar()
 plot(penguins$species)
@@ -404,7 +404,7 @@ plot(penguins$species)
 
 2. Use bind_cols in dplyr to create a tibble from built-in vectors state.abb and state.region, then use ggplot with geom_bar to create a bar graph of the four regions. [**`generic_methods`**]
 
-```{r include=F}
+```{r vis.ex2, include=F}
 library(tidyverse)
 regions <- bind_cols(state.abb, state.region)
 ggplot(regions, aes(state.region)) + geom_bar()
@@ -413,7 +413,7 @@ ggplot(regions, aes(state.region)) + geom_bar()
 
 3. Convert the built-in time series `treering` into a tibble `tr`using the `tibble()` functions with the single variable assigned as `treering = treering`, then create a histogram, using that tibble and variable for the `data` and `x` settings needed. Attach a screen capture of the histogram. 
 
-```{r include=F}
+```{r vis.ex3, include=F}
 library(tidyverse)
 tr <- tibble(treering = treering)
 str(tr)
@@ -422,7 +422,7 @@ ggplot(data=tr, aes(x=treering)) + geom_histogram()
 
 4. Start by clearing your environment with the broom icon in the Environment tab, then we'll create two tibbles: Create a new tibble `st` using `bind_cols` with `Name=state.name`, `Abb=state.abb`, `Region=state.region`, and `as_tibble(state.x77)`. *Note that this works since all of the parts are sorted by state.* Then use `summary(st)` and copy and paste its results for your answer.
 
-```{r include=F}
+```{r vis.ex4, include=F}
 st <- as_tibble(state.x77)
 library(tidyverse)
 st <- bind_cols(Name=state.name, Abb=state.abb, Region=state.region, as_tibble(state.x77))
@@ -431,21 +431,21 @@ summary(st)
 
 5. From `st`, create a density plot from the variable `Frost` (number of days with frost for that state).  Attach that plot, and answer: approximately what is the modal value?
 
-```{r include=F}
+```{r vis.ex5, include=F}
 #st <- as_tibble(state.x77)
 ggplot(data=st, aes(x=Frost)) + geom_density()
 ```
 
 6. From `st` create a a boxplot of `Area` by `Region`.  Which region has the highest and which has the lowest median Area?  Do the same for `Frost`.
 
-```{r include=F}
+```{r vis.ex6, include=F}
 ggplot(data=st, aes(x=Region, y=Area)) + geom_boxplot()
 ggplot(data=st, aes(x=Region, y=Frost)) + geom_boxplot()
 ```
 
 7. From st, compare murder rate (y=Murder) to Frost (x) in a scatter plot, colored by Region.
 
-```{r include=F}
+```{r vis.ex7, include=F}
 st %>%
   ggplot(aes(x=Frost, y=Murder)) + geom_point(aes(col=Region))
 #print(st$Name[which.max(st$Murder)])
@@ -453,7 +453,7 @@ st %>%
 
 8. Add a trend line (smooth) with method="lm" to your scatterplot, not colored by Region (but keep the points colored by Region). What can you say about what this graph is showing you?
 
-```{r include=F}
+```{r vis.ex8, include=F}
 st %>%
   ggplot(aes(x=Frost, y=Murder)) + geom_point(aes(col=Region)) + geom_smooth(method="lm")
 cor.test(st$Frost, st$Murder)
@@ -462,8 +462,7 @@ cor.test(st$Frost, st$Murder)
 
 9. Add a title to your graph.
 
-
-```{r include=F}
+```{r vis.ex9, include=F}
 st %>%
   ggplot(aes(x=Frost, y=Murder)) + geom_point(aes(col=Region)) + geom_smooth(method="lm") +
   labs(title="Frost and Murder Rate")
@@ -471,7 +470,7 @@ st %>%
 
 10. Change your scatterplot to place labels using the Abb variable (still colored by Region) using `geom_label(aes(label=Abb, col=Region))`. Any observations about outliers?
 
-```{r include=F}
+```{r vis.ex10, include=F}
 st %>%
   ggplot(aes(x=Frost, y=Murder)) + geom_label(aes(label=Abb, col=Region)) + geom_smooth(method="lm")
 
