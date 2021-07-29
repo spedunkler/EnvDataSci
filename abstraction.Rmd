@@ -105,7 +105,7 @@ In this study, we looked at the amount of runoff and erosion captured in Gerlach
 
 <img src="img/eucoak.png">
 
-```{r abstraction.eucoakIntro, echo=F}
+```{r echo=F, fig.cap="Study of runoff & erosion under Eucalyptus & Oak canopy"}
 library(tidyverse); library(sf); library(leaflet)
 sites <- read_csv(system.file("extdata","eucoakSites.csv", package="iGIScData"))
 leaflet(data = sites) %>%
@@ -115,7 +115,7 @@ leaflet(data = sites) %>%
 
 ## Visualizing data with a Tukey box plot
 
-```{r abstraction.Tukey, warning=F}
+```{r warning=F, fig.cap="Tukey boxplot of runoff under Eucalyptus canopy"}
 ggplot(data = eucoakrainfallrunoffTDR) + geom_boxplot(mapping = aes(x=site, y=runoffL_euc))
 ```
 

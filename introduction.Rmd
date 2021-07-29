@@ -303,18 +303,18 @@ lat <- c(39.52, 38.91, 37.97, 38.70, 39.09, 39.25, 39.94, 37.75, 40.35, 39.33, 3
 ```
 
 **Plot individually**
-```{r intro.plot1, fig.cap="Temperature"}
+```{r fig.cap="Temperature simply plotted by index"}
 plot(temp)
 ```
-```{r intro.plot2, fig.cap="Elevation"}
+```{r fig.cap="Elevation plotted by index"}
 plot(elev)
 ```
-```{r intro.plot3, fig.cap="Latitude"}
+```{r fig.cap="Latitude plotted by index"}
 plot(lat)
 ```
 
 **Then plot as a scatterplot**
-```{r intro.scatter, fig.cap="Temperature~Elevation"}
+```{r fig.cap="Temperature~Elevation"}
 plot(elev,temp)
 ```
 #### Named indices
@@ -380,7 +380,7 @@ knitr::kable(
 This `palmerpenguins` data frame is from @palmer.
 
 **Creating a data frame out of a matrix**
-```{r intro.plotSierra, fig.cap="Temperature~Elevation", warning=F}
+```{r fig.cap="Temperature~Elevation", warning=F}
 mydata <- as.data.frame(sierradata)
 DT::datatable(mydata)
 plot(data = mydata, x = elev, y = temp)

@@ -111,13 +111,13 @@ str_extract(sapply(rst_lst, names), "B.{2}") # shows the order of bands, with B0
 
 ## Visualize the original imagery
 
-```{r visualize}
+```{r fig.cap="Color (RGB) orthomap visualization of Sentinel-2 imagery"}
 viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview::viewRGB, raster::brick]
 ```
 
 ### Visualize the image in false color (IR-R-G as R-G-B).
 
-```{r falseColor, message=FALSE, warning=FALSE}
+```{r fig.cap="False-color (IR-R-G as RGB) orthomap visualization of Sentinel-2 imagery", message=FALSE, warning=FALSE}
 viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
 ```
 
@@ -161,7 +161,7 @@ brick_for_prediction <- brick(rst_for_prediction)  # [raster]
 PCA creates new uncorrelated variables from correlated variables (bands in this case), 
 with the purpose of identifying the key dimensions that provide the most information.
 
-```{r PCA}
+```{r fig.cap="Three strongest dimensions of PCA displayed as RGB"}
 rcv_PCA <- rasterPCA(brick_for_prediction, nSamples=NULL, nComp = nlayers(brick_for_prediction), spca = FALSE)
 rcv_PCA_stack <- stack(rcv_PCA$map)
 plotRGB(rcv_PCA_stack, r=1, g=2, b=3, stretch="lin")
@@ -172,7 +172,7 @@ rcv_PCA$model
 ## Create an NDVI raster
 The normalized difference vegetation index is widely used to look at vegetation health, and for this we can use all 10m bands.
 
-```{r NDVI}
+```{r fig.cap="NDVI"}
 red <- brick_for_prediction$B04
 nir <- brick_for_prediction$B07
 ndvi <- (nir - red)/(nir + red)
@@ -192,7 +192,7 @@ names(brick_for_prediction_norm) <- names(brick_for_prediction)
 
 ## Create the same AOI that was used to crop the image, for display purposes
 
-```{r aoi}
+```{r fig.cap="AOI polygon"}
 aoi <- matrix(data = c(-120.470, 39.975,  # Upper left corner
                        -120.396, 39.975,  # Upper right corner
                        -120.396, 39.918,  # Bottom right corner
@@ -209,7 +209,7 @@ We'll derive points from these polygons (digitized in ArcGIS, but could be creat
 
 Read the training polygons in shapefiles with 'class' field digitized from multispectral drone imagery, and assign colors using hex codes. 
 
-```{r training}
+```{r fig.cap="Training polygons"}
 
 poly <- read_sf(file.path(dtaPath, "train_polys.shp")) %>% 
   mutate(id = as.integer(factor(class)))# %>%  # creates a numeric id useful for rasterization
@@ -265,7 +265,7 @@ points_with_rastervals <- bind_cols(points, points_rastervals) %>%
 
 ## Histograms of predictors
 
-```{r histograms}
+```{r fig.cap="Histograms of band values at training sites"}
 points_with_rastervals %>%
   select(starts_with("B")) %>%
   tidyr::pivot_longer(everything(), names_to = "band", values_to = "value") %>% 
@@ -364,7 +364,7 @@ saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
 ### SVM model summary & confusion matrix
 The **confusion matrix** provides the number of matches and "confusions" exist between the test data and what the model predicts. The main diagonal shows the number of matches and eveywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
 
-```{r}
+```{r fig.cap="SVM tuning results and accuracy"}
 model_svm$times$everything # total computation time
 ##    user  system elapsed 
 ##    1.44    0.31   16.55
@@ -379,7 +379,7 @@ cm_svm
 ### SVM variable importance
 Importance values indicate how much drop in performance occurs when the predictor is not used. 
 
-```{r SVMimportance}
+```{r fig.cap = "SVM importance"}
 caret::varImp(model_svm)$importance %>%
   as.matrix %>% 
   plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
@@ -389,7 +389,7 @@ caret::varImp(model_svm)$importance %>%
 
 ### SVM prediction map
 
-```{r PredictViewWrite}
+```{r fig.cap="SVM Prediction"}
 predict_svm <- raster::predict(object = brick_for_prediction_norm,
                                  model = model_svm, type = 'raw')
 mapView(predict_svm, col.regions = cls_dt$hex)
@@ -425,7 +425,7 @@ saveRDS(model_rf, file = "./cache/model_rf.rds")
 
 ### RF confusion matrix
 
-```{r rfConfusion}
+```{r fig.cap="RF tuning results and accuracy"}
 model_rf$times$everything # total computation time
 plot(model_rf) # tuning results
 cm_rf <- confusionMatrix(data = predict(model_rf, newdata = dt_test),
@@ -436,7 +436,7 @@ model_rf$finalModel
 
 ### RF predictor importance
 
-```{r rf_varImportance}
+```{r fig.cap="rf variable importance"}
 caret::varImp(model_rf)$importance %>%
   as.matrix %>% 
   plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
@@ -451,7 +451,7 @@ randomForest::importance(model_rf$finalModel) %>%
           width = 350, height = 300)
 ```
 
-```{r rfPlotImportance}
+```{r fig.cap = "rf final model"}
 randomForest::varImpPlot(model_rf$finalModel)
 ```
 
@@ -487,7 +487,7 @@ saveRDS(model_nnet, file = "./cache/model_nn.rds")
 ```
 
 
-```{r plot_nnet}
+```{r fig.cap = "Neural network tuning results and accuracy"}
 
 plot(model_nnet) # tuning results
 
@@ -504,7 +504,7 @@ garson(model_nnet) +
   scale_fill_gradientn(colours = cols)
 ```
 
-```{r mapNN}
+```{r fig.cap="Neural network prediction"}
 predict_nnet <- raster::predict(object = brick_for_prediction_norm,
                                   model = model_nnet, type = 'raw')
 mapView(predict_nnet, col.regions = cls_dt$hex)
