@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-29" />
+<meta name="date" content="2021-08-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -75,7 +75,7 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
-<script src="libs/ndvi_5cad19-1/data_stars_ndvi584b19.txt"></script>
+<script src="libs/ndvi_ced415-1/data_stars_ndvi2951cf.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
@@ -534,15 +534,13 @@ are the same for each, or not the same. The three set methods are:</p>
 <span id="cb309-3"><a href="data-transformation.html#cb309-3" aria-hidden="true" tabindex="-1"></a>squares</span></code></pre></div>
 <pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100</code></pre>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-transformation.html#cb311-1" aria-hidden="true" tabindex="-1"></a>evens</span></code></pre></div>
-<pre><code>##  [1]   0   2   4   6   8  10  12  14  16  18  20  22  24  26  28  30  32  34  36  38  40  42  44  46
-## [25]  48  50  52  54  56  58  60  62  64  66  68  70  72  74  76  78  80  82  84  86  88  90  92  94
-## [49]  96  98 100</code></pre>
+<pre><code>##  [1]   0   2   4   6   8  10  12  14  16  18  20  22  24  26  28  30  32  34  36  38  40  42  44  46  48  50  52  54  56  58  60  62
+## [33]  64  66  68  70  72  74  76  78  80  82  84  86  88  90  92  94  96  98 100</code></pre>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="data-transformation.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(squares,evens)</span></code></pre></div>
 <pre><code>## [1]   4  16  36  64 100</code></pre>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="data-transformation.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">union</span>(squares,evens))</span></code></pre></div>
-<pre><code>##  [1]   0   1   2   4   6   8   9  10  12  14  16  18  20  22  24  25  26  28  30  32  34  36  38  40
-## [25]  42  44  46  48  49  50  52  54  56  58  60  62  64  66  68  70  72  74  76  78  80  81  82  84
-## [49]  86  88  90  92  94  96  98 100</code></pre>
+<pre><code>##  [1]   0   1   2   4   6   8   9  10  12  14  16  18  20  22  24  25  26  28  30  32  34  36  38  40  42  44  46  48  49  50  52  54
+## [33]  56  58  60  62  64  66  68  70  72  74  76  78  80  81  82  84  86  88  90  92  94  96  98 100</code></pre>
 <div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-transformation.html#cb317-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">setdiff</span>(squares,evens))</span></code></pre></div>
 <pre><code>## [1]  1  9 25 49 81</code></pre>
 </div>
@@ -575,14 +573,14 @@ which would require manipulating them into factors:</p>
 <span id="cb321-5"><a href="data-transformation.html#cb321-5" aria-hidden="true" tabindex="-1"></a>                          state.x77))</span>
 <span id="cb321-6"><a href="data-transformation.html#cb321-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(states)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 12
-##   abb   name    region division Population Income Illiteracy `Life Exp` Murder `HS Grad` Frost Area 
-##   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;
-## 1 AL    Alabama 2      4        3615       3624   2.1        69.05      15.1   41.3      20    50708
-## 2 AK    Alaska  4      9        365        6315   1.5        69.31      11.3   66.7      152   5664~
-## 3 AZ    Arizona 4      8        2212       4530   1.8        70.55      7.8    58.1      15    1134~
-## 4 AR    Arkans~ 2      5        2110       3378   1.9        70.66      10.1   39.9      65    51945
-## 5 CA    Califo~ 4      9        21198      5114   1.1        71.71      10.3   62.6      20    1563~
-## 6 CO    Colora~ 4      8        2541       4884   0.7        72.06      6.8    63.9      166   1037~</code></pre>
+##   abb   name       region division Population Income Illiteracy `Life Exp` Murder `HS Grad` Frost Area  
+##   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; 
+## 1 AL    Alabama    2      4        3615       3624   2.1        69.05      15.1   41.3      20    50708 
+## 2 AK    Alaska     4      9        365        6315   1.5        69.31      11.3   66.7      152   566432
+## 3 AZ    Arizona    4      8        2212       4530   1.8        70.55      7.8    58.1      15    113417
+## 4 AR    Arkansas   2      5        2110       3378   1.9        70.66      10.1   39.9      65    51945 
+## 5 CA    California 4      9        21198      5114   1.1        71.71      10.3   62.6      20    156361
+## 6 CO    Colorado   4      8        2541       4884   0.7        72.06      6.8    63.9      166   103766</code></pre>
 </div>
 <div id="pivotting-data-frames" class="section level2" number="5.4">
 <h2><span class="header-section-number">5.4</span> Pivotting data frames</h2>
@@ -636,7 +634,7 @@ useful in a particular analysis. A common need to pivot is 2+ variables with the
 <span id="cb328-4"><a href="data-transformation.html#cb328-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb328-5"><a href="data-transformation.html#cb328-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(elevation, NDVI, </span>
 <span id="cb328-6"><a href="data-transformation.html#cb328-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> phenology), <span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <p>Pivots turn out to be commonly useful. Runoff graphing from the Eucalyptus/Oak study <span class="citation">(<a href="#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span> also benefited
 from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="data-transformation.html#cb329-1" aria-hidden="true" tabindex="-1"></a>eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
@@ -645,7 +643,7 @@ from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <span id="cb329-4"><a href="data-transformation.html#cb329-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tree =</span> <span class="fu">str_sub</span>(tree, <span class="fu">str_length</span>(tree)<span class="sc">-</span><span class="dv">2</span>, <span class="fu">str_length</span>(tree))) <span class="sc">%&gt;%</span></span>
 <span id="cb329-5"><a href="data-transformation.html#cb329-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(site, runoffL)) <span class="sc">+</span></span>
 <span id="cb329-6"><a href="data-transformation.html#cb329-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(tree <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p><strong>Combining a pivot with bind_rows to create a runoff/rainfall scatterplot colored by tree</strong></p>
 <div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-transformation.html#cb330-1" aria-hidden="true" tabindex="-1"></a>runoffPivot <span class="ot">&lt;-</span> eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
 <span id="cb330-2"><a href="data-transformation.html#cb330-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;runoffL&quot;</span>),</span>
@@ -676,7 +674,7 @@ from a pivot_longer [<strong><code>eucoak</code></strong>]:</p>
 <span id="cb330-27"><a href="data-transformation.html#cb330-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> rain_mm, <span class="at">y=</span> runoffL, <span class="at">color =</span> tree), </span>
 <span id="cb330-28"><a href="data-transformation.html#cb330-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="sc">+</span></span>
 <span id="cb330-29"><a href="data-transformation.html#cb330-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;seagreen4&quot;</span>, <span class="st">&quot;orange3&quot;</span>))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p><strong>Using pivot_wider with traffic stop data</strong> <span class="citation">(<a href="#ref-Engel" role="doc-biblioref">Engel 2020</a>)</span></p>
 <div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="data-transformation.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb331-2"><a href="data-transformation.html#cb331-2" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;MS_trafficstops_bw_age.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>

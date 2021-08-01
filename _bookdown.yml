@@ -1,7 +1,8 @@
 book_filename: "EnvDataSci"
 delete_merged_file: true
-rmd_files: ["index.Rmd",   "introduction.Rmd", "abstraction.Rmd", "visualization.Rmd", "transformation.Rmd",
-            "spatial.Rmd", "statistics.Rmd",   "ImageClassification.Rmd", "TimeSeries.Rmd",  "communication.Rmd", "AppendixDataPackage.Rmd", "references.Rmd"]
+rmd_files: ["index.Rmd", "introduction.Rmd", "abstraction.Rmd", "visualization.Rmd", "transformation.Rmd",
+            "spatial.Rmd", "statistics.Rmd", "ImageClassification.Rmd", "TimeSeries.Rmd",  "communication.Rmd",
+            "AppendixDataPackage.Rmd", "references.Rmd"]
 language:
   ui:
     chapter_name: ""
