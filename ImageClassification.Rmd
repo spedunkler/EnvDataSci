@@ -23,7 +23,7 @@ It's important to realize that the accuracy we determine is *only* based on the 
 
 In thinking about the concept of overfit models and selecting out training (and testing) sets, it's useful to consider the purpose of our classification and how important it is that our predictions are absolutely reliable. In choosing training sets, accuracy is also important, so we will want to make sure that they are good representatives of the land cover type (assuming that's our response variable). While some land covers are pretty clear (like streets or buildings), there's a lot of fuzziness in the world: you might be trying to identify wetland conditions based on the type of vegetation growing, but in a meadow you can commonly find wetland species mixed in with more mesic species -- to pick a reliable wetland sample we might want to only pick areas with only wetland species (and this can get tricky since there are many challenges of "obligate wetland" or "facultative wetland" species.)  It might actually be more appropriate to use a probability model to do this, but we can also take a spatial approach to prediction and accept that some areas will tend more toward one vs. another.
 
-## Methods
+## Imagery Setup and Visualization Methods
 
 Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
 
@@ -75,7 +75,7 @@ dir.create(file.path("./cache", "temp"))
 rasterOptions(tmpdir = "./cache/temp")
 ```
 
-## Read all 10m & 20m bands into a list of 10 bands
+### Read all 10m & 20m bands into a list of 10 bands
 
 10 m bands
 
@@ -109,20 +109,20 @@ str_extract(sapply(rst_lst, names), "B.{2}") # shows the order of bands, with B0
 ```
 
 
-## Visualize the original imagery
+### Visualize the original imagery
 
 ```{r fig.cap="Color (RGB) orthomap visualization of Sentinel-2 imagery"}
 viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview::viewRGB, raster::brick]
 ```
 
-### Visualize the image in false color (IR-R-G as R-G-B).
+#### Visualize the image in false color (IR-R-G as R-G-B).
 
 ```{r fig.cap="False-color (IR-R-G as RGB) orthomap visualization of Sentinel-2 imagery", message=FALSE, warning=FALSE}
 viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
 ```
 
 
-## Set up prediction raster brick
+### Set up prediction raster brick
 Needed to build a brick raster object to be used for prediction result
 [see raster::brick, etc.]
 
@@ -131,7 +131,7 @@ rst_for_prediction <- vector(mode = "list", length = length(rst_lst))
 names(rst_for_prediction) <- names(rst_lst)
 ```
 
-## Resample 20 m bands to 10 m
+### Resample 20 m bands to 10 m
 In addition to the 4 bands at 10 m resolution (B02, B03, B04, B08),
 there are 5 bands at 20 m resolution (B05, B06, B07, B8A, B11, B12) 
 which provide red edge and SWIR useful for vegetation and moisture indices 
@@ -156,7 +156,7 @@ brick_for_prediction <- brick(rst_for_prediction)  # [raster]
 
 ```
 
-## Principle Component Analysis (PCA)
+### Principle Component Analysis (PCA) & Visualization
 
 PCA creates new uncorrelated variables from correlated variables (bands in this case), 
 with the purpose of identifying the key dimensions that provide the most information.
@@ -169,7 +169,7 @@ rcv_PCA$model
 
 ```
 
-## Create an NDVI raster
+### Create an NDVI raster
 The normalized difference vegetation index is widely used to look at vegetation health, and for this we can use all 10m bands.
 
 ```{r fig.cap="NDVI"}
@@ -179,7 +179,7 @@ ndvi <- (nir - red)/(nir + red)
 mapview(ndvi)
 ```
 
-## Normalize (Center & scale) raster images:
+### Normalize (Center & scale) raster images:
 Subtract the mean and divide by the standard deviation for each variable/feature/band.
 While the data don't need normalization to convert to normal distribution,
 the transformation is needed for the ML algorithms, especially for the neural networks.
@@ -190,7 +190,7 @@ names(brick_for_prediction_norm) <- names(brick_for_prediction)
 
 ```
 
-## Create the same AOI that was used to crop the image, for display purposes
+### Create the same AOI that was used to crop the image, for display purposes
 
 ```{r fig.cap="AOI polygon"}
 aoi <- matrix(data = c(-120.470, 39.975,  # Upper left corner
@@ -204,7 +204,7 @@ view_aoi()     # [getSpatialData]
 ```
 
 
-## Training polygons
+### Training polygons
 We'll derive points from these polygons (digitized in ArcGIS, but could be created with other GIS programs). Later in the code, we'll write out the resulting predicted class counts percentages which we can compare with training point class percentages; if these differ significantly we might want to go in and edit the polygons, adding additional ones in classes under-represented by the training set.
 
 Read the training polygons in shapefiles with 'class' field digitized from multispectral drone imagery, and assign colors using hex codes. 
@@ -236,7 +236,7 @@ mapview(poly, zcol = "class", col.regions = cls_dt$hex)
 poly_utm <- st_transform(poly, crs = st_crs(rst_lst[[1]]))
 ```
 
-## Extract training values from polygons at 10 m resolution
+### Extract training values from polygons at 10 m resolution
 1. Convert the vector polygons to raster using a template based on the image raster (10 m cells) 
 2. Convert the raster to points in a data.table format
 3. Use these points to extract values from the Sentinel bands.
@@ -263,7 +263,7 @@ points_with_rastervals <- bind_cols(points, points_rastervals) %>%
 
 ```
 
-## Histograms of predictors
+### Histograms of predictors
 
 ```{r fig.cap="Histograms of band values at training sites"}
 points_with_rastervals %>%
@@ -275,7 +275,7 @@ points_with_rastervals %>%
   facet_wrap(facets = vars(band), ncol = 3)
 ```
 
-## Split into training and testing subsets
+### Split into training and testing subsets
 The training subset will be used for model tuning by cross-validation and grid search.
 The final models are tested using the test subset to build confusion matrices
 See caret package
@@ -338,13 +338,13 @@ ctrl <- trainControl(summaryFunction = defaultSummary,   # [caret]   # was multi
 ```
 
 
-## Support Vector Machine (SVM) model
+### Support Vector Machine (SVM) model
 
 “L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
 
 The trainControl parameter setting importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, this doesn't create a problem, so it was easier to just leave it the same, and it will be useful for random forests.
 
-### Train SVM model
+#### Train SVM model
 [After reinstalling caret, parallel tools makeCluster or detectCores create errors, 
 but parallel processing isn't essential for this size dataset]
 
@@ -361,7 +361,7 @@ saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
 
 ```
 
-### SVM model summary & confusion matrix
+#### SVM model summary & confusion matrix
 The **confusion matrix** provides the number of matches and "confusions" exist between the test data and what the model predicts. The main diagonal shows the number of matches and eveywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
 
 ```{r fig.cap="SVM tuning results and accuracy"}
@@ -376,7 +376,7 @@ cm_svm <- confusionMatrix(data = predict(model_svm, newdata = dt_test),  # [care
 cm_svm
 ```
 
-### SVM variable importance
+#### SVM variable importance
 Importance values indicate how much drop in performance occurs when the predictor is not used. 
 
 ```{r fig.cap = "SVM importance"}
@@ -387,7 +387,7 @@ caret::varImp(model_svm)$importance %>%
 ```
 
 
-### SVM prediction map
+#### SVM prediction map
 
 ```{r fig.cap="SVM Prediction"}
 predict_svm <- raster::predict(object = brick_for_prediction_norm,
@@ -396,7 +396,7 @@ mapView(predict_svm, col.regions = cls_dt$hex)
 writeRaster(predict_svm, paste0(dtaPath, "/predict_svm", imgDate,".tif"), datatype = "INT2S", TFW = YES, overwrite=TRUE)
 ```
 
-### Compare training vs SVM predicted % cover
+#### Compare training vs SVM predicted % cover
 ... to see if training allocation needs adjusting to be more comparable.
 
 ```{r checkCoverPcts}
@@ -409,7 +409,7 @@ training
 
 
 
-## Random Forest
+### Random Forest
 
 ```{r rf}
 model_rf <- caret::train(class ~ . , method = "rf", data = dt_train,
@@ -423,7 +423,7 @@ registerDoSEQ()
 saveRDS(model_rf, file = "./cache/model_rf.rds")
 ```
 
-### RF confusion matrix
+#### RF confusion matrix
 
 ```{r fig.cap="RF tuning results and accuracy"}
 model_rf$times$everything # total computation time
@@ -434,7 +434,7 @@ cm_rf
 model_rf$finalModel
 ```
 
-### RF predictor importance
+#### RF predictor importance
 
 ```{r fig.cap="rf variable importance"}
 caret::varImp(model_rf)$importance %>%
@@ -463,7 +463,7 @@ predict_rf <- raster::predict(object = brick_for_prediction_norm,
 mapView(predict_rf, col.regions = cls_dt$hex)
 ```
 
-## Neural Network
+### Neural Network
 
 ```{r nn, message=F, warning=F, results=F }
 # Grid of tuning parameters

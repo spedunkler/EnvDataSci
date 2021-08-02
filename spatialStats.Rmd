@@ -1,0 +1,90 @@
+# Spatial Statistical Analysis
+
+*under construction*
+
+Spatial statistical analysis brings in the spatial dimension to a statistical analysis, ranging from visual analysis of patterns to specialized spatial statistical methods. There are many applications for these methods in environmental research, since spatial patterns are generally highly relevant.  We might ask:
+
+- What patterns can we see?
+- What is the effect of scale?
+- Relationships among variables – do they vary spatially?
+
+```{r message=F, warning=F, echo=F, results='hide'}
+library(tidyverse)
+library(iGIScData)
+library(sf); library(raster)
+rasPath <- system.file("extdata", "ca_hillsh_WGS84.tif", package="iGIScData")
+hillsh <- raster(rasPath)
+hillshpts <- as.data.frame(rasterToPoints(hillsh))
+#CA_counties
+CAbasemap <- ggplot() + 
+  geom_raster(aes(x=x, y=y, fill=ca_hillsh_WGS84), hillshpts) + guides(fill=F) +
+  geom_sf(data=CA_counties, fill=NA) +
+  scale_fill_gradient(low = "#606060", high = "#FFFFFF") +
+  labs(x='', y='')
+sierra <- st_as_sf(filter(sierraFeb, !is.na(TEMPERATURE)), coords=c("LONGITUDE", "LATITUDE"), crs=4326)
+model1 <- lm(TEMPERATURE ~ ELEVATION, data = sierra)
+cc <- model1$coefficients
+sierra$resid <- resid(model1)
+sierra$predict <- predict(model1) 
+eqn = paste("temperature =", paste(round(cc[1],2), paste(round(cc[-1], digits=3), sep="*", collapse=" + ", paste("elevation")), sep=" + "), "+ e")
+ct <- st_read(system.file("extdata","CA_places.shp",package="iGIScData"))
+ct$AREANAME_pad <- paste0(str_replace_all(ct$AREANAME, '[A-Za-z]',' '), ct$AREANAME)
+bounds <- st_bbox(sierra)
+sierrabasemap <- CAbasemap + 
+  geom_sf(data=ct) +
+  geom_sf_text(mapping = aes(label=AREANAME_pad), data=ct, size = 2, nudge_x = 0.1, nudge_y = 0.1) +
+  coord_sf(xlim = c(bounds[1], bounds[3]), ylim = c(bounds[2],bounds[4]))
+sierrabasemap +
+  geom_sf(mapping = aes(color = TEMPERATURE), alpha=0.7, data=sierra, size=2.5) +
+  scale_color_gradient2(low="blue", mid="ivory2", high="red", 
+                        midpoint=mean(sierra$TEMPERATURE)) +
+  coord_sf(xlim = c(bounds[1], bounds[3]), ylim = c(bounds[2],bounds[4]))  +
+  labs(title="February Normals") + theme(legend.position = c(0.8, 0.85)) + 
+  theme(legend.key.size = unit(0.4, 'cm'), 
+        legend.title = element_text(size=8))
+```
+
+### Spatial Autocorrelation
+
+*[Need to add a Moran's I section here]*
+
+
+### Mapping Residuals
+
+If the *residuals* from regression are spatially autocorrelated, look for patterns in the residuals to find other explanatory variables. 
+
+```{r message=F, warning=F, results='hide'}
+library(tidyverse)
+library(iGIScData)
+library(sf); library(raster)
+rasPath <- system.file("extdata", "ca_hillsh_WGS84.tif", package="iGIScData")
+hillsh <- raster(rasPath)
+hillshpts <- as.data.frame(rasterToPoints(hillsh))
+CAbasemap <- ggplot() + 
+  geom_raster(aes(x=x, y=y, fill=ca_hillsh_WGS84), hillshpts) + guides(fill=F) +
+  geom_sf(data=CA_counties, fill=NA) +
+  scale_fill_gradient(low = "#606060", high = "#FFFFFF") +
+  labs(x='', y='')
+sierra <- st_as_sf(filter(sierraFeb, !is.na(TEMPERATURE)), coords=c("LONGITUDE", "LATITUDE"), crs=4326)
+model1 <- lm(TEMPERATURE ~ ELEVATION, data = sierra)
+cc <- model1$coefficients
+sierra$resid <- resid(model1)
+sierra$predict <- predict(model1) 
+eqn = paste("temperature =", paste(round(cc[1],2), paste(round(cc[-1], digits=3), sep="*", collapse=" + ", paste("elevation")), sep=" + "), "+ e")
+ct <- st_read(system.file("extdata","CA_places.shp",package="iGIScData"))
+ct$AREANAME_pad <- paste0(str_replace_all(ct$AREANAME, '[A-Za-z]',' '), ct$AREANAME)
+bounds <- st_bbox(sierra)
+sierrabasemap <- CAbasemap + 
+  geom_sf(data=ct) +
+  geom_sf_text(mapping = aes(label=AREANAME_pad), data=ct, size = 2, nudge_x = 0.1, nudge_y = 0.1) +
+  coord_sf(xlim = c(bounds[1], bounds[3]), ylim = c(bounds[2],bounds[4]))
+sierrabasemap +
+  geom_sf(mapping = aes(color = resid), alpha=0.7, data=sierra, size=2.5) +
+  scale_color_gradient2(low="blue", mid="ivory2", high="red", 
+                        midpoint=mean(sierra$resid)) +
+  coord_sf(xlim = c(bounds[1], bounds[3]), ylim = c(bounds[2],bounds[4]))  +
+  labs(title="Residuals", subtitle=eqn) + theme(legend.position = c(0.8, 0.85)) + 
+  theme(legend.key.size = unit(0.4, 'cm'), 
+        legend.title = element_text(size=8))
+```
+

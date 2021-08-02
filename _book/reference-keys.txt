@@ -143,13 +143,13 @@ machine-learning-for-imagery-classification
 introduction
 validation-creating-a-training-set-and-the-overfit-model-problem
 the-overfit-model-problem
-methods
+imagery-setup-and-visualization-methods
 read-all-10m-20m-bands-into-a-list-of-10-bands
 visualize-the-original-imagery
 visualize-the-image-in-false-color-ir-r-g-as-r-g-b.
 set-up-prediction-raster-brick
 resample-20-m-bands-to-10-m
-principle-component-analysis-pca
+principle-component-analysis-pca-visualization
 create-an-ndvi-raster
 normalize-center-scale-raster-images
 create-the-same-aoi-that-was-used-to-crop-the-image-for-display-purposes
