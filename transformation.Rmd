@@ -4,7 +4,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 # Data Transformation
 
-The goal of this section is to continue where we started in the earlier chapter on data abstraction with **`dplyr`** to look at more transformational functions, and **`tidyr`** adds other tools like pivot tables.
+The goal of this section is to continue where we started in the earlier chapter on data abstraction with **`dplyr`** to look at the more transformational functions applied to data in a database, and **`tidyr`** adds other tools like pivot tables.
 
 - **`dplyr`** tools: 
    - joins: `left_join`, `right_join`, `inner_join`, `full_join`, `semi_join`, `anti_join`

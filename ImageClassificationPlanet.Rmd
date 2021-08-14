@@ -1,0 +1,476 @@
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# Machine Learning for Imagery Classification
+
+## Introduction
+Using machine learning algorithms is one approach to imagery classification, whether that classification is object-based or pixel-based. We're going to focus on a pixel-based approach to identify land cover from imagery or other continuous raster variables (such as elevation or elevation-derived rasters such as slope, curvature, and roughness), employing samples of those variables called training samples in a "supervised" imagery classification.
+
+It's useful to realize that the modeling methods we use for this type of imagery classification are really no different at the core from methods we'd use to work with continuous variables that might not even be spatial. For example, if we leave off the classification process for a moment, a machine learning algorithm might be used to predict a response result from a series of predictor variables, like predicting temperature from elevation and latitude, or acceleration might be predicted by some force acting on a body. So the first model might be used to predict the temperature of any location (within the boundary of the study area) given an elevation and latitude; or the second model might predict an acceleration given the magnitude of a force applied to the body (maybe of a given mass). A classification model varies on this by predicting a nominal variable like type of land cover; some other types of responses might be counts (using a Poisson model) or probabilities (using a logistic model).
+
+The imagery classification approach adds to this model an input preparation process and an output prediction process:
+
+- A training set of points and polygons are created that represent areas of known classification such as land cover like forest or wetland, used to identify values of the predictor variables (e.g. imagery bands)
+- A predicted raster is created using the model applied to the original rasters.
+
+### Validation, creating a training set and the "overfit model" problem
+
+An important part of the imagery classification process is *validation*, where we look at how well the model works. The way this is done is pretty easy to understand, and requires have *testing* data in addition to the *training* data mentioned above. Testing data can be created in a variety of ways -- we'll randomly pull out a percentage of our training data and not use it for training, only for testing. Then we'll employ a *confusion matrix* and various measures of accuracy to see how well the model predicts the testing data.
+
+#### The "overfit model" problem
+It's important to realize that the accuracy we determine is *only* based on the training and testing data. The accuracy of the prediction of the classification elsewhere will likely be somewhat less than this, and if this is substantial our model is "overfit". We don't actually know how overfit a model truly is because that depends on how likely the conditions seen in our training and testing data also occur throughout the rest of the image; if those conditions are common, just not sampled, then the model might actually be pretty well fit. 
+
+In thinking about the concept of overfit models and selecting out training (and testing) sets, it's useful to consider the purpose of our classification and how important it is that our predictions are absolutely reliable. In choosing training sets, accuracy is also important, so we will want to make sure that they are good representatives of the land cover type (assuming that's our response variable). While some land covers are pretty clear (like streets or buildings), there's a lot of fuzziness in the world: you might be trying to identify wetland conditions based on the type of vegetation growing, but in a meadow you can commonly find wetland species mixed in with more mesic species -- to pick a reliable wetland sample we might want to only pick areas with only wetland species (and this can get tricky since there are many challenges of "obligate wetland" or "facultative wetland" species.)  It might actually be more appropriate to use a probability model to do this, but we can also take a spatial approach to prediction and accept that some areas will tend more toward one vs. another.
+
+## Imagery Setup and Visualization Methods
+
+Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
+
+- @stefan 
+- @maxwell
+- @caret
+- various sources from Google searches such as @MLtuning
+
+As with everything else in R, the specific coding methods used vary with the coder and what they're used to using. If a method works, it's certainly ok to keep using it, but where it can be clarified with clearer code such as from the tidyverse or sf, it may make it easier to understand and improve on. 
+
+This code accesses Sentinel-2 imagery downloaded from @Copernicus covering 
+Red Clover Valley, and then cropped to that site in a previous script, and saved to 
+folders named in the form cropYYYYMMDD, such as "crop20210708".
+The following code chunk specifies the date, with multiple cropped images stored in iGIScData.
+
+```{r}
+imgDate <- "20210629"
+# other dates stored:  "20210728"
+```
+
+```{r libraries, message=F, warning=F}
+library(rgdal)         # [readOGR]
+library(gdalUtils)
+library(raster)        # [writeRaster, brick, beginCluster, unique, projection, rasterToPoints]
+library(sf)
+library(sp)            # [spTransform]
+library(RStoolbox)     # Remote Sensing toolbox.  [normImage]
+library(getSpatialData)# for reading Sentinel, Landsat, MODIS, SRTM [set_aoi, view_aoi]
+# library(rasterVis)   # terra required, creates error in module
+                       # "spat" -- function 'Rcpp_precious_remove' not provided by package 'Rcpp'
+library(mapview)       # [viewRGB, mapview]
+library(RColorBrewer)
+library(plotly)        # [plot_ly]
+library(grDevices)
+
+library(caret)         # [createDataPartition, createFolds, trainControl, train, confusionMatrix]
+
+library(data.table)    # [setDT, setnames]
+library(dplyr)
+library(stringr)
+library(doParallel)    # [registerDoParallel]
+library(snow)          # [makeCluster, stopCluster]
+library(parallel)      # [makeCluster, stopCluster, detectCores]
+
+# set the temporary folder for raster package operations
+unlink("./cache", recursive = T) # Deletes crop folder if it already exists
+dir.create(file.path(".", "cache")) # will create warning if it already exists
+dir.create(file.path("./cache", "temp"))
+rasterOptions(tmpdir = "./cache/temp")
+```
+
+### Read all 3m bands into a stack and a corresponding brick of 4 bands
+
+- Band_1 - Blue	0.464-0.517 $\mu$m
+- Band_2 - Green	0.547-0.585	$\mu$m
+- Band_3 - Red	0.650-0.682	$\mu$m
+- Band_4 - NIR	0.846-0.888	$\mu$m
+
+
+```{r readImageRasters}
+dtaPath <- system.file("extdata", "RCVimagery", package="iGIScData")
+# Get 4-band image as
+imgFilepath <- list.files(paste0(dtaPath,"/planetScope", imgDate), pattern = "*.tif", full.names = TRUE)[1]
+imgStack <- stack(imgFilepath)
+names(imgStack) <- c("B1","B2","B3","B4")
+imgBrick <- brick(imgStack)
+# Read it one by one also
+blue <- raster(imgFilepath, band=1)
+green <- raster(imgFilepath, band=2)
+red <- raster(imgFilepath, band=3)
+nir <- raster(imgFilepath, band=4)
+```
+
+### Visualize the original imagery
+
+```{r fig.cap="Color (RGB) orthomap visualization of PlanetScope imagery"}
+viewRGB(imgBrick, r=3,g=2,b=1)
+```
+
+#### Visualize the image in false color (IR-R-G as R-G-B).
+
+```{r fig.cap="False-color (IR-R-G as RGB) orthomap visualization of PlanetScope imagery", message=FALSE, warning=FALSE}
+viewRGB(imgBrick, r=4,g=3,b=2) # [mapview, raster]
+```
+
+
+### Set up prediction raster brick
+Needed to build a brick raster object to be used for prediction result
+[see raster::brick, etc.]
+
+```{r prepPrediction}
+# Can just use the imgStack and imgBrick already created
+```
+
+
+### Principle Component Analysis (PCA) & Visualization
+
+PCA creates new uncorrelated variables from correlated variables (bands in this case), 
+with the purpose of identifying the key dimensions that provide the most information.
+
+```{r fig.cap="Three strongest dimensions of PCA displayed as RGB"}
+rcv_PCA <- rasterPCA(imgBrick, nSamples=NULL, nComp = nlayers(imgBrick), spca = FALSE)
+rcv_PCA_stack <- stack(rcv_PCA$map)
+plotRGB(rcv_PCA_stack, r=1, g=2, b=3, stretch="lin")
+rcv_PCA$model
+
+```
+
+### Create an NDVI raster
+The normalized difference vegetation index is widely used to look at vegetation health.
+
+```{r fig.cap="NDVI"}
+# We already read in separate bands as rasters
+ndvi <- (nir - red)/(nir + red)
+mapview(ndvi)
+```
+
+### Normalize (Center & scale) raster images:
+Subtract the mean and divide by the standard deviation for each variable/feature/band.
+While the data don't need normalization to convert to normal distribution,
+the transformation is needed for the ML algorithms, especially for the neural networks.
+
+```{r normalize}
+brick_for_prediction_norm <- normImage(imgBrick)  # [RStoolbox]
+names(brick_for_prediction_norm) <- names(imgBrick)
+
+```
+
+### Create the same AOI that was used to crop the image, for display purposes
+
+```{r fig.cap="AOI polygon"}
+aoi <- matrix(data = c(-120.470, 39.975,  # Upper left corner
+                       -120.396, 39.975,  # Upper right corner
+                       -120.396, 39.918,  # Bottom right corner
+                       -120.470, 39.918,  # Bottom left corner
+                       -120.470, 39.975), # Upper left corner - closure
+              ncol = 2, byrow = TRUE)
+set_aoi(aoi)   # [getSpatialData]
+view_aoi()     # [getSpatialData]
+```
+
+
+### Training polygons
+We'll derive points from these polygons (digitized in ArcGIS, but could be created with other GIS programs). Later in the code, we'll write out the resulting predicted class counts percentages which we can compare with training point class percentages; if these differ significantly we might want to go in and edit the polygons, adding additional ones in classes under-represented by the training set.
+
+Read the training polygons in shapefiles with 'class' field digitized from multispectral drone imagery, and assign colors using hex codes. 
+
+```{r fig.cap="Training polygons"}
+
+poly <- read_sf(file.path(dtaPath, "train_polys.shp")) %>% 
+  mutate(id = as.integer(factor(class)))# %>%  # creates a numeric id useful for rasterization
+  #filter(!st_is_empty(geometry)) # one polygon was empty, remove it
+#setDT(poly@data)
+# Prepare colors for each class.
+cls_dt <- poly %>% 
+  st_drop_geometry() %>% 
+  distinct(class, id) %>%   # [raster]
+  arrange(id) %>%  # sorting required for the next step to work
+  mutate(hex = c(ARTCAN      = "#e9ffbe",
+                 ARTTRI      = "#ff7f7f",
+                 bare        = "#cdaa66",
+                 CARNEB      = "#00ffc5",
+                 CARUTR      = "#00a884",
+                 mesic       = "#ffff66",
+                 pavement    = "#b2b2b2",
+                 PINJEF      = "#007700",
+                 rocky       = "#222222",
+                 SALIX       = "#66ff33",
+                 water       = "#0033AA"))
+
+#view_aoi() +
+#mapview.Options(basemaps = c("OpenTopoMap", "Esri.WorldImagery"))
+mapview(poly, zcol = "class", col.regions = cls_dt$hex)
+poly_utm <- st_transform(poly, crs = st_crs(imgBrick))
+```
+
+### Extract training values from polygons at 10 m resolution
+1. Convert the vector polygons to raster using a template based on the image raster (10 m cells) 
+2. Convert the raster to points in a data.table format
+3. Use these points to extract values from the Sentinel bands.
+(Method from Stefan 2019)
+
+```{r extractTraining}
+# convert the training polygons to points on the raster grid
+rasterpolys <- rasterize(poly_utm, blue, field = "id")
+
+
+points <- rasterize(poly_utm, blue, field = "id") %>% 
+  stars::st_as_stars() %>% 
+  st_as_sf(as_points = TRUE) %>% 
+  left_join(cls_dt, by = c("layer" = "id")) # reattach class names
+
+# Extract band values to points
+points_rastervals <- brick_for_prediction_norm %>%
+  raster::extract(y = points) %>%
+  as.data.frame()
+
+# Attach band values to points AND drop spatial data
+points_with_rastervals <- bind_cols(points, points_rastervals) %>% 
+  st_drop_geometry()
+
+```
+
+### Histograms of predictors
+
+```{r fig.cap="Histograms of band values at training sites"}
+points_with_rastervals %>%
+  select(starts_with("B")) %>%
+  tidyr::pivot_longer(everything(), names_to = "band", values_to = "value") %>% 
+  ggplot() +
+  geom_histogram(aes(value)) +
+  geom_vline(xintercept = 0, color = "gray70") +
+  facet_wrap(facets = vars(band), ncol = 3)
+```
+
+### Split into training and testing subsets
+The training subset will be used for model tuning by cross-validation and grid search.
+The final models are tested using the test subset to build confusion matrices
+See caret package
+
+```{r splitTrainTest}
+dt_all <- points_with_rastervals %>% 
+  select(class, starts_with("B")) %>% 
+  mutate(class = factor(class))
+
+set.seed(321)
+# A stratified random split of the data
+idx_train <- createDataPartition(dt_all$class,    # [caret]
+                                 p = 0.7, # percentage of data as training
+                                 list = FALSE)
+dt_train <- dt_all[idx_train,]
+dt_test <- dt_all[-idx_train,]
+table(dt_train$class)
+table(dt_test$class)
+
+```
+
+
+## Fit models
+The next step is setting up and fitting models -- we'll look at:
+- Random Forest
+- Support Vector Machine (SVM)
+- Neural Network
+Note that the first part of this is the same for the other models.
+
+The training dataset is used for to cross-validate and model tuning. Once the optimal/best parameters were found a final model is fit to the entire training dataset using those findings. Then we test.
+
+Details are provided in the intro vignette of caret package <https://cran.r-project.org/web/packages/caret/vignettes/caret.html>
+
+Cross validation (CV) is used to compare models, using a number of folds which must be set for each model. Also see help(trainControl).
+
+```{r CVfolds}
+# create cross-validation folds (splits the data into n random groups)
+n_folds <- 10
+set.seed(321)
+folds <- createFolds(1:nrow(dt_train), k = n_folds)    # [caret]
+# Set the seed at each resampling iteration. Useful when running CV in parallel.
+seeds <- vector(mode = "list", length = n_folds + 1) # +1 for the final model
+for(i in 1:n_folds) seeds[[i]] <- sample.int(1000, n_folds)
+seeds[n_folds + 1] <- sample.int(1000, 1) # seed for the final model
+```
+
+### Set up model training controls (for all models)
+
+While the various model types have slightly different requirements, the following will work: 
+
+```{r ctrl}
+ctrl <- trainControl(summaryFunction = defaultSummary,   # [caret]   # was multiClassSummary -- causes rf and nn to fail
+                     method = "cv",
+                     number = n_folds,
+                     search = "grid",
+                     classProbs = TRUE, # not implemented for SVM; will just get a warning
+                     savePredictions = TRUE,
+                     index = folds,
+                     seeds = seeds)
+```
+
+
+### Support Vector Machine (SVM) model
+
+“L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
+
+The trainControl parameter setting importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, this doesn't create a problem, so it was easier to just leave it the same, and it will be useful for random forests.
+
+#### Train SVM model
+[After reinstalling caret, parallel tools makeCluster or detectCores create errors, 
+but parallel processing isn't essential for this size dataset]
+
+```{r svmTrain}
+# Grid of tuning parameters
+svm_grid <- expand.grid(cost = c(0.2, 0.5, 1),
+                        Loss = c("L1", "L2"))
+model_svm <- caret::train(class ~ . , method = "svmLinear3", data = dt_train,
+                         allowParallel = FALSE,   # since parallel now fails
+                         tuneGrid = svm_grid,
+                         trControl = ctrl)
+registerDoSEQ()   # [foreach]
+saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
+
+```
+
+#### SVM model summary & confusion matrix
+The **confusion matrix** provides the number of matches and "confusions" exist between the test data and what the model predicts. The main diagonal shows the number of matches and eveywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
+
+```{r fig.cap="SVM tuning results and accuracy"}
+model_svm$times$everything # total computation time
+##    user  system elapsed 
+##    1.44    0.31   16.55
+plot(model_svm) # tuning results
+
+# The confusion matrix using the test dataset
+cm_svm <- confusionMatrix(data = predict(model_svm, newdata = dt_test),  # [caret]
+                          dt_test$class)
+cm_svm
+```
+
+#### SVM variable importance
+Importance values indicate how much drop in performance occurs when the predictor is not used. 
+
+```{r fig.cap = "SVM importance"}
+caret::varImp(model_svm)$importance %>%
+  as.matrix %>% 
+  plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
+          width = 350, height = 300)
+```
+
+
+#### SVM prediction map
+
+```{r fig.cap="SVM Prediction"}
+predict_svm <- raster::predict(object = brick_for_prediction_norm,
+                                 model = model_svm, type = 'raw')
+mapView(predict_svm, col.regions = cls_dt$hex)
+writeRaster(predict_svm, paste0(dtaPath, "/predict_svm", imgDate,".tif"), datatype = "INT2S", TFW = YES, overwrite=TRUE)
+```
+
+#### Compare training vs SVM predicted % cover
+... to see if training allocation needs adjusting to be more comparable.
+
+```{r checkCoverPcts}
+classFactor <- factor(points_with_rastervals$class)
+training <- bind_cols(as.data.frame(summary(classFactor),make.names=T),as.data.frame(freq(predict_svm))) %>%
+  mutate(pct_train = `summary(classFactor)`/sum(`summary(classFactor)`),
+         pct_predict = count/sum(count))
+training
+```
+
+
+
+### Random Forest
+
+```{r rf}
+model_rf <- caret::train(class ~ . , method = "rf", data = dt_train,
+                         importance = TRUE, # passed to randomForest()
+                         # run CV process in parallel;
+                         # see https://stackoverflow.com/a/44774591/5193830
+                         allowParallel = FALSE,
+                         tuneGrid = data.frame(mtry = c(2, 3, 4, 5, 8)),
+                         trControl = ctrl)
+registerDoSEQ()
+saveRDS(model_rf, file = "./cache/model_rf.rds")
+```
+
+#### RF confusion matrix
+
+```{r fig.cap="RF tuning results and accuracy"}
+model_rf$times$everything # total computation time
+plot(model_rf) # tuning results
+cm_rf <- confusionMatrix(data = predict(model_rf, newdata = dt_test),
+                         dt_test$class)
+cm_rf
+model_rf$finalModel
+```
+
+#### RF predictor importance
+
+```{r fig.cap="rf variable importance"}
+caret::varImp(model_rf)$importance %>%
+  as.matrix %>% 
+  plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
+          width = 350, height = 300)
+```
+This method does the same thing, specific to the random forest model:
+
+```{r rf_Importance}
+randomForest::importance(model_rf$finalModel) %>% 
+  .[, - which(colnames(.) %in% c("MeanDecreaseAccuracy", "MeanDecreaseGini"))] %>% 
+  plot_ly(x = colnames(.), y = rownames(.), z = ., type = "heatmap",
+          width = 350, height = 300)
+```
+
+```{r fig.cap = "rf final model"}
+randomForest::varImpPlot(model_rf$finalModel)
+```
+
+
+
+```{r predictRFmap}
+predict_rf <- raster::predict(object = brick_for_prediction_norm,
+                                 model = model_rf, type = 'raw')
+mapView(predict_rf, col.regions = cls_dt$hex)
+```
+
+### Neural Network
+
+```{r nn, message=F, warning=F, results=F }
+# Grid of tuning parameters
+nnet_grid <- expand.grid(size = c(5, 10, 15),
+                         decay = c(0.001, 0.01, 0.1))
+
+#cl <- makeCluster(3/4 * detectCores())
+#registerDoParallel(cl)
+model_nnet <- train(class ~ ., method = 'nnet', data = dt_train,
+                    importance = TRUE,
+                    maxit = 1000, # set high enough so to be sure that it converges
+                    allowParallel = TRUE,
+                    tuneGrid = nnet_grid,
+                    entropy = TRUE,
+                    trControl = ctrl)
+#stopCluster(cl); remove(cl)
+registerDoSEQ()
+#saveRDS(model_nnet, file = "./cache/model_nnet.rds")
+model_nnet$times$everything # total computation time
+saveRDS(model_nnet, file = "./cache/model_nn.rds")
+```
+
+
+```{r fig.cap = "Neural network tuning results and accuracy"}
+
+plot(model_nnet) # tuning results
+
+# The confusion matrix using the test dataset
+cm_nnet <- confusionMatrix(data = predict(model_nnet, newdata = dt_test),
+                           dt_test$class)
+cm_nnet
+
+
+cols <- grDevices::colorRampPalette(colors = brewer.pal(n = 9, name = "YlGnBu"))(10)
+library(NeuralNetTools)
+garson(model_nnet) +
+  scale_y_continuous('Rel. Importance') + 
+  scale_fill_gradientn(colours = cols)
+```
+
+```{r fig.cap="Neural network prediction"}
+predict_nnet <- raster::predict(object = brick_for_prediction_norm,
+                                  model = model_nnet, type = 'raw')
+mapView(predict_nnet, col.regions = cls_dt$hex)
+```
+

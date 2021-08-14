@@ -14,6 +14,8 @@ The imagery classification approach adds to this model an input preparation proc
 - A training set of points and polygons are created that represent areas of known classification such as land cover like forest or wetland, used to identify values of the predictor variables (e.g. imagery bands)
 - A predicted raster is created using the model applied to the original rasters.
 
+This chapter delves into methods in the subdiscipline of *remote sensing* which students are encouraged to learn more about in courses such as GEOG 610 and 611 at San Francisco State University (@SFSU).  Some key things to learn more about are the nature of the electromagnetic spectrum and especially bands of that spectrum that are informative for land cover and especially vegetation detection, and the process of image classification.
+
 ### Validation, creating a training set and the "overfit model" problem
 
 An important part of the imagery classification process is *validation*, where we look at how well the model works. The way this is done is pretty easy to understand, and requires have *testing* data in addition to the *training* data mentioned above. Testing data can be created in a variety of ways -- we'll randomly pull out a percentage of our training data and not use it for training, only for testing. Then we'll employ a *confusion matrix* and various measures of accuracy to see how well the model predicts the testing data.
@@ -27,7 +29,7 @@ In thinking about the concept of overfit models and selecting out training (and 
 
 Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
 
-- @stefan 
+- @stefan -- the source of my original inspiration and basic methods used in this section. This paper also describes clipping the data and some ideas on web scraping Sentinel-2 imagery from Copernicus.
 - @maxwell
 - @caret
 - various sources from Google searches such as @MLtuning
@@ -35,7 +37,7 @@ Since machine learning algorithms are very black boxy, getting them working righ
 As with everything else in R, the specific coding methods used vary with the coder and what they're used to using. If a method works, it's certainly ok to keep using it, but where it can be clarified with clearer code such as from the tidyverse or sf, it may make it easier to understand and improve on. 
 
 This code accesses Sentinel-2 imagery downloaded from @Copernicus covering 
-Red Clover Valley, and then cropped to that site in a previous script, and saved to 
+Red Clover Valley, where we are doing research on biogeochemical cycles and carbon sequestration from hydrologic restoration with The Sierra Fund (@TSF_CV), and then cropped to that site in a previous script, and saved to 
 folders named in the form cropYYYYMMDD, such as "crop20210708".
 The following code chunk specifies the date, with multiple cropped images stored in iGIScData.
 
@@ -77,6 +79,8 @@ rasterOptions(tmpdir = "./cache/temp")
 
 ### Read all 10m & 20m bands into a list of 10 bands
 
+As documented at @Copernicus, Sentinel-2 imagery is collected at three resolutions, with the most bands at the coarsest (60m) resolution. The bands added at that coarsest resolution are not critical for our work as they relate to oceanographic and atmospheric research, and our focus will be on land cover and vegetation in a terrestrial area. So we'll work with four bands at 10m and an additional six bands at 20m resolution:
+
 10 m bands
 
 - B02 - Blue	0.490 $\mu$m
@@ -111,11 +115,20 @@ str_extract(sapply(rst_lst, names), "B.{2}") # shows the order of bands, with B0
 
 ### Visualize the original imagery
 
+Displaying the imagery 3 bands at a time (displayed as RGB on our computer screen) is always a good place to start, and two especially useful band sets are RGB itself -- so looking like a conventional color aerial photography -- and "false color" that includes a band normally invisible to our eyes, such as near infrared that reflects chlorophyll in healthy plants.
+
+A RasterBrick is commonly used to store multiband imagery, and we'll create a brick from the imagery currently stored in a list. 
+
 ```{r fig.cap="Color (RGB) orthomap visualization of Sentinel-2 imagery"}
 viewRGB(brick(rst_lst[1:3]), r = 3, g = 2, b = 1)  # [mapview::viewRGB, raster::brick]
 ```
 
 #### Visualize the image in false color (IR-R-G as R-G-B).
+
+In standard "false color" surface-reflected near infrared is displayed as red, reflected red is displayed as green and green is displaed as blue.  Some advantages of this false color display include:
+- Blue is not included at all, which helps reduce haze
+- Water bodies absorb NIR, so appear very dark in the image
+- Chlorophyll strongly reflects NIR, so healthy vegetation is bright red
 
 ```{r fig.cap="False-color (IR-R-G as RGB) orthomap visualization of Sentinel-2 imagery", message=FALSE, warning=FALSE}
 viewRGB(brick(rst_lst[c(2,3,7)]), r = 3, g = 2, b = 1)  # [mapview, raster]
@@ -165,6 +178,7 @@ with the purpose of identifying the key dimensions that provide the most informa
 rcv_PCA <- rasterPCA(brick_for_prediction, nSamples=NULL, nComp = nlayers(brick_for_prediction), spca = FALSE)
 rcv_PCA_stack <- stack(rcv_PCA$map)
 plotRGB(rcv_PCA_stack, r=1, g=2, b=3, stretch="lin")
+#mapview(rcv_PCA_stack)
 rcv_PCA$model
 
 ```
@@ -179,10 +193,8 @@ ndvi <- (nir - red)/(nir + red)
 mapview(ndvi)
 ```
 
-### Normalize (Center & scale) raster images:
-Subtract the mean and divide by the standard deviation for each variable/feature/band.
-While the data don't need normalization to convert to normal distribution,
-the transformation is needed for the ML algorithms, especially for the neural networks.
+### Normalize (center & scale) raster images:
+Subtract the mean and divide by the standard deviation for each variable/feature/band. While the data don't need normalization to convert to normal distribution, the transformation is needed for the ML algorithms, especially for the neural networks.
 
 ```{r normalize}
 brick_for_prediction_norm <- normImage(brick_for_prediction)  # [RStoolbox]
@@ -193,11 +205,11 @@ names(brick_for_prediction_norm) <- names(brick_for_prediction)
 ### Create the same AOI that was used to crop the image, for display purposes
 
 ```{r fig.cap="AOI polygon"}
-aoi <- matrix(data = c(-120.470, 39.975,  # Upper left corner
-                       -120.396, 39.975,  # Upper right corner
-                       -120.396, 39.918,  # Bottom right corner
-                       -120.470, 39.918,  # Bottom left corner
-                       -120.470, 39.975), # Upper left corner - closure
+aoi <- matrix(data = c(-120.470, 39.975,  # top left
+                       -120.396, 39.975,  # top right
+                       -120.396, 39.918,  # bottom right
+                       -120.470, 39.918,  # bottom left
+                       -120.470, 39.975), # close polygon
               ncol = 2, byrow = TRUE)
 set_aoi(aoi)   # [getSpatialData]
 view_aoi()     # [getSpatialData]
@@ -208,6 +220,16 @@ view_aoi()     # [getSpatialData]
 We'll derive points from these polygons (digitized in ArcGIS, but could be created with other GIS programs). Later in the code, we'll write out the resulting predicted class counts percentages which we can compare with training point class percentages; if these differ significantly we might want to go in and edit the polygons, adding additional ones in classes under-represented by the training set.
 
 Read the training polygons in shapefiles with 'class' field digitized from multispectral drone imagery, and assign colors using hex codes. 
+
+The purpose of the classification we'll use is on vegetation that provides a signal for meadow restoration where the goal is to sequester carbon.  Sedge (*Carex*) species such as *C. nebrascensis* and *C. utriculatata* as well as are some rush (*Juncus* and *Eleocharis*) species. For these herbaceous species where there's quite a mix of plants in particular areas that could be mapped, we try to map to the California Native Plant Society (@CNPS) *alliances* of associated species. These alliances are often named for a dominant species like *Carex nebrascensis* and we've labeled these with 6-character names such as "CARNEB", ranging from driest to wettest:
+
+- ARTTRI : *Artemisia tridentata*, Big sagebrush (typical xeric)
+- mesic : many possible alliances of grasses and forbs
+- ARTCAN : *Artemisia cana*, Silver sagebrush wet shrubland
+- CARNEB : *Carex nebrascensis*, Nebraska sedge meadows
+- CARUTR : *Carex (utriculata, vesicaria)*, Beaked sedge and blister sedge meadows
+
+Other categories are two trees, willow (SALIX) and Jeffrey Pine (PINJEF), and various other land covers such as bare, pavement, water, and rocky.
 
 ```{r fig.cap="Training polygons"}
 
@@ -220,15 +242,17 @@ cls_dt <- poly %>%
   st_drop_geometry() %>% 
   distinct(class, id) %>%   # [raster]
   arrange(id) %>%  # sorting required for the next step to work
-  mutate(hex = c(bare        = "#ffebaf",
-                 forest      = "#008800",
-                 hydric      = "#99ffcc",
+  mutate(hex = c(ARTCAN      = "#e9ffbe",
+                 ARTTRI      = "#ff7f7f",
+                 bare        = "#cdaa66",
+                 CARNEB      = "#00ffc5",
+                 CARUTR      = "#00a884",
                  mesic       = "#ffff66",
-                 outcrop     = "#222222",
-                 pavement    = "#999999",
-                 water       = "#0033AA",
-                 willow      = "#66ff33",
-                 xeric       = "#ff7f7f"))
+                 pavement    = "#b2b2b2",
+                 PINJEF      = "#007700",
+                 rocky       = "#222222",
+                 SALIX       = "#66ff33",
+                 water       = "#0033AA"))
 
 #view_aoi() +
 #mapview.Options(basemaps = c("OpenTopoMap", "Esri.WorldImagery"))
@@ -240,7 +264,7 @@ poly_utm <- st_transform(poly, crs = st_crs(rst_lst[[1]]))
 1. Convert the vector polygons to raster using a template based on the image raster (10 m cells) 
 2. Convert the raster to points in a data.table format
 3. Use these points to extract values from the Sentinel bands.
-(Method from Stefan 2019)
+(Method from Stefan 2019 (@Stefan)
 
 ```{r extractTraining}
 # convert the training polygons to points on the raster grid
@@ -276,9 +300,9 @@ points_with_rastervals %>%
 ```
 
 ### Split into training and testing subsets
-The training subset will be used for model tuning by cross-validation and grid search.
-The final models are tested using the test subset to build confusion matrices
-See caret package
+The training polygons needs to be split into two subsets, one for training, the other for validation (testing).  The training subset will further be optimized using cross validation and grid search.  Then the final optimized models are validated using the test subset to build confusion matrices and accuracy statistics.
+
+See the @caret package for documentation on the various steps and settings. 
 
 ```{r splitTrainTest}
 dt_all <- points_with_rastervals %>% 
@@ -288,7 +312,7 @@ dt_all <- points_with_rastervals %>%
 set.seed(321)
 # A stratified random split of the data
 idx_train <- createDataPartition(dt_all$class,    # [caret]
-                                 p = 0.7, # percentage of data as training
+                                 p = 0.7, # percentage of data used for training
                                  list = FALSE)
 dt_train <- dt_all[idx_train,]
 dt_test <- dt_all[-idx_train,]
@@ -298,18 +322,18 @@ table(dt_test$class)
 ```
 
 
-## Fit models
+## Setting Up and Fitting Models
 The next step is setting up and fitting models -- we'll look at:
-- Random Forest
 - Support Vector Machine (SVM)
+- Random Forest
 - Neural Network
 Note that the first part of this is the same for the other models.
 
-The training dataset is used for to cross-validate and model tuning. Once the optimal/best parameters were found a final model is fit to the entire training dataset using those findings. Then we test.
+The training dataset is used for to cross-validate and model tuning. Once the optimal/best parameters were found a final model is fit to the entire training dataset using those findings. Then we validate.
 
 Details are provided in the intro vignette of caret package <https://cran.r-project.org/web/packages/caret/vignettes/caret.html>
 
-Cross validation (CV) is used to compare models, using a number of folds which must be set for each model. Also see help(trainControl).
+Cross validation (CV) is used to compare models for optimization, using a number of folds which must be set for each model. Also see help(trainControl).
 
 ```{r CVfolds}
 # create cross-validation folds (splits the data into n random groups)
@@ -324,7 +348,7 @@ seeds[n_folds + 1] <- sample.int(1000, 1) # seed for the final model
 
 ### Set up model training controls (for all models)
 
-While the various model types have slightly different requirements, the following will work: 
+While the various model types have slightly different requirements, the following will work reasonably well for all: 
 
 ```{r ctrl}
 ctrl <- trainControl(summaryFunction = defaultSummary,   # [caret]   # was multiClassSummary -- causes rf and nn to fail
@@ -340,7 +364,7 @@ ctrl <- trainControl(summaryFunction = defaultSummary,   # [caret]   # was multi
 
 ### Support Vector Machine (SVM) model
 
-“L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
+The Support Vector Machine model is one of the simplest machine learning algorithms.   “L2 Regularized Support Vector Machine (dual) with Linear Kernel”. To try other SVM options see SVM tags.
 
 The trainControl parameter setting importance = TRUE is not applicable for SVM. Same for class probabilities classProbs = TRUE defined in ctrl above. However, this doesn't create a problem, so it was easier to just leave it the same, and it will be useful for random forests.
 
@@ -362,7 +386,7 @@ saveRDS(model_svm, file = "./cache/model_svm.rds")   # FIX LATER
 ```
 
 #### SVM model summary & confusion matrix
-The **confusion matrix** provides the number of matches and "confusions" exist between the test data and what the model predicts. The main diagonal shows the number of matches and eveywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
+The **confusion matrix** provides the number of matches and "confusions" that exist between the test data and what the model predicts. The diagonal shows the number of matches and everywhere else is a mismatch. Displayed below the matrix are overall statistics such as accuracy and Kappa statistic. Then a table of statistics by class is displayed; **sensitivity** is the "true positive rate" where the model is correct in detecting the class, while **specificity** is the "true negative rate" where the model correctly rejects the class.
 
 ```{r fig.cap="SVM tuning results and accuracy"}
 model_svm$times$everything # total computation time
@@ -414,8 +438,6 @@ training
 ```{r rf}
 model_rf <- caret::train(class ~ . , method = "rf", data = dt_train,
                          importance = TRUE, # passed to randomForest()
-                         # run CV process in parallel;
-                         # see https://stackoverflow.com/a/44774591/5193830
                          allowParallel = FALSE,
                          tuneGrid = data.frame(mtry = c(2, 3, 4, 5, 8)),
                          trControl = ctrl)
@@ -495,13 +517,16 @@ plot(model_nnet) # tuning results
 cm_nnet <- confusionMatrix(data = predict(model_nnet, newdata = dt_test),
                            dt_test$class)
 cm_nnet
+```
 
-
-cols <- grDevices::colorRampPalette(colors = brewer.pal(n = 9, name = "YlGnBu"))(10)
-library(NeuralNetTools)
-garson(model_nnet) +
-  scale_y_continuous('Rel. Importance') + 
-  scale_fill_gradientn(colours = cols)
+```{r include=F}
+#cols <- grDevices::colorRampPalette(colors = brewer.pal(n = 11, name = "YlGnBu"))(10)
+#library(NeuralNetTools)
+## The following failed with new classes
+## Error in wts_in[[grep("out 1", names(wts_in))]] : recursive indexing failed at level 2
+#garson(model_nnet) +
+#  scale_y_continuous('Rel. Importance') + 
+#  scale_fill_gradientn(colours = cols)
 ```
 
 ```{r fig.cap="Neural network prediction"}

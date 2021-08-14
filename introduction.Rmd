@@ -334,7 +334,7 @@ codes["italy"]
 ```
 
 ### Lists
-Lists can be heterogeneous, with multiple class types. Lists are actually used a lot in R, but we won't see them for a while.
+Lists can be heterogeneous, with multiple class types. Lists are actually used a lot in R, and are created by many operations, but we'll avoid them for a while...
 
 ### Matrices
 Vectors are commonly used as a column in a matrix (or as we'll see, a data frame), like a variable
