@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-08-12" />
+<meta name="date" content="2021-08-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -75,7 +75,7 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
-<script src="libs/ndvi_843091-1/data_stars_ndvi75cae4.txt"></script>
+<script src="libs/ndvi_03187b-1/data_stars_ndvi4dac09.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
@@ -293,6 +293,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.2" data-path="data-transformation.html"><a href="data-transformation.html#set-operations"><i class="fa fa-check"></i><b>5.2</b> Set Operations</a></li>
 <li class="chapter" data-level="5.3" data-path="data-transformation.html"><a href="data-transformation.html#binding-rows-and-columns"><i class="fa fa-check"></i><b>5.3</b> Binding Rows and Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="data-transformation.html"><a href="data-transformation.html#pivotting-data-frames"><i class="fa fa-check"></i><b>5.4</b> Pivotting data frames</a></li>
+<li class="chapter" data-level="5.5" data-path="data-transformation.html"><a href="data-transformation.html#data-wrangling-exercise"><i class="fa fa-check"></i><b>5.5</b> Data wrangling exercise</a></li>
 </ul></li>
 <li class="part"><span><b>II Spatial</b></span></li>
 <li class="chapter" data-level="6" data-path="spatial-data-and-maps.html"><a href="spatial-data-and-maps.html"><i class="fa fa-check"></i><b>6</b> Spatial Data and Maps</a>
@@ -444,8 +445,8 @@ see ?family to see those supported, including binomial, gaussian, poisson, etc.<
 <li>gam(y ~ x) generalized additive models</li>
 <li>tree(y ~ x) or rpart(y ~ x) regression/classification trees</li>
 </ul>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="modeling-in-r.html#cb431-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TEMPERATURE <span class="sc">~</span> ELEVATION, <span class="at">data =</span> sierraFeb)</span>
-<span id="cb431-2"><a href="modeling-in-r.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="modeling-in-r.html#cb432-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(TEMPERATURE <span class="sc">~</span> ELEVATION, <span class="at">data =</span> sierraFeb)</span>
+<span id="cb432-2"><a href="modeling-in-r.html#cb432-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = TEMPERATURE ~ ELEVATION, data = sierraFeb)
@@ -459,13 +460,14 @@ see ?family to see those supported, including binomial, gaussian, poisson, etc.<
 ## (Intercept) 11.8813804  0.3825302   31.06   &lt;2e-16 ***
 ## ELEVATION   -0.0061018  0.0002968  -20.56   &lt;2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 1.533 on 60 degrees of freedom
 ## Multiple R-squared:  0.8757, Adjusted R-squared:  0.8736 
 ## F-statistic: 422.6 on 1 and 60 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Probably the most important statistic is the p value for the predictor variable ELEVATION, which in this case is very small &lt;2e-16.</p>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <pre><code>## 
 ## Call:
 ## lm(formula = TEMPERATURE ~ ELEVATION, data = sierraFeb)
@@ -474,15 +476,15 @@ see ?family to see those supported, including binomial, gaussian, poisson, etc.<
 ## (Intercept)    ELEVATION  
 ##   11.881380    -0.006102</code></pre>
 <p><strong>Making Predictions</strong></p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="modeling-in-r.html#cb434-1" aria-hidden="true" tabindex="-1"></a>eqn</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="modeling-in-r.html#cb435-1" aria-hidden="true" tabindex="-1"></a>eqn</span></code></pre></div>
 <pre><code>## [1] &quot;temperature = 11.88 + -0.006*elevation + e&quot;</code></pre>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="modeling-in-r.html#cb436-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> model1<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
-<span id="cb436-2"><a href="modeling-in-r.html#cb436-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> model1<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
-<span id="cb436-3"><a href="modeling-in-r.html#cb436-3" aria-hidden="true" tabindex="-1"></a>elevations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">1500</span>, <span class="dv">2000</span>)</span>
-<span id="cb436-4"><a href="modeling-in-r.html#cb436-4" aria-hidden="true" tabindex="-1"></a>elevations</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="modeling-in-r.html#cb437-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> model1<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb437-2"><a href="modeling-in-r.html#cb437-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> model1<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb437-3"><a href="modeling-in-r.html#cb437-3" aria-hidden="true" tabindex="-1"></a>elevations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">1500</span>, <span class="dv">2000</span>)</span>
+<span id="cb437-4"><a href="modeling-in-r.html#cb437-4" aria-hidden="true" tabindex="-1"></a>elevations</span></code></pre></div>
 <pre><code>## [1]  500 1000 1500 2000</code></pre>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="modeling-in-r.html#cb438-1" aria-hidden="true" tabindex="-1"></a>tempEstimate <span class="ot">&lt;-</span> a <span class="sc">+</span> b <span class="sc">*</span> elevations</span>
-<span id="cb438-2"><a href="modeling-in-r.html#cb438-2" aria-hidden="true" tabindex="-1"></a>tempEstimate</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="modeling-in-r.html#cb439-1" aria-hidden="true" tabindex="-1"></a>tempEstimate <span class="ot">&lt;-</span> a <span class="sc">+</span> b <span class="sc">*</span> elevations</span>
+<span id="cb439-2"><a href="modeling-in-r.html#cb439-2" aria-hidden="true" tabindex="-1"></a>tempEstimate</span></code></pre></div>
 <pre><code>## [1]  8.8304692  5.7795580  2.7286468 -0.3222645</code></pre>
 <div id="analysis-of-covariance" class="section level3" number="8.1.1">
 <h3><span class="header-section-number">8.1.1</span> Analysis of Covariance</h3>
@@ -513,31 +515,38 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 <p><code>log10(S) ~ strtype * log10(Q)</code> … interaction between covariate and factor</p>
 <p><code>log10(S) ~ strtype + log10(Q)</code> … no interaction, parallel slopes</p>
 <p>If models are not significantly different, remove interaction term due to parsimony, and satisfies this ANCOVA requirement.</p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="modeling-in-r.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb440-2"><a href="modeling-in-r.html#cb440-2" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;streams.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
-<span id="cb440-3"><a href="modeling-in-r.html#cb440-3" aria-hidden="true" tabindex="-1"></a>streams <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath)</span>
-<span id="cb440-4"><a href="modeling-in-r.html#cb440-4" aria-hidden="true" tabindex="-1"></a>streams<span class="sc">$</span>strtype <span class="ot">&lt;-</span> <span class="fu">factor</span>(streams<span class="sc">$</span>type, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Anastomosing&quot;</span>,<span class="st">&quot;Braided&quot;</span>,<span class="st">&quot;Meandering&quot;</span>))</span>
-<span id="cb440-5"><a href="modeling-in-r.html#cb440-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(streams)</span></code></pre></div>
-<pre><code>##      type                 Q                S                    strtype  
-##  Length:41          Min.   :     6   Min.   :0.000011   Anastomosing: 8  
-##  Class :character   1st Qu.:    15   1st Qu.:0.000100   Braided     :12  
-##  Mode  :character   Median :    40   Median :0.000700   Meandering  :21  
-##                     Mean   :  4159   Mean   :0.001737                    
-##                     3rd Qu.:   550   3rd Qu.:0.002800                    
-##                     Max.   :100000   Max.   :0.009500</code></pre>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="modeling-in-r.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
-<span id="cb442-2"><a href="modeling-in-r.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modeling-in-r.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># needed for the trans_format function below</span></span>
-<span id="cb443-2"><a href="modeling-in-r.html#cb443-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
-<span id="cb443-3"><a href="modeling-in-r.html#cb443-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb443-4"><a href="modeling-in-r.html#cb443-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
-<span id="cb443-5"><a href="modeling-in-r.html#cb443-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))) <span class="sc">+</span></span>
-<span id="cb443-6"><a href="modeling-in-r.html#cb443-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
-<span id="cb443-7"><a href="modeling-in-r.html#cb443-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x)))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-121-2.png" width="672" /></p>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modeling-in-r.html#cb444-1" aria-hidden="true" tabindex="-1"></a>ancova <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">*</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
-<span id="cb444-2"><a href="modeling-in-r.html#cb444-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ancova)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="modeling-in-r.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb441-2"><a href="modeling-in-r.html#cb441-2" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>,<span class="st">&quot;streams.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
+<span id="cb441-3"><a href="modeling-in-r.html#cb441-3" aria-hidden="true" tabindex="-1"></a>streams <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath)</span>
+<span id="cb441-4"><a href="modeling-in-r.html#cb441-4" aria-hidden="true" tabindex="-1"></a>streams<span class="sc">$</span>strtype <span class="ot">&lt;-</span> <span class="fu">factor</span>(streams<span class="sc">$</span>type, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Anastomosing&quot;</span>,<span class="st">&quot;Braided&quot;</span>,<span class="st">&quot;Meandering&quot;</span>))</span>
+<span id="cb441-5"><a href="modeling-in-r.html#cb441-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(streams)</span></code></pre></div>
+<pre><code>##      type                 Q                S           
+##  Length:41          Min.   :     6   Min.   :0.000011  
+##  Class :character   1st Qu.:    15   1st Qu.:0.000100  
+##  Mode  :character   Median :    40   Median :0.000700  
+##                     Mean   :  4159   Mean   :0.001737  
+##                     3rd Qu.:   550   3rd Qu.:0.002800  
+##                     Max.   :100000   Max.   :0.009500  
+##          strtype  
+##  Anastomosing: 8  
+##  Braided     :12  
+##  Meandering  :21  
+##                   
+##                   
+## </code></pre>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="modeling-in-r.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
+<span id="cb443-2"><a href="modeling-in-r.html#cb443-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="modeling-in-r.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># needed for the trans_format function below</span></span>
+<span id="cb444-2"><a href="modeling-in-r.html#cb444-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(streams, <span class="fu">aes</span>(Q, S, <span class="at">color=</span>strtype)) <span class="sc">+</span></span>
+<span id="cb444-3"><a href="modeling-in-r.html#cb444-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb444-4"><a href="modeling-in-r.html#cb444-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
+<span id="cb444-5"><a href="modeling-in-r.html#cb444-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x))) <span class="sc">+</span></span>
+<span id="cb444-6"><a href="modeling-in-r.html#cb444-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">trans=</span><span class="fu">log10_trans</span>(),</span>
+<span id="cb444-7"><a href="modeling-in-r.html#cb444-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">trans_format</span>(<span class="st">&quot;log10&quot;</span>, <span class="fu">math_format</span>(<span class="dv">10</span><span class="sc">^</span>.x)))</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-111-2.png" width="672" /></p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="modeling-in-r.html#cb445-1" aria-hidden="true" tabindex="-1"></a>ancova <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">*</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
+<span id="cb445-2"><a href="modeling-in-r.html#cb445-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ancova)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = log10(S) ~ strtype * log10(Q), data = streams)
@@ -547,20 +556,28 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ## -0.63636 -0.13903 -0.00032  0.12652  0.60750 
 ## 
 ## Coefficients:
-##                            Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                -3.91819    0.31094 -12.601 1.45e-14 ***
-## strtypeBraided              2.20085    0.35383   6.220 3.96e-07 ***
-## strtypeMeandering           1.63479    0.33153   4.931 1.98e-05 ***
-## log10(Q)                   -0.43537    0.18073  -2.409   0.0214 *  
-## strtypeBraided:log10(Q)    -0.01488    0.19102  -0.078   0.9384    
-## strtypeMeandering:log10(Q)  0.05183    0.18748   0.276   0.7838    
+##                            Estimate Std. Error t value
+## (Intercept)                -3.91819    0.31094 -12.601
+## strtypeBraided              2.20085    0.35383   6.220
+## strtypeMeandering           1.63479    0.33153   4.931
+## log10(Q)                   -0.43537    0.18073  -2.409
+## strtypeBraided:log10(Q)    -0.01488    0.19102  -0.078
+## strtypeMeandering:log10(Q)  0.05183    0.18748   0.276
+##                            Pr(&gt;|t|)    
+## (Intercept)                1.45e-14 ***
+## strtypeBraided             3.96e-07 ***
+## strtypeMeandering          1.98e-05 ***
+## log10(Q)                     0.0214 *  
+## strtypeBraided:log10(Q)      0.9384    
+## strtypeMeandering:log10(Q)   0.7838    
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.2656 on 35 degrees of freedom
 ## Multiple R-squared:  0.9154, Adjusted R-squared:  0.9033 
 ## F-statistic: 75.73 on 5 and 35 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="modeling-in-r.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="modeling-in-r.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: log10(S)
@@ -570,10 +587,11 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ## strtype:log10(Q)  2  0.0511  0.0255   0.3619    0.6989    
 ## Residuals        35  2.4688  0.0705                       
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="modeling-in-r.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now an additive model, which does not have that interaction</span></span>
-<span id="cb448-2"><a href="modeling-in-r.html#cb448-2" aria-hidden="true" tabindex="-1"></a>ancova2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">+</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
-<span id="cb448-3"><a href="modeling-in-r.html#cb448-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova2)</span></code></pre></div>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="modeling-in-r.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now an additive model, which does not have that interaction</span></span>
+<span id="cb449-2"><a href="modeling-in-r.html#cb449-2" aria-hidden="true" tabindex="-1"></a>ancova2 <span class="ot">=</span> <span class="fu">lm</span>(<span class="fu">log10</span>(S)<span class="sc">~</span>strtype<span class="sc">+</span><span class="fu">log10</span>(Q), <span class="at">data=</span>streams)</span>
+<span id="cb449-3"><a href="modeling-in-r.html#cb449-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova2)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: log10(S)
@@ -582,8 +600,9 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ## log10(Q)   1  8.2658  8.2658  121.37  3.07e-13 ***
 ## Residuals 37  2.5199  0.0681                      
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="modeling-in-r.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova,ancova2)   </span></code></pre></div>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="modeling-in-r.html#cb451-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova,ancova2)   </span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: log10(S) ~ strtype * log10(Q)
@@ -591,11 +610,11 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
 ## 1     35 2.4688                           
 ## 2     37 2.5199 -2 -0.051051 0.3619 0.6989</code></pre>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="modeling-in-r.html#cb452-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># not significantly different, so model simplification is justified</span></span>
-<span id="cb452-2"><a href="modeling-in-r.html#cb452-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb452-3"><a href="modeling-in-r.html#cb452-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we remove the strtype term</span></span>
-<span id="cb452-4"><a href="modeling-in-r.html#cb452-4" aria-hidden="true" tabindex="-1"></a>ancova3 <span class="ot">=</span> <span class="fu">update</span>(ancova2, <span class="sc">~</span> . <span class="sc">-</span> strtype)  </span>
-<span id="cb452-5"><a href="modeling-in-r.html#cb452-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova2,ancova3)  </span></code></pre></div>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="modeling-in-r.html#cb453-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># not significantly different, so model simplification is justified</span></span>
+<span id="cb453-2"><a href="modeling-in-r.html#cb453-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb453-3"><a href="modeling-in-r.html#cb453-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we remove the strtype term</span></span>
+<span id="cb453-4"><a href="modeling-in-r.html#cb453-4" aria-hidden="true" tabindex="-1"></a>ancova3 <span class="ot">=</span> <span class="fu">update</span>(ancova2, <span class="sc">~</span> . <span class="sc">-</span> strtype)  </span>
+<span id="cb453-5"><a href="modeling-in-r.html#cb453-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ancova2,ancova3)  </span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: log10(S) ~ strtype + log10(Q)
@@ -604,10 +623,11 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ## 1     37  2.5199                                  
 ## 2     39 25.5099 -2    -22.99 168.78 &lt; 2.2e-16 ***
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="modeling-in-r.html#cb454-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Goes too far.  Removing the strtype creates a significantly different model</span></span>
-<span id="cb454-2"><a href="modeling-in-r.html#cb454-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb454-3"><a href="modeling-in-r.html#cb454-3" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(ancova)</span></code></pre></div>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="modeling-in-r.html#cb455-1" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Goes too far.  Removing the strtype creates a significantly different model</span></span>
+<span id="cb455-2"><a href="modeling-in-r.html#cb455-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb455-3"><a href="modeling-in-r.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">step</span>(ancova)</span></code></pre></div>
 <pre><code>## Start:  AIC=-103.2
 ## log10(S) ~ strtype * log10(Q)
 ## 
@@ -627,8 +647,10 @@ varies by bankfull discharge in a relationship that looks something like:</p>
 ## lm(formula = log10(S) ~ strtype + log10(Q), data = streams)
 ## 
 ## Coefficients:
-##       (Intercept)     strtypeBraided  strtypeMeandering           log10(Q)  
-##           -3.9583             2.1453             1.7294            -0.4109</code></pre>
+##       (Intercept)     strtypeBraided  strtypeMeandering  
+##           -3.9583             2.1453             1.7294  
+##          log10(Q)  
+##           -0.4109</code></pre>
 <p><strong>Part of general linear model (lm)</strong></p>
 <p>ANOVA &amp; ANCOVA are applications of a general linear model.</p>
 <ul>

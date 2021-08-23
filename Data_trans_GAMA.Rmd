@@ -1,0 +1,84 @@
+## Data wrangling exercise
+
+The impetus behind this exercise is from the movie Dark Waters (https://www.youtube.com/watch?v=RvAOuhyunhY), inspired by a true story of negligent chemical waste disposal by Dupont.
+
+First create a new RStudio project, named `GAMA` and save this .Rmd file there, and create a folder `GAMA_water_data` in the project folder; the path to the data can then be specified as `"GAMA_water_data/gama_pfas_statewide_v2.txt"` assuming that the latter name matches what is unzipped from your download.
+
+Then download from the California Water Boards, GAMA groundwater website. 
+[https://gamagroundwater.waterboards.ca.gov/gama/datadownload]
+
+
+Then select "Statewide Downloads" then "Statewide PFOS Data" and extract the zip file into a folder "" located in your project folder. Remember this path. This is a large txt file so if you open it with notepad it may take some time to load. Notice that this is a space delimited file.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Required packages:
+```{r}
+library(tidyverse)
+library(lubridate)
+```
+
+Read in the downloaded file "gama_pfas_statewide_v2.txt" and call it cal_pfas and have a look at the data set. You can select if from the Envronment pane or use view(cal_pfas).
+```{r include=F}
+cal_pfas <- read.delim("GAMA_water_data\\gama_pfas_statewide_v2.txt")
+
+```
+Before we clean up this data, let's preserve the locations of all the wells. Select GM_WELL_ID, GM_LATITUDE, and GM_LONGITUDE and remove all the duplicate wells (hint: dplyr cheat sheet provides a function to do this) and save this as cal_pfas_loc.
+```{r include=F}
+#retaining a small data frame for well geolocations
+cal_pfas_loc <- select(cal_pfas,GM_WELL_ID,lat = GM_LATITUDE,long = GM_LONGITUDE) %>%
+  distinct() #removes duplicate wells
+```
+Now to trim down the data. Create a new data frame- cal_pfas_trim; add a new column, DATE, using the associated lubridate function on GM_SAMP_COLLECTION_DATE (this will allow ggplot to recognize it as a date and not a character string), select GM_WELL_ID,GM_CHEMICAL_VVL,GM_RESULT, and the newly created DATE. Arrange the data by GM_WELL_ID.
+```{r include=F}
+#cleaning up cal_pfas
+cal_pfas_trim <- cal_pfas %>%
+  mutate(DATE=mdy(GM_SAMP_COLLECTION_DATE)) %>% #using lubridate(mdy) for ggplot communication
+  select(GM_WELL_ID,GM_CHEMICAL_VVL,GM_RESULT,DATE) %>% 
+  arrange(GM_WELL_ID) #arrange used here to aid in visualizing data frame
+```
+Pivot the data to create new columns from the chemical names and values from the result column and store the new data frame as cal_pfas_wide. Notice the warnings. Some of the wells have multiple samples on the same day so they will be put into a list (ex. c(6.8,9,4.3,etc..)). Rerun the pivot but include the argument- values_fn = mean. This will return only the average of all the samples. Once the pivot is working correctly, keep the columns GM_WELL_ID,DATE,PFOS,PFOA and pipe a mutate to create a new column SUMPFS that is the sum of PFOS +  PFOA.
+```{r include=F}
+#pivoting wider, "values_fn" is used here to average the multiple per-day results, otherwise the values would be a list ex, c(4.8,6.8,etc.)
+cal_pfas_wide <- pivot_wider(cal_pfas_trim,names_from = "GM_CHEMICAL_VVL",values_from = "GM_RESULT", values_fn = mean) %>%
+  select(GM_WELL_ID,DATE,PFOS,PFOA) %>%
+  mutate(SUMPFS= PFOS + PFOA) #creating a new column for the sum of PFOS + PFOA 
+
+#"The US EPA has established a lifetime Health Advisory Level (HAL) for PFOA and PFOS of
+#70 ng/L. When both PFOA and PFOS are found in drinking water, the combined
+#concentrations of PFOA and PFOS should be compared with the 70 ng/L HAL." from GROUNDWATER INFORMATION SHEET
+```
+"The US EPA has established a lifetime Health Advisory Level (HAL) for PFOA and PFOS of 70 ng/L. When both PFOA and PFOS are found in drinking water, the combined concentrations of PFOA and PFOS should be compared with the 70 ng/L HAL."- from the GROUNDWATER INFORMATION SHEET for PFOA (website:https://www.waterboards.ca.gov/water_issues/programs/gama/factsheets.html)
+
+For the sake of creating an interesting time series plot, lets filter data for wells that have a SUMPFS greater than 70 and that have more than 10 sampling dates. Start by creating a new data frame- cal_pfas_index from the pivoted data frame. Hint: use goup_by, filter, count, and filter again. The resulting data frame should have 11 observations and 2 variables.
+```{r include=F}
+#creating an index by filtering for PFOS_PFOA greater than 70(HAL) with more than 10 sample dates.
+#We're choosing for wells with an extended sampling history to plot a time series later.
+cal_pfas_index <- cal_pfas_wide %>%
+  group_by(GM_WELL_ID) %>% #group_by function is needed here for count to work properly
+  filter(SUMPFS > 70) %>%
+  count() %>%
+  filter(n>10)
+```
+Locate the well with the most sampling dates (n). The data wrangling function from Rbase, subset, can do this adding the max function as an argument. 
+```{r include=F}
+#locating the longest sampled well with PFOS_PFOA greater than 70. Note that this is not the well with the highest concentrations, but one with a long sampling history. 
+cal_pfas_max <- subset(cal_pfas_index,n==max(n))
+```
+Lastly, let's pull all the data on that well by joining the max indexed well to cal_pfas_wide. Remove the "n" column using the select function.
+```{r include=F}
+cal_pfas_join <- left_join(cal_pfas_max,cal_pfas_wide,by="GM_WELL_ID") %>%
+  select(-n)
+```
+Plot the well with ggplot, using DATE on the x axis and plot the three variables (PFOS,PFOA,SUMPFS) with different colors. Add a horizontal reference line for the HAL limit at 70.
+```{r include=F}
+#use ggplot to visualize set HAL level with a horizontal line at 70
+ggplot(cal_pfas_join, aes(x=DATE)) +
+  geom_line(aes(y=PFOS),color = "darkred") +
+  geom_line(aes(y=PFOA),color="steelblue") +
+  geom_line(aes(y=SUMPFS), color="purple") +
+  geom_hline(yintercept = 70)
+```
+
+

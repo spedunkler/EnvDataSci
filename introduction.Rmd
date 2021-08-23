@@ -114,7 +114,6 @@ An expression can be entered in the console to display its current value, and th
 
 ```{r intro.Pi}
 cos(pi)
-print(cos(pi))
 Nile
 ```
 
@@ -303,6 +302,8 @@ lat <- c(39.52, 38.91, 37.97, 38.70, 39.09, 39.25, 39.94, 37.75, 40.35, 39.33, 3
 ```
 
 **Plot individually**
+
+We'll use the `plot()` function to visualize what's in a vector. The `plot()` function will create an output based upon its best guess of what you're wanting to see, and will depend on the nature of the data you provide it. We'll be looking at a lot of ways to visualize data soon, but it's often useful to just see what `plot()` gives you. In this case it just makes a bivariate plot where the x dimension is the sequential index of the vector from 1 through the length of the vector, and the values are in the y dimension. 
 ```{r fig.cap="Temperature simply plotted by index"}
 plot(temp)
 ```
@@ -314,6 +315,9 @@ plot(lat)
 ```
 
 **Then plot as a scatterplot**
+
+If we provide two vectors, we'll get a more useful bivariate scatter plot.
+
 ```{r fig.cap="Temperature~Elevation"}
 plot(elev,temp)
 ```
@@ -334,7 +338,7 @@ codes["italy"]
 ```
 
 ### Lists
-Lists can be heterogeneous, with multiple class types. Lists are actually used a lot in R, and are created by many operations, but we'll avoid them for a while...
+Lists can be heterogeneous, with multiple class types. Lists are actually used a lot in R, and are created by many operations, so we all need to understand them better; but we'll avoid them for a while...
 
 ### Matrices
 Vectors are commonly used as a column in a matrix (or as we'll see, a data frame), like a variable
@@ -369,7 +373,7 @@ b <- matrix(1:12, ncol=1)  # 1 column matrix is allowed
 ### Data frames
 A data frame is a database with fields (as vectors) with records (rows), so is very important for data analysis and GIS.  They're kind of like a spreadsheet with rules (first row is field names, fields all one type). So even though they're more complex than a list, we use them so frequently they become quite familiar. We'll use a couple of alternative table display methods, though as we've seen we can also display them by entering the data frame name, or use head().
 
-```{r intro.dataframes}
+```{r}
 library(palmerpenguins); library(kableExtra)
 knitr::kable(
   head(penguins, 10), booktabs = TRUE,
@@ -380,6 +384,8 @@ knitr::kable(
 This `palmerpenguins` data frame is from @palmer.
 
 **Creating a data frame out of a matrix**
+
+There are many functions that start with `as.` that convert things to a desired type. We'll use `as.data.frame()` to create a data frame out of a matrix. (While we're at it, we'll also try a DataTable widget to provide a better way to display a table.)
 ```{r fig.cap="Temperature~Elevation", warning=F}
 mydata <- as.data.frame(sierradata)
 DT::datatable(mydata)
@@ -460,16 +466,9 @@ str(sierraFeb$COUNTY)
 
 ## Programming scripts in RStudio
 
-Given the exploratory nature of the R language, we sometimes forget that it provides
-significant capabilities as a programming language where we can solve more 
-complex problems by coding procedures and using logic to control the process
-and handle a range of possible scenarios.
+Given the exploratory nature of the R language, we sometimes forget that it provides significant capabilities as a programming language where we can solve more  complex problems by coding procedures and using logic to control the process and handle a range of possible scenarios.
 
-Programming languages are used for a wide range of purposes, from developing operating
-systems built from low-level code to high-level *scripting* used to run existing functions
-in libraries. R and Python are commonly used for scripting, and you may be familiar with
-using arcpy to script ArcGIS geoprocessing tools. But whether low- or high-level, some common
-operational structures are used in all computer programming languages:
+Programming languages are used for a wide range of purposes, from developing operating systems built from low-level code to high-level *scripting* used to run existing functions in libraries. R and Python are commonly used for scripting, and you may be familiar with using arcpy to script ArcGIS geoprocessing tools. But whether low- or high-level, some common operational structures are used in all computer programming languages:
 
 - Conditional operations: *If* a condition is true, do this, and maybe otherwise do something *else*.
 
@@ -490,11 +489,9 @@ turnright(c(260, 270, 280))
 
 As we move forward, we'll be wanting to develop complete, free-standing scripts that have all of the needed libraries and data. Your scripts should stand on their own. One example of this that may seem insignificant is using print() statements instead of just naming the object or variable in the console. While that is common in exploratory work, we need to learn to create free-standing scripts.
 
-However, "free standing" still allows for loading libraries of functions we'll be using. 
-We're still talking about high-level (*scripting*), not low-level programming, so we can depend on those libraries that any user can access by installing those packages. If we develop our own packages, we just need to provide the user the ability to install those packages. 
+However, "free standing" still allows for loading libraries of functions we'll be using. We're still talking about high-level (*scripting*), not low-level programming, so we can depend on those libraries that any user can access by installing those packages. If we develop our own packages, we just need to provide the user the ability to install those packages. 
 
-**RStudio projects** are going to be the way we'll want to work for the rest of this book, so each time we start looking at a new data set, or even create one from scratch, you need to create a project to 
-go with it, using File/New Project and specify in a new directory (unless you already have data in an existing one), and specifying a location. Most likely the default location to place it in will work but you can change that.
+**RStudio projects** are going to be the way we'll want to work for the rest of this book, so each time we start looking at a new data set, or even create one from scratch, you need to create a project to go with it, using File/New Project and specify in a new directory (unless you already have data in an existing one), and specifying a location. Most likely the default location to place it in will work but you can change that.
 
 In this book, we'll be making a lot of use of data provided for you from various data packages such as built-in data, `palmerpenguins` [@palmer], or `iGIScData`, but they correspond to specific research projects, such as Sierra Climate to which several data frames and spatial data apply. *You should create a* **`sierra`** *project for those problems* and return to it every time it applies. We'll try to include a reminder about using a particular project.
 

@@ -66,7 +66,7 @@ The methods needed for environmental research can include many things since envi
    
 ## Goals of this book
 
-While the methodological reach of data science is very great, and the spectrum of environmental data is as well, our goal is to lay the foundation and provide useful introductory methods in the areas outlined above, but as a "live" book be able to extend into more advanced methods and provide a growing suite of research examples with associated data sets. We'll briefly explore some data mining methods that can be applied to so-called "big data" challenges, but our focus is on **exploratory data analysis** in general, applied to *environmental data in space and time domains*. Much of our data will be in fact be quite *small*, derived from field-based environmental measurements, and it will primarily be in the areas of time-series and imagery, where automated data capture is employed, when we'll dip our toes into what you might call big-data issues.  
+While the methodological reach of data science is very great, and the spectrum of environmental data is as well, our goal is to lay the foundation and provide useful introductory methods in the areas outlined above, but as a "live" book be able to extend into more advanced methods and provide a growing suite of research examples with associated data sets. We'll briefly explore some data mining methods that can be applied to so-called "big data" challenges, but our focus is on **exploratory data analysis** in general, applied to *environmental data in space and time domains*. Much of our data will be in fact be quite *small*, derived from field-based environmental measurements, and it will primarily be in the areas of time-series and imagery, where automated data capture and machine learning are employed, when we'll dip our toes into what you might call big-data issues.  
 
 ### Some definitions:
 
@@ -140,14 +140,13 @@ To install these packages, the following code will work:
 install.packages(c("tidyverse", "lubridate", "sf", "raster", "tmap"))
 ```
 
-You can always add more packages as needed, do them one at a time, whatever. But 
-generally *don't reinstall the packages again with the unless you actually want to reinstall it*, maybe because it's been updated. So generally I don't include `install.packages()` in my script. Once installed, you can access the packages with the library function, e.g.
+You can always add more packages as needed, do them one at a time, whatever. But generally *don't reinstall the packages again with the unless you actually want to reinstall it*, maybe because it's been updated. So generally I don't include `install.packages()` in my script. Once installed, you can access the packages with the library function, e.g.
 
 ```{r message=F}
-library(tidyverse)
+library(dplyr)
 ```
 
-which you *will* want to include in your script.
+which you *will* want to include in your script. Alternatively, if you're only using maybe one function out of an installed package, you can call that function with the `::` separator, like `dplyr::select()`
  
 ### Data
 
@@ -186,8 +185,12 @@ library(tidyverse); library(iGIScData); library(sf)
 ggplot(data=CA_counties) + geom_sf()
 ```
 
+The package datasets can be used directly as sf data (if the sf library is installed) or data frames (all tibbles).  And similarly to functions, you can accessed the (previously installed) data set by prefacing with `iGIScData::` this way, without having to load the library.  This might be useful in a one-off operation:
+```{r}
+mean(iGIScData::sierraFeb$LATITUDE)
+```
 
-The package datasets can be used directly as sf data (if the sf library is installed) or data frames (all tibbles).  Raw data can also be read from the `extdata` folder that is installed on your computer when you install the package, using code such as:
+Raw data can also be read from the `extdata` folder that is installed on your computer when you install the package, using code such as:
 
 ```
 csvPath <- system.file("extdata","TRI_1987_BaySites.csv", package="iGIScData")

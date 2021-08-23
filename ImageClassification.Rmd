@@ -29,7 +29,7 @@ In thinking about the concept of overfit models and selecting out training (and 
 
 Since machine learning algorithms are very black boxy, getting them working right mostly requires getting good data inputs and tweaking the variety of parameters that control how the model training proceeds. Fortunately there are a lot of good online resources such as: 
 
-- @stefan -- the source of my original inspiration and basic methods used in this section. This paper also describes clipping the data and some ideas on web scraping Sentinel-2 imagery from Copernicus.
+- @Stefan -- the source of my original inspiration and basic methods used in this section. This paper also describes clipping the data and some ideas on web scraping Sentinel-2 imagery from Copernicus.
 - @maxwell
 - @caret
 - various sources from Google searches such as @MLtuning

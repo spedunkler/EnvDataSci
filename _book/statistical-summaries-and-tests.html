@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-08-12" />
+<meta name="date" content="2021-08-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -75,7 +75,7 @@
 <link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
 <script src="libs/HomeButton-0.0.1/home-button.js"></script>
 <script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
-<script src="libs/ndvi_843091-1/data_stars_ndvi75cae4.txt"></script>
+<script src="libs/ndvi_03187b-1/data_stars_ndvi4dac09.txt"></script>
 <script src="libs/joda-0.0.1/joda.js"></script>
 <script src="libs/joda-0.0.1/addImageQuery-bindings.js"></script>
 <link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
@@ -293,6 +293,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.2" data-path="data-transformation.html"><a href="data-transformation.html#set-operations"><i class="fa fa-check"></i><b>5.2</b> Set Operations</a></li>
 <li class="chapter" data-level="5.3" data-path="data-transformation.html"><a href="data-transformation.html#binding-rows-and-columns"><i class="fa fa-check"></i><b>5.3</b> Binding Rows and Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="data-transformation.html"><a href="data-transformation.html#pivotting-data-frames"><i class="fa fa-check"></i><b>5.4</b> Pivotting data frames</a></li>
+<li class="chapter" data-level="5.5" data-path="data-transformation.html"><a href="data-transformation.html#data-wrangling-exercise"><i class="fa fa-check"></i><b>5.5</b> Data wrangling exercise</a></li>
 </ul></li>
 <li class="part"><span><b>II Spatial</b></span></li>
 <li class="chapter" data-level="6" data-path="spatial-data-and-maps.html"><a href="spatial-data-and-maps.html"><i class="fa fa-check"></i><b>6</b> Spatial Data and Maps</a>
@@ -430,7 +431,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="statistical-summaries-and-tests" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Statistical Summaries and Tests</h1>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
 <div id="goals-of-statistical-analysis" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Goals of statistical analysis</h2>
 <p>To frame how we might approach statistical analysis and modeling, there are
@@ -497,23 +498,31 @@ these methods and how they apply to environmental data science.</p>
 <h2><span class="header-section-number">7.2</span> Summary Statistics</h2>
 <p>Summary statistics such as mean, standard deviation, variance, minimum, maximum, and range are derived in quite a few
 R functions, commonly as a parameter or a sub-function (see <code>mutate</code>). An overall simple statistical summary is very easy to do in base R:</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="statistical-summaries-and-tests.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tidy_eucoak)</span></code></pre></div>
-<pre><code>##      site               site #          tree                Date           
-##  Length:180         Min.   :1.000   Length:180         Min.   :2006-11-08  
-##  Class :character   1st Qu.:2.000   Class :character   1st Qu.:2006-12-07  
-##  Mode  :character   Median :4.000   Mode  :character   Median :2007-01-30  
-##                     Mean   :4.422                      Mean   :2007-01-29  
-##                     3rd Qu.:6.000                      3rd Qu.:2007-03-22  
-##                     Max.   :8.000                      Max.   :2007-05-07  
-##                                                                            
-##     month              rain_mm      rain_subcanopy      slope           aspect     
-##  Length:180         Min.   : 1.00   Min.   : 1.00   Min.   : 9.00   Min.   :100.0  
-##  Class :character   1st Qu.:16.00   1st Qu.:16.00   1st Qu.:12.00   1st Qu.:143.0  
-##  Mode  :character   Median :28.50   Median :30.00   Median :24.00   Median :196.0  
-##                     Mean   :37.99   Mean   :34.84   Mean   :20.48   Mean   :186.6  
-##                     3rd Qu.:63.25   3rd Qu.:50.00   3rd Qu.:27.00   3rd Qu.:221.8  
-##                     Max.   :99.00   Max.   :98.00   Max.   :32.00   Max.   :296.0  
-##                     NA&#39;s   :36      NA&#39;s   :4                                      
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="statistical-summaries-and-tests.html#cb373-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tidy_eucoak)</span></code></pre></div>
+<pre><code>##      site               site #          tree          
+##  Length:180         Min.   :1.000   Length:180        
+##  Class :character   1st Qu.:2.000   Class :character  
+##  Mode  :character   Median :4.000   Mode  :character  
+##                     Mean   :4.422                     
+##                     3rd Qu.:6.000                     
+##                     Max.   :8.000                     
+##                                                       
+##       Date               month              rain_mm     
+##  Min.   :2006-11-08   Length:180         Min.   : 1.00  
+##  1st Qu.:2006-12-07   Class :character   1st Qu.:16.00  
+##  Median :2007-01-30   Mode  :character   Median :28.50  
+##  Mean   :2007-01-29                      Mean   :37.99  
+##  3rd Qu.:2007-03-22                      3rd Qu.:63.25  
+##  Max.   :2007-05-07                      Max.   :99.00  
+##                                          NA&#39;s   :36     
+##  rain_subcanopy      slope           aspect     
+##  Min.   : 1.00   Min.   : 9.00   Min.   :100.0  
+##  1st Qu.:16.00   1st Qu.:12.00   1st Qu.:143.0  
+##  Median :30.00   Median :24.00   Median :196.0  
+##  Mean   :34.84   Mean   :20.48   Mean   :186.6  
+##  3rd Qu.:50.00   3rd Qu.:27.00   3rd Qu.:221.8  
+##  Max.   :98.00   Max.   :32.00   Max.   :296.0  
+##  NA&#39;s   :4                                      
 ##     runoff_L      surface_tension runoff_rainfall_ratio
 ##  Min.   : 0.000   Min.   :28.51   Min.   :0.00000      
 ##  1st Qu.: 0.000   1st Qu.:37.40   1st Qu.:0.00000      
@@ -524,37 +533,38 @@ R functions, commonly as a parameter or a sub-function (see <code>mutate</code>)
 ##  NA&#39;s   :8        NA&#39;s   :44      NA&#39;s   :8</code></pre>
 <div id="summarize-by-group-stratifying-a-summary" class="section level3" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Summarize by group: <em>stratifying a summary</em></h3>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="statistical-summaries-and-tests.html#cb374-1" aria-hidden="true" tabindex="-1"></a>eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
-<span id="cb374-2"><a href="statistical-summaries-and-tests.html#cb374-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site) <span class="sc">%&gt;%</span></span>
-<span id="cb374-3"><a href="statistical-summaries-and-tests.html#cb374-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb374-4"><a href="statistical-summaries-and-tests.html#cb374-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rain =</span> <span class="fu">mean</span>(rain_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-5"><a href="statistical-summaries-and-tests.html#cb374-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rainSD =</span> <span class="fu">sd</span>(rain_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-6"><a href="statistical-summaries-and-tests.html#cb374-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_oak =</span> <span class="fu">mean</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-7"><a href="statistical-summaries-and-tests.html#cb374-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_euc =</span> <span class="fu">mean</span>(runoffL_euc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-8"><a href="statistical-summaries-and-tests.html#cb374-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_oakMax =</span> <span class="fu">max</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-9"><a href="statistical-summaries-and-tests.html#cb374-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_eucMax =</span> <span class="fu">max</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb374-10"><a href="statistical-summaries-and-tests.html#cb374-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="statistical-summaries-and-tests.html#cb375-1" aria-hidden="true" tabindex="-1"></a>eucoakrainfallrunoffTDR <span class="sc">%&gt;%</span></span>
+<span id="cb375-2"><a href="statistical-summaries-and-tests.html#cb375-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site) <span class="sc">%&gt;%</span></span>
+<span id="cb375-3"><a href="statistical-summaries-and-tests.html#cb375-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb375-4"><a href="statistical-summaries-and-tests.html#cb375-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rain =</span> <span class="fu">mean</span>(rain_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-5"><a href="statistical-summaries-and-tests.html#cb375-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">rainSD =</span> <span class="fu">sd</span>(rain_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-6"><a href="statistical-summaries-and-tests.html#cb375-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_oak =</span> <span class="fu">mean</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-7"><a href="statistical-summaries-and-tests.html#cb375-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_euc =</span> <span class="fu">mean</span>(runoffL_euc, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-8"><a href="statistical-summaries-and-tests.html#cb375-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_oakMax =</span> <span class="fu">max</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-9"><a href="statistical-summaries-and-tests.html#cb375-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">runoffL_eucMax =</span> <span class="fu">max</span>(runoffL_oak, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb375-10"><a href="statistical-summaries-and-tests.html#cb375-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 7
-##   site   rain rainSD runoffL_oak runoffL_euc runoffL_oakMax runoffL_eucMax
-##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
-## 1 AB1    48.4   28.2      6.80         6.03          6.80           6.80  
-## 2 AB2    34.1   27.9      4.91         3.65          4.91           4.91  
-## 3 KM1    48     32.0      1.94         0.592         1.94           1.94  
-## 4 PR1    56.5   19.1      0.459        2.31          0.459          0.459 
-## 5 TP1    38.4   29.5      0.877        1.66          0.877          0.877 
-## 6 TP2    34.3   29.2      0.0955       1.53          0.0955         0.0955
-## 7 TP3    32.1   28.4      0.381        0.815         0.381          0.381 
-## 8 TP4    32.5   28.2      0.231        2.83          0.231          0.231</code></pre>
+##   site   rain rainSD runoffL_oak runoffL_euc runoffL_oakMax
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1 AB1    48.4   28.2      6.80         6.03          6.80  
+## 2 AB2    34.1   27.9      4.91         3.65          4.91  
+## 3 KM1    48     32.0      1.94         0.592         1.94  
+## 4 PR1    56.5   19.1      0.459        2.31          0.459 
+## 5 TP1    38.4   29.5      0.877        1.66          0.877 
+## 6 TP2    34.3   29.2      0.0955       1.53          0.0955
+## 7 TP3    32.1   28.4      0.381        0.815         0.381 
+## 8 TP4    32.5   28.2      0.231        2.83          0.231 
+## # ... with 1 more variable: runoffL_eucMax &lt;dbl&gt;</code></pre>
 </div>
 <div id="boxplot-for-visualizing-distributions-by-group" class="section level3" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Boxplot for visualizing distributions by group</h3>
 <p>A Tukey boxplot is a good way to visualize distributions by group. In this soil CO<sub>2</sub>
 study of the Marble Mountains <span class="citation">(<a href="#ref-marblesCO2" role="doc-biblioref">J. D. Davis, Kiefer, and Amato 2001</a>)</span>, some sites had much greater variance, and some sites
 tended to be low vs high:</p>
-<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="statistical-summaries-and-tests.html#cb376-1" aria-hidden="true" tabindex="-1"></a>soilCO2_97<span class="sc">$</span>SITE <span class="ot">&lt;-</span> <span class="fu">factor</span>(soilCO2_97<span class="sc">$</span>SITE)</span>
-<span id="cb376-2"><a href="statistical-summaries-and-tests.html#cb376-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> soilCO2_97, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> SITE, <span class="at">y =</span> <span class="st">`</span><span class="at">CO2%</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb376-3"><a href="statistical-summaries-and-tests.html#cb376-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="statistical-summaries-and-tests.html#cb377-1" aria-hidden="true" tabindex="-1"></a>soilCO2_97<span class="sc">$</span>SITE <span class="ot">&lt;-</span> <span class="fu">factor</span>(soilCO2_97<span class="sc">$</span>SITE)</span>
+<span id="cb377-2"><a href="statistical-summaries-and-tests.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> soilCO2_97, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> SITE, <span class="at">y =</span> <span class="st">`</span><span class="at">CO2%</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb377-3"><a href="statistical-summaries-and-tests.html#cb377-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <p><img src="img/marblesCO2map.png">
 <img src="img/marblesCO2ortho.png"></p>
 </div>
@@ -569,19 +579,19 @@ need a lot of these, such as in Monte Carlo simulation. The two most commonly us
 <code>mean=0</code> and <code>sd=0</code>.</li>
 </ul>
 <p>To see both in action as x and y:</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="statistical-summaries-and-tests.html#cb377-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">min=</span><span class="dv">10</span>, <span class="at">max=</span><span class="dv">20</span>))</span>
-<span id="cb377-2"><a href="statistical-summaries-and-tests.html#cb377-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="st">&#39;x&#39;</span></span>
-<span id="cb377-3"><a href="statistical-summaries-and-tests.html#cb377-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(x, <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
-<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="statistical-summaries-and-tests.html#cb378-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">10</span>))</span>
-<span id="cb378-2"><a href="statistical-summaries-and-tests.html#cb378-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">&lt;-</span> <span class="st">&#39;y&#39;</span></span>
-<span id="cb378-3"><a href="statistical-summaries-and-tests.html#cb378-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-102-2.png" width="672" /></p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="statistical-summaries-and-tests.html#cb379-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-102-3.png" width="672" /></p>
-<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="statistical-summaries-and-tests.html#cb380-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(x,y)</span>
-<span id="cb380-2"><a href="statistical-summaries-and-tests.html#cb380-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(xy, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-102-4.png" width="672" /></p>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="statistical-summaries-and-tests.html#cb378-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">runif</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">min=</span><span class="dv">10</span>, <span class="at">max=</span><span class="dv">20</span>))</span>
+<span id="cb378-2"><a href="statistical-summaries-and-tests.html#cb378-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x) <span class="ot">&lt;-</span> <span class="st">&#39;x&#39;</span></span>
+<span id="cb378-3"><a href="statistical-summaries-and-tests.html#cb378-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(x, <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="statistical-summaries-and-tests.html#cb379-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">1000</span>, <span class="at">mean=</span><span class="dv">100</span>, <span class="at">sd=</span><span class="dv">10</span>))</span>
+<span id="cb379-2"><a href="statistical-summaries-and-tests.html#cb379-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y) <span class="ot">&lt;-</span> <span class="st">&#39;y&#39;</span></span>
+<span id="cb379-3"><a href="statistical-summaries-and-tests.html#cb379-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-92-2.png" width="672" /></p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="statistical-summaries-and-tests.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(y, <span class="fu">aes</span>(<span class="at">x=</span>y)) <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-92-3.png" width="672" /></p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="statistical-summaries-and-tests.html#cb381-1" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(x,y)</span>
+<span id="cb381-2"><a href="statistical-summaries-and-tests.html#cb381-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(xy, <span class="fu">aes</span>(<span class="at">x=</span>x,<span class="at">y=</span>y)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-92-4.png" width="672" /></p>
 </div>
 </div>
 <div id="statistical-tests" class="section level2" number="7.3">
@@ -594,16 +604,16 @@ the appropriate methods for your research.</p>
 <p>A common need in environmental research is to compare samples of a phenomenon or compare samples with an assumed standard population. The simplest application of this is the t-test, which can only involve comparing two samples or one sample with a population. Analysis of Variance extends this to allow for more than two groups, and can be seen as a linear model where the categorical grouping (as a factor in R) is one of the variables.</p>
 <div id="t.test-and-a-non-parametric-alternative-the-kruskal-wallis-rank-sum-test" class="section level4" number="7.3.1.1">
 <h4><span class="header-section-number">7.3.1.1</span> t.test and a non-parametric alternative, the Kruskal-Wallis Rank Sum test</h4>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="statistical-summaries-and-tests.html#cb381-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span></span>
-<span id="cb381-2"><a href="statistical-summaries-and-tests.html#cb381-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI, <span class="at">fill=</span>phenology)) <span class="sc">+</span></span>
-<span id="cb381-3"><a href="statistical-summaries-and-tests.html#cb381-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-104"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-104-1.png" alt="NDVI by phenology" width="672" />
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="statistical-summaries-and-tests.html#cb382-1" aria-hidden="true" tabindex="-1"></a>XSptsPheno <span class="sc">%&gt;%</span></span>
+<span id="cb382-2"><a href="statistical-summaries-and-tests.html#cb382-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(NDVI, <span class="at">fill=</span>phenology)) <span class="sc">+</span></span>
+<span id="cb382-3"><a href="statistical-summaries-and-tests.html#cb382-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-94"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-94-1.png" alt="NDVI by phenology" width="672" />
 <p class="caption">
 Figure 7.1: NDVI by phenology
 </p>
 </div>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="statistical-summaries-and-tests.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(NDVI<span class="sc">~</span>phenology, <span class="at">data=</span>XSptsPheno) </span></code></pre></div>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="statistical-summaries-and-tests.html#cb383-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(NDVI<span class="sc">~</span>phenology, <span class="at">data=</span>XSptsPheno) </span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -617,33 +627,34 @@ Figure 7.1: NDVI by phenology
 ##               0.5901186               0.3661588</code></pre>
 <p>While these data sets appear reasonably normal, the Shapiro-Wilk test (which uses a null hypothesis of normal)
 has a p value &lt; 0.05 for the senescent group, so the data can’t be assumed to be normal.</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="statistical-summaries-and-tests.html#cb384-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(XSptsPheno<span class="sc">$</span>NDVI[XSptsPheno<span class="sc">$</span>phenology<span class="sc">==</span><span class="st">&quot;growing&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="statistical-summaries-and-tests.html#cb385-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(XSptsPheno<span class="sc">$</span>NDVI[XSptsPheno<span class="sc">$</span>phenology<span class="sc">==</span><span class="st">&quot;growing&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  XSptsPheno$NDVI[XSptsPheno$phenology == &quot;growing&quot;]
 ## W = 0.93608, p-value = 0.07918</code></pre>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="statistical-summaries-and-tests.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(XSptsPheno<span class="sc">$</span>NDVI[XSptsPheno<span class="sc">$</span>phenology<span class="sc">==</span><span class="st">&quot;senescent&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="statistical-summaries-and-tests.html#cb387-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(XSptsPheno<span class="sc">$</span>NDVI[XSptsPheno<span class="sc">$</span>phenology<span class="sc">==</span><span class="st">&quot;senescent&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  XSptsPheno$NDVI[XSptsPheno$phenology == &quot;senescent&quot;]
 ## W = 0.88728, p-value = 0.004925</code></pre>
 <p>Therefore we should use a non-parametric alternative such as the Kruskal-Wallis Rank Sum test:</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="statistical-summaries-and-tests.html#cb388-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(NDVI<span class="sc">~</span>phenology, <span class="at">data=</span>XSptsPheno)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="statistical-summaries-and-tests.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(NDVI<span class="sc">~</span>phenology, <span class="at">data=</span>XSptsPheno)</span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  NDVI by phenology
-## Kruskal-Wallis chi-squared = 19.164, df = 1, p-value = 1.199e-05</code></pre>
+## Kruskal-Wallis chi-squared = 19.164, df = 1, p-value
+## = 1.199e-05</code></pre>
 <p>[<strong><code>eucoak</code></strong>] For the question “Is the runoff under Eucalyptus canopy significantly different from that under oaks?” we’ll then start by test for normality of each of the two samples (euc and oak)</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="statistical-summaries-and-tests.html#cb390-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tidy_eucoak<span class="sc">$</span>runoff_L[tidy_eucoak<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="statistical-summaries-and-tests.html#cb391-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tidy_eucoak<span class="sc">$</span>runoff_L[tidy_eucoak<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  tidy_eucoak$runoff_L[tidy_eucoak$tree == &quot;euc&quot;]
 ## W = 0.74241, p-value = 4.724e-11</code></pre>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="statistical-summaries-and-tests.html#cb392-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tidy_eucoak<span class="sc">$</span>runoff_L[tidy_eucoak<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="statistical-summaries-and-tests.html#cb393-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tidy_eucoak<span class="sc">$</span>runoff_L[tidy_eucoak<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -651,56 +662,58 @@ has a p value &lt; 0.05 for the senescent group, so the data can’t be assumed 
 ## W = 0.71744, p-value = 1.698e-11</code></pre>
 <p>which shows clearly that both samples are non-normal. So we might apply the non-parametric Kruskal-Wallis
 test:</p>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="statistical-summaries-and-tests.html#cb394-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(runoff_L<span class="sc">~</span>tree, <span class="at">data=</span>tidy_eucoak)</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="statistical-summaries-and-tests.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(runoff_L<span class="sc">~</span>tree, <span class="at">data=</span>tidy_eucoak)</span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  runoff_L by tree
-## Kruskal-Wallis chi-squared = 2.2991, df = 1, p-value = 0.1294</code></pre>
+## Kruskal-Wallis chi-squared = 2.2991, df = 1, p-value
+## = 0.1294</code></pre>
 <p>and no significant difference can be seen. If we look at the data graphically, this makes sense:</p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="statistical-summaries-and-tests.html#cb396-1" aria-hidden="true" tabindex="-1"></a>tidy_eucoak <span class="sc">%&gt;%</span></span>
-<span id="cb396-2"><a href="statistical-summaries-and-tests.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
-<span id="cb396-3"><a href="statistical-summaries-and-tests.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-109"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-109-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="statistical-summaries-and-tests.html#cb397-1" aria-hidden="true" tabindex="-1"></a>tidy_eucoak <span class="sc">%&gt;%</span></span>
+<span id="cb397-2"><a href="statistical-summaries-and-tests.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
+<span id="cb397-3"><a href="statistical-summaries-and-tests.html#cb397-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-99"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-99-1.png" alt="Runoff under Eucalyptus and Oak in Bay Area sites" width="672" />
 <p class="caption">
 Figure 7.2: Runoff under Eucalyptus and Oak in Bay Area sites
 </p>
 </div>
 <p>However, some of this may result from major variations among sites, which is apparent in this boxplot:</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="statistical-summaries-and-tests.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tidy_eucoak) <span class="sc">+</span></span>
-<span id="cb397-2"><a href="statistical-summaries-and-tests.html#cb397-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>runoff_L, <span class="at">color=</span>tree))</span></code></pre></div>
-<div class="figure"><span id="fig:unnamed-chunk-110"></span>
-<img src="EnvDataSci_files/figure-html/unnamed-chunk-110-1.png" alt="runoff at various sites contrasting euc and oak" width="672" />
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="statistical-summaries-and-tests.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tidy_eucoak) <span class="sc">+</span></span>
+<span id="cb398-2"><a href="statistical-summaries-and-tests.html#cb398-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>site, <span class="at">y=</span>runoff_L, <span class="at">color=</span>tree))</span></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-100"></span>
+<img src="EnvDataSci_files/figure-html/unnamed-chunk-100-1.png" alt="runoff at various sites contrasting euc and oak" width="672" />
 <p class="caption">
 Figure 7.3: runoff at various sites contrasting euc and oak
 </p>
 </div>
 <p>We might restrict our analysis to Tilden Park sites in the East Bay.</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="statistical-summaries-and-tests.html#cb398-1" aria-hidden="true" tabindex="-1"></a>tilden <span class="ot">&lt;-</span> tidy_eucoak <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(tidy_eucoak<span class="sc">$</span>site,<span class="st">&quot;TP&quot;</span>))</span>
-<span id="cb398-2"><a href="statistical-summaries-and-tests.html#cb398-2" aria-hidden="true" tabindex="-1"></a>tilden <span class="sc">%&gt;%</span></span>
-<span id="cb398-3"><a href="statistical-summaries-and-tests.html#cb398-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
-<span id="cb398-4"><a href="statistical-summaries-and-tests.html#cb398-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="statistical-summaries-and-tests.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tilden<span class="sc">$</span>runoff_L[tilden<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="statistical-summaries-and-tests.html#cb399-1" aria-hidden="true" tabindex="-1"></a>tilden <span class="ot">&lt;-</span> tidy_eucoak <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">str_detect</span>(tidy_eucoak<span class="sc">$</span>site,<span class="st">&quot;TP&quot;</span>))</span>
+<span id="cb399-2"><a href="statistical-summaries-and-tests.html#cb399-2" aria-hidden="true" tabindex="-1"></a>tilden <span class="sc">%&gt;%</span></span>
+<span id="cb399-3"><a href="statistical-summaries-and-tests.html#cb399-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">log</span>(runoff_L),<span class="at">fill=</span>tree)) <span class="sc">+</span></span>
+<span id="cb399-4"><a href="statistical-summaries-and-tests.html#cb399-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="statistical-summaries-and-tests.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tilden<span class="sc">$</span>runoff_L[tilden<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  tilden$runoff_L[tilden$tree == &quot;euc&quot;]
 ## W = 0.73933, p-value = 1.764e-07</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="statistical-summaries-and-tests.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tilden<span class="sc">$</span>runoff_L[tilden<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="statistical-summaries-and-tests.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(tilden<span class="sc">$</span>runoff_L[tilden<span class="sc">$</span>tree <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  tilden$runoff_L[tilden$tree == &quot;oak&quot;]
 ## W = 0.59535, p-value = 8.529e-10</code></pre>
 <p>So once again, as is common with small sample sets, we need a non-parametric test.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="statistical-summaries-and-tests.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(runoff_L<span class="sc">~</span>tree, <span class="at">data=</span>tilden)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="statistical-summaries-and-tests.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(runoff_L<span class="sc">~</span>tree, <span class="at">data=</span>tilden)</span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  runoff_L by tree
-## Kruskal-Wallis chi-squared = 14.527, df = 1, p-value = 0.0001382</code></pre>
+## Kruskal-Wallis chi-squared = 14.527, df = 1, p-value
+## = 0.0001382</code></pre>
 <p><strong>Analysis process from exploration to testing</strong></p>
 <p>[<strong><code>eucoak</code></strong>] In the year runoff was studied, there were no runoff events sufficient to mobilize sediments. The next year, January had a big event, so we collected sediments and processed them in the lab. <span class="citation">(<a href="#ref-eucoak" role="doc-biblioref">Thompson, Davis, and Oliphant 2016</a>)</span></p>
 <p>Questions:</p>
@@ -708,68 +721,84 @@ Figure 7.3: runoff at various sites contrasting euc and oak
 <li>Is there a difference between eucs and oaks in terms of fine sediment yield?</li>
 <li>Is there a difference between eucs and oaks in terms of total sediment yield? (includes litter)</li>
 </ul>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="statistical-summaries-and-tests.html#cb405-1" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;eucoaksediment.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
-<span id="cb405-2"><a href="statistical-summaries-and-tests.html#cb405-2" aria-hidden="true" tabindex="-1"></a>eucoaksed <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath)</span>
-<span id="cb405-3"><a href="statistical-summaries-and-tests.html#cb405-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(eucoaksed)</span></code></pre></div>
-<pre><code>##       id                site              trtype              slope        bulkDensity   
-##  Length:14          Length:14          Length:14          Min.   : 9.00   Min.   :0.960  
-##  Class :character   Class :character   Class :character   1st Qu.:12.00   1st Qu.:1.060  
-##  Mode  :character   Mode  :character   Mode  :character   Median :21.00   Median :1.125  
-##                                                           Mean   :20.04   Mean   :1.156  
-##                                                           3rd Qu.:25.00   3rd Qu.:1.245  
-##                                                           Max.   :32.00   Max.   :1.490  
-##                                                                                          
-##      litter         Jan08rain     mean_runoff_ratio med_runoff_ratio  std_runoff_ratio 
-##  Min.   : 25.00   Min.   :228.1   Min.   :0.00450   Min.   :0.00000   Min.   :0.01070  
-##  1st Qu.: 51.25   1st Qu.:290.8   1st Qu.:0.02285   1st Qu.:0.01105   1st Qu.:0.01642  
-##  Median : 77.00   Median :301.1   Median :0.04835   Median :0.04950   Median :0.02740  
-##  Mean   : 76.64   Mean   :298.5   Mean   :0.06679   Mean   :0.06179   Mean   :0.04355  
-##  3rd Qu.: 95.75   3rd Qu.:317.0   3rd Qu.:0.12172   3rd Qu.:0.09492   3rd Qu.:0.05735  
-##  Max.   :135.00   Max.   :328.5   Max.   :0.16480   Max.   :0.16430   Max.   :0.11480  
-##                                                                                        
-##     fines_g         litter_g        total_g       fineTotalRatio   fineRainRatio  
-##  Min.   : 7.50   Min.   :14.00   Min.   : 23.50   Min.   :0.1300   Min.   :0.025  
-##  1st Qu.:13.30   1st Qu.:18.80   1st Qu.: 35.00   1st Qu.:0.2700   1st Qu.:0.044  
-##  Median :18.10   Median :40.40   Median : 60.50   Median :0.3900   Median :0.064  
-##  Mean   :27.77   Mean   :41.32   Mean   : 69.12   Mean   :0.3715   Mean   :0.097  
-##  3rd Qu.:45.00   3rd Qu.:57.50   3rd Qu.: 95.50   3rd Qu.:0.4900   3rd Qu.:0.141  
-##  Max.   :66.70   Max.   :97.80   Max.   :125.90   Max.   :0.5500   Max.   :0.293  
-##  NA&#39;s   :1       NA&#39;s   :1       NA&#39;s   :1        NA&#39;s   :1        NA&#39;s   :1</code></pre>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="statistical-summaries-and-tests.html#cb407-1" aria-hidden="true" tabindex="-1"></a>eucoaksed <span class="sc">%&gt;%</span></span>
-<span id="cb407-2"><a href="statistical-summaries-and-tests.html#cb407-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(trtype) <span class="sc">%&gt;%</span></span>
-<span id="cb407-3"><a href="statistical-summaries-and-tests.html#cb407-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanfines =</span> <span class="fu">mean</span>(fines_g, <span class="at">na.rm=</span>T), <span class="at">sdfines =</span> <span class="fu">sd</span>(fines_g, <span class="at">na.rm=</span>T),</span>
-<span id="cb407-4"><a href="statistical-summaries-and-tests.html#cb407-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meantotal =</span> <span class="fu">mean</span>(total_g, <span class="at">na.rm=</span>T), <span class="at">sdtotal =</span> <span class="fu">sd</span>(total_g, <span class="at">na.rm=</span>T))</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="statistical-summaries-and-tests.html#cb406-1" aria-hidden="true" tabindex="-1"></a>csvPath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;eucoaksediment.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
+<span id="cb406-2"><a href="statistical-summaries-and-tests.html#cb406-2" aria-hidden="true" tabindex="-1"></a>eucoaksed <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(csvPath)</span>
+<span id="cb406-3"><a href="statistical-summaries-and-tests.html#cb406-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(eucoaksed)</span></code></pre></div>
+<pre><code>##       id                site              trtype         
+##  Length:14          Length:14          Length:14         
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##                                                          
+##      slope        bulkDensity        litter      
+##  Min.   : 9.00   Min.   :0.960   Min.   : 25.00  
+##  1st Qu.:12.00   1st Qu.:1.060   1st Qu.: 51.25  
+##  Median :21.00   Median :1.125   Median : 77.00  
+##  Mean   :20.04   Mean   :1.156   Mean   : 76.64  
+##  3rd Qu.:25.00   3rd Qu.:1.245   3rd Qu.: 95.75  
+##  Max.   :32.00   Max.   :1.490   Max.   :135.00  
+##                                                  
+##    Jan08rain     mean_runoff_ratio med_runoff_ratio 
+##  Min.   :228.1   Min.   :0.00450   Min.   :0.00000  
+##  1st Qu.:290.8   1st Qu.:0.02285   1st Qu.:0.01105  
+##  Median :301.1   Median :0.04835   Median :0.04950  
+##  Mean   :298.5   Mean   :0.06679   Mean   :0.06179  
+##  3rd Qu.:317.0   3rd Qu.:0.12172   3rd Qu.:0.09492  
+##  Max.   :328.5   Max.   :0.16480   Max.   :0.16430  
+##                                                     
+##  std_runoff_ratio     fines_g         litter_g    
+##  Min.   :0.01070   Min.   : 7.50   Min.   :14.00  
+##  1st Qu.:0.01642   1st Qu.:13.30   1st Qu.:18.80  
+##  Median :0.02740   Median :18.10   Median :40.40  
+##  Mean   :0.04355   Mean   :27.77   Mean   :41.32  
+##  3rd Qu.:0.05735   3rd Qu.:45.00   3rd Qu.:57.50  
+##  Max.   :0.11480   Max.   :66.70   Max.   :97.80  
+##                    NA&#39;s   :1       NA&#39;s   :1      
+##     total_g       fineTotalRatio   fineRainRatio  
+##  Min.   : 23.50   Min.   :0.1300   Min.   :0.025  
+##  1st Qu.: 35.00   1st Qu.:0.2700   1st Qu.:0.044  
+##  Median : 60.50   Median :0.3900   Median :0.064  
+##  Mean   : 69.12   Mean   :0.3715   Mean   :0.097  
+##  3rd Qu.: 95.50   3rd Qu.:0.4900   3rd Qu.:0.141  
+##  Max.   :125.90   Max.   :0.5500   Max.   :0.293  
+##  NA&#39;s   :1        NA&#39;s   :1        NA&#39;s   :1</code></pre>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="statistical-summaries-and-tests.html#cb408-1" aria-hidden="true" tabindex="-1"></a>eucoaksed <span class="sc">%&gt;%</span></span>
+<span id="cb408-2"><a href="statistical-summaries-and-tests.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(trtype) <span class="sc">%&gt;%</span></span>
+<span id="cb408-3"><a href="statistical-summaries-and-tests.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">meanfines =</span> <span class="fu">mean</span>(fines_g, <span class="at">na.rm=</span>T), <span class="at">sdfines =</span> <span class="fu">sd</span>(fines_g, <span class="at">na.rm=</span>T),</span>
+<span id="cb408-4"><a href="statistical-summaries-and-tests.html#cb408-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meantotal =</span> <span class="fu">mean</span>(total_g, <span class="at">na.rm=</span>T), <span class="at">sdtotal =</span> <span class="fu">sd</span>(total_g, <span class="at">na.rm=</span>T))</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   trtype meanfines sdfines meantotal sdtotal
 ##   &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 euc         14.2    3.50      48.6    35.0
 ## 2 oak         39.4   20.4       86.7    26.2</code></pre>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="statistical-summaries-and-tests.html#cb409-1" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="ot">&lt;-</span> eucoaksed <span class="sc">%&gt;%</span> </span>
-<span id="cb409-2"><a href="statistical-summaries-and-tests.html#cb409-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">col=</span><span class="fu">c</span>(fines_g,litter_g), </span>
-<span id="cb409-3"><a href="statistical-summaries-and-tests.html#cb409-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sed_type&quot;</span>, </span>
-<span id="cb409-4"><a href="statistical-summaries-and-tests.html#cb409-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;sed_g&quot;</span>)</span>
-<span id="cb409-5"><a href="statistical-summaries-and-tests.html#cb409-5" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
-<span id="cb409-6"><a href="statistical-summaries-and-tests.html#cb409-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(trtype, sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
-<span id="cb409-7"><a href="statistical-summaries-and-tests.html#cb409-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
-<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="statistical-summaries-and-tests.html#cb410-1" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
-<span id="cb410-2"><a href="statistical-summaries-and-tests.html#cb410-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
-<span id="cb410-3"><a href="statistical-summaries-and-tests.html#cb410-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb410-4"><a href="statistical-summaries-and-tests.html#cb410-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(trtype <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-114-2.png" width="672" /></p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="statistical-summaries-and-tests.html#cb411-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>fines_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="statistical-summaries-and-tests.html#cb410-1" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="ot">&lt;-</span> eucoaksed <span class="sc">%&gt;%</span> </span>
+<span id="cb410-2"><a href="statistical-summaries-and-tests.html#cb410-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">col=</span><span class="fu">c</span>(fines_g,litter_g), </span>
+<span id="cb410-3"><a href="statistical-summaries-and-tests.html#cb410-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sed_type&quot;</span>, </span>
+<span id="cb410-4"><a href="statistical-summaries-and-tests.html#cb410-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;sed_g&quot;</span>)</span>
+<span id="cb410-5"><a href="statistical-summaries-and-tests.html#cb410-5" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
+<span id="cb410-6"><a href="statistical-summaries-and-tests.html#cb410-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(trtype, sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
+<span id="cb410-7"><a href="statistical-summaries-and-tests.html#cb410-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="statistical-summaries-and-tests.html#cb411-1" aria-hidden="true" tabindex="-1"></a>eucoakLong <span class="sc">%&gt;%</span></span>
+<span id="cb411-2"><a href="statistical-summaries-and-tests.html#cb411-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sed_g, <span class="at">col=</span>sed_type)) <span class="sc">+</span> </span>
+<span id="cb411-3"><a href="statistical-summaries-and-tests.html#cb411-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb411-4"><a href="statistical-summaries-and-tests.html#cb411-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(trtype <span class="sc">~</span> .)</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-104-2.png" width="672" /></p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="statistical-summaries-and-tests.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>fines_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  eucoaksed$fines_g[eucoaksed$trtype == &quot;euc&quot;]
 ## W = 0.9374, p-value = 0.6383</code></pre>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="statistical-summaries-and-tests.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>fines_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="statistical-summaries-and-tests.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>fines_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  eucoaksed$fines_g[eucoaksed$trtype == &quot;oak&quot;]
 ## W = 0.96659, p-value = 0.8729</code></pre>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="statistical-summaries-and-tests.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(fines_g<span class="sc">~</span>trtype, <span class="at">data=</span>eucoaksed) </span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="statistical-summaries-and-tests.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(fines_g<span class="sc">~</span>trtype, <span class="at">data=</span>eucoaksed) </span></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -781,24 +810,25 @@ Figure 7.3: runoff at various sites contrasting euc and oak
 ## sample estimates:
 ## mean in group euc mean in group oak 
 ##          14.21667          39.38571</code></pre>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="statistical-summaries-and-tests.html#cb417-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>total_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="statistical-summaries-and-tests.html#cb418-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>total_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;euc&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  eucoaksed$total_g[eucoaksed$trtype == &quot;euc&quot;]
 ## W = 0.76405, p-value = 0.02725</code></pre>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="statistical-summaries-and-tests.html#cb419-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>total_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="statistical-summaries-and-tests.html#cb420-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(eucoaksed<span class="sc">$</span>total_g[eucoaksed<span class="sc">$</span>trtype <span class="sc">==</span> <span class="st">&quot;oak&quot;</span>])</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  eucoaksed$total_g[eucoaksed$trtype == &quot;oak&quot;]
 ## W = 0.94988, p-value = 0.7286</code></pre>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="statistical-summaries-and-tests.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(total_g<span class="sc">~</span>trtype, <span class="at">data=</span>eucoaksed) </span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="statistical-summaries-and-tests.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(total_g<span class="sc">~</span>trtype, <span class="at">data=</span>eucoaksed) </span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  total_g by trtype
-## Kruskal-Wallis chi-squared = 3.449, df = 1, p-value = 0.06329</code></pre>
+## Kruskal-Wallis chi-squared = 3.449, df = 1, p-value =
+## 0.06329</code></pre>
 <p>So we used a t test for the fines_g, and the test suggests that there’s a significant
 difference in sediment yield for fines, but the Kruskal-Wallis test on total sediment
 (including litter) did not show a significant difference. Both results support
@@ -818,57 +848,59 @@ total sediment yield not significantly different.</p>
 <p><img src="img/PigeonMtWaterSample.png" align = "left">
 <img src="img/CaveCoveSink.png" align = "center">
 <img src="img/HelenHighwaterSpring.png" align = "right"></p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="statistical-summaries-and-tests.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl); <span class="fu">library</span>(tmap)</span>
-<span id="cb423-2"><a href="statistical-summaries-and-tests.html#cb423-2" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>,<span class="st">&quot;SinkingCoveWaterChem.xlsx&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb423-3"><a href="statistical-summaries-and-tests.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">siteLoc =</span> <span class="fu">str_sub</span>(Site,<span class="at">start=</span>1L, <span class="at">end=</span>1L))</span>
-<span id="cb423-4"><a href="statistical-summaries-and-tests.html#cb423-4" aria-hidden="true" tabindex="-1"></a>wChemTrunk <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">==</span> <span class="st">&quot;T&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;trunk&quot;</span>)</span>
-<span id="cb423-5"><a href="statistical-summaries-and-tests.html#cb423-5" aria-hidden="true" tabindex="-1"></a>wChemDrip <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;S&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;dripwater&quot;</span>)</span>
-<span id="cb423-6"><a href="statistical-summaries-and-tests.html#cb423-6" aria-hidden="true" tabindex="-1"></a>wChemTrib <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="st">&quot;P&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;tributary&quot;</span>)</span>
-<span id="cb423-7"><a href="statistical-summaries-and-tests.html#cb423-7" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(wChemTrunk, wChemDrip, wChemTrib)</span>
-<span id="cb423-8"><a href="statistical-summaries-and-tests.html#cb423-8" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>, <span class="st">&quot;SinkingCoveSites.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>))</span>
-<span id="cb423-9"><a href="statistical-summaries-and-tests.html#cb423-9" aria-hidden="true" tabindex="-1"></a>wChem <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span></span>
-<span id="cb423-10"><a href="statistical-summaries-and-tests.html#cb423-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Site&quot;</span> <span class="ot">=</span> <span class="st">&quot;site&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb423-11"><a href="statistical-summaries-and-tests.html#cb423-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb423-12"><a href="statistical-summaries-and-tests.html#cb423-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb423-13"><a href="statistical-summaries-and-tests.html#cb423-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
-<span id="cb423-14"><a href="statistical-summaries-and-tests.html#cb423-14" aria-hidden="true" tabindex="-1"></a>DEMpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>,<span class="st">&quot;DEM_SinkingCoveUTM.tif&quot;</span>,<span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
-<span id="cb423-15"><a href="statistical-summaries-and-tests.html#cb423-15" aria-hidden="true" tabindex="-1"></a>DEM <span class="ot">&lt;-</span> <span class="fu">raster</span>(DEMpath)</span>
-<span id="cb423-16"><a href="statistical-summaries-and-tests.html#cb423-16" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">opt=</span><span class="st">&#39;slope&#39;</span>)</span>
-<span id="cb423-17"><a href="statistical-summaries-and-tests.html#cb423-17" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">opt=</span><span class="st">&#39;aspect&#39;</span>)</span>
-<span id="cb423-18"><a href="statistical-summaries-and-tests.html#cb423-18" aria-hidden="true" tabindex="-1"></a>hillsh <span class="ot">&lt;-</span> <span class="fu">hillShade</span>(slope, aspect, <span class="dv">40</span>, <span class="dv">330</span>)</span>
-<span id="cb423-19"><a href="statistical-summaries-and-tests.html#cb423-19" aria-hidden="true" tabindex="-1"></a>bounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(wChem)</span>
-<span id="cb423-20"><a href="statistical-summaries-and-tests.html#cb423-20" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>xmax <span class="sc">-</span> bounds<span class="sc">$</span>xmin</span>
-<span id="cb423-21"><a href="statistical-summaries-and-tests.html#cb423-21" aria-hidden="true" tabindex="-1"></a>yrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>ymax <span class="sc">-</span> bounds<span class="sc">$</span>ymin</span>
-<span id="cb423-22"><a href="statistical-summaries-and-tests.html#cb423-22" aria-hidden="true" tabindex="-1"></a>xMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmin <span class="sc">-</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
-<span id="cb423-23"><a href="statistical-summaries-and-tests.html#cb423-23" aria-hidden="true" tabindex="-1"></a>xMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmax <span class="sc">+</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
-<span id="cb423-24"><a href="statistical-summaries-and-tests.html#cb423-24" aria-hidden="true" tabindex="-1"></a>yMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymin <span class="sc">-</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
-<span id="cb423-25"><a href="statistical-summaries-and-tests.html#cb423-25" aria-hidden="true" tabindex="-1"></a>yMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymax <span class="sc">+</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
-<span id="cb423-26"><a href="statistical-summaries-and-tests.html#cb423-26" aria-hidden="true" tabindex="-1"></a><span class="co">#st_bbox(c(xmin = 16.1, xmax = 16.6, ymax = 48.6, ymin = 47.9), crs = st_crs(4326))</span></span>
-<span id="cb423-27"><a href="statistical-summaries-and-tests.html#cb423-27" aria-hidden="true" tabindex="-1"></a>newbounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span>xMIN, <span class="at">xmax=</span>xMAX, <span class="at">ymin=</span>yMIN, <span class="at">ymax=</span>yMAX), <span class="at">crs=</span> <span class="fu">st_crs</span>(<span class="dv">4326</span>))</span>
-<span id="cb423-28"><a href="statistical-summaries-and-tests.html#cb423-28" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(hillsh,<span class="at">bbox=</span>newbounds) <span class="sc">+</span></span>
-<span id="cb423-29"><a href="statistical-summaries-and-tests.html#cb423-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="st">&quot;-Greys&quot;</span>,<span class="at">legend.show=</span>F,<span class="at">n=</span><span class="dv">20</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">tm_shape</span>(wChem) <span class="sc">+</span> </span>
-<span id="cb423-30"><a href="statistical-summaries-and-tests.html#cb423-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="st">&quot;TH&quot;</span>, <span class="at">col=</span><span class="st">&quot;Lithology&quot;</span>, <span class="at">scale=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="st">&quot;siteType&quot;</span>) <span class="sc">+</span></span>
-<span id="cb423-31"><a href="statistical-summaries-and-tests.html#cb423-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_legend</span>() <span class="sc">+</span></span>
-<span id="cb423-32"><a href="statistical-summaries-and-tests.html#cb423-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb423-33"><a href="statistical-summaries-and-tests.html#cb423-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lines=</span>F)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="statistical-summaries-and-tests.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(TH<span class="sc">~</span>siteType, <span class="at">data =</span> wChemData))</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="statistical-summaries-and-tests.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf); <span class="fu">library</span>(tidyverse); <span class="fu">library</span>(readxl); <span class="fu">library</span>(tmap)</span>
+<span id="cb424-2"><a href="statistical-summaries-and-tests.html#cb424-2" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>,<span class="st">&quot;SinkingCoveWaterChem.xlsx&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb424-3"><a href="statistical-summaries-and-tests.html#cb424-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">siteLoc =</span> <span class="fu">str_sub</span>(Site,<span class="at">start=</span>1L, <span class="at">end=</span>1L))</span>
+<span id="cb424-4"><a href="statistical-summaries-and-tests.html#cb424-4" aria-hidden="true" tabindex="-1"></a>wChemTrunk <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">==</span> <span class="st">&quot;T&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;trunk&quot;</span>)</span>
+<span id="cb424-5"><a href="statistical-summaries-and-tests.html#cb424-5" aria-hidden="true" tabindex="-1"></a>wChemDrip <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;D&quot;</span>,<span class="st">&quot;S&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;dripwater&quot;</span>)</span>
+<span id="cb424-6"><a href="statistical-summaries-and-tests.html#cb424-6" aria-hidden="true" tabindex="-1"></a>wChemTrib <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span> <span class="fu">filter</span>(siteLoc <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;W&quot;</span>, <span class="st">&quot;P&quot;</span>)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">siteType =</span> <span class="st">&quot;tributary&quot;</span>)</span>
+<span id="cb424-7"><a href="statistical-summaries-and-tests.html#cb424-7" aria-hidden="true" tabindex="-1"></a>wChemData <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(wChemTrunk, wChemDrip, wChemTrib)</span>
+<span id="cb424-8"><a href="statistical-summaries-and-tests.html#cb424-8" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>, <span class="st">&quot;SinkingCoveSites.csv&quot;</span>, <span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>))</span>
+<span id="cb424-9"><a href="statistical-summaries-and-tests.html#cb424-9" aria-hidden="true" tabindex="-1"></a>wChem <span class="ot">&lt;-</span> wChemData <span class="sc">%&gt;%</span></span>
+<span id="cb424-10"><a href="statistical-summaries-and-tests.html#cb424-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sites, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Site&quot;</span> <span class="ot">=</span> <span class="st">&quot;site&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb424-11"><a href="statistical-summaries-and-tests.html#cb424-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>, <span class="st">&quot;latitude&quot;</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb424-12"><a href="statistical-summaries-and-tests.html#cb424-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb424-13"><a href="statistical-summaries-and-tests.html#cb424-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb424-14"><a href="statistical-summaries-and-tests.html#cb424-14" aria-hidden="true" tabindex="-1"></a>DEMpath <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata/SinkingCove&quot;</span>,<span class="st">&quot;DEM_SinkingCoveUTM.tif&quot;</span>,<span class="at">package=</span><span class="st">&quot;iGIScData&quot;</span>)</span>
+<span id="cb424-15"><a href="statistical-summaries-and-tests.html#cb424-15" aria-hidden="true" tabindex="-1"></a>DEM <span class="ot">&lt;-</span> <span class="fu">raster</span>(DEMpath)</span>
+<span id="cb424-16"><a href="statistical-summaries-and-tests.html#cb424-16" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">opt=</span><span class="st">&#39;slope&#39;</span>)</span>
+<span id="cb424-17"><a href="statistical-summaries-and-tests.html#cb424-17" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(DEM, <span class="at">opt=</span><span class="st">&#39;aspect&#39;</span>)</span>
+<span id="cb424-18"><a href="statistical-summaries-and-tests.html#cb424-18" aria-hidden="true" tabindex="-1"></a>hillsh <span class="ot">&lt;-</span> <span class="fu">hillShade</span>(slope, aspect, <span class="dv">40</span>, <span class="dv">330</span>)</span>
+<span id="cb424-19"><a href="statistical-summaries-and-tests.html#cb424-19" aria-hidden="true" tabindex="-1"></a>bounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(wChem)</span>
+<span id="cb424-20"><a href="statistical-summaries-and-tests.html#cb424-20" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>xmax <span class="sc">-</span> bounds<span class="sc">$</span>xmin</span>
+<span id="cb424-21"><a href="statistical-summaries-and-tests.html#cb424-21" aria-hidden="true" tabindex="-1"></a>yrange <span class="ot">&lt;-</span> bounds<span class="sc">$</span>ymax <span class="sc">-</span> bounds<span class="sc">$</span>ymin</span>
+<span id="cb424-22"><a href="statistical-summaries-and-tests.html#cb424-22" aria-hidden="true" tabindex="-1"></a>xMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmin <span class="sc">-</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb424-23"><a href="statistical-summaries-and-tests.html#cb424-23" aria-hidden="true" tabindex="-1"></a>xMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>xmax <span class="sc">+</span> xrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb424-24"><a href="statistical-summaries-and-tests.html#cb424-24" aria-hidden="true" tabindex="-1"></a>yMIN <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymin <span class="sc">-</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb424-25"><a href="statistical-summaries-and-tests.html#cb424-25" aria-hidden="true" tabindex="-1"></a>yMAX <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(bounds<span class="sc">$</span>ymax <span class="sc">+</span> yrange<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb424-26"><a href="statistical-summaries-and-tests.html#cb424-26" aria-hidden="true" tabindex="-1"></a><span class="co">#st_bbox(c(xmin = 16.1, xmax = 16.6, ymax = 48.6, ymin = 47.9), crs = st_crs(4326))</span></span>
+<span id="cb424-27"><a href="statistical-summaries-and-tests.html#cb424-27" aria-hidden="true" tabindex="-1"></a>newbounds <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">c</span>(<span class="at">xmin=</span>xMIN, <span class="at">xmax=</span>xMAX, <span class="at">ymin=</span>yMIN, <span class="at">ymax=</span>yMAX), <span class="at">crs=</span> <span class="fu">st_crs</span>(<span class="dv">4326</span>))</span>
+<span id="cb424-28"><a href="statistical-summaries-and-tests.html#cb424-28" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(hillsh,<span class="at">bbox=</span>newbounds) <span class="sc">+</span></span>
+<span id="cb424-29"><a href="statistical-summaries-and-tests.html#cb424-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette=</span><span class="st">&quot;-Greys&quot;</span>,<span class="at">legend.show=</span>F,<span class="at">n=</span><span class="dv">20</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span> <span class="fu">tm_shape</span>(wChem) <span class="sc">+</span> </span>
+<span id="cb424-30"><a href="statistical-summaries-and-tests.html#cb424-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_symbols</span>(<span class="at">size=</span><span class="st">&quot;TH&quot;</span>, <span class="at">col=</span><span class="st">&quot;Lithology&quot;</span>, <span class="at">scale=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="st">&quot;siteType&quot;</span>) <span class="sc">+</span></span>
+<span id="cb424-31"><a href="statistical-summaries-and-tests.html#cb424-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_legend</span>() <span class="sc">+</span></span>
+<span id="cb424-32"><a href="statistical-summaries-and-tests.html#cb424-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">&quot;left&quot;</span>, <span class="st">&quot;bottom&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb424-33"><a href="statistical-summaries-and-tests.html#cb424-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_graticules</span>(<span class="at">lines=</span>F)</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="statistical-summaries-and-tests.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(TH<span class="sc">~</span>siteType, <span class="at">data =</span> wChemData))</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## siteType     2  79172   39586   20.59 1.07e-07 ***
 ## Residuals   67 128815    1923                     
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="statistical-summaries-and-tests.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(TH<span class="sc">~</span>Lithology, <span class="at">data =</span> wChemData))</span></code></pre></div>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="statistical-summaries-and-tests.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(TH<span class="sc">~</span>Lithology, <span class="at">data =</span> wChemData))</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## Lithology    3  98107   32702   19.64 3.28e-09 ***
 ## Residuals   66 109881    1665                     
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="statistical-summaries-and-tests.html#cb428-1" aria-hidden="true" tabindex="-1"></a>wChemData <span class="sc">%&gt;%</span></span>
-<span id="cb428-2"><a href="statistical-summaries-and-tests.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TH, <span class="at">fill=</span>siteType)) <span class="sc">+</span></span>
-<span id="cb428-3"><a href="statistical-summaries-and-tests.html#cb428-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb428-4"><a href="statistical-summaries-and-tests.html#cb428-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Lithology <span class="sc">~</span> .)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-115-2.png" width="672" /></p>
+## Signif. codes:  
+## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="statistical-summaries-and-tests.html#cb429-1" aria-hidden="true" tabindex="-1"></a>wChemData <span class="sc">%&gt;%</span></span>
+<span id="cb429-2"><a href="statistical-summaries-and-tests.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>TH, <span class="at">fill=</span>siteType)) <span class="sc">+</span></span>
+<span id="cb429-3"><a href="statistical-summaries-and-tests.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb429-4"><a href="statistical-summaries-and-tests.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Lithology <span class="sc">~</span> .)</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-105-2.png" width="672" /></p>
 <p>Some observations and caveats from the above:</p>
 <ul>
 <li><p>There’s pretty clearly a difference between surface waters (trunk and tributary) and cave dripwaters (from stalactites) in terms of solutes. Analysis of variance simply confirms the obvious.</p></li>
@@ -880,11 +912,11 @@ total sediment yield not significantly different.</p>
 <img src="img/UpperSinkingCoveGeology.png"></p></li>
 <li><p>While the rapid increase in solutes happens when Cave Cove Creek starts draining through the much more soluble limestone until reaches saturation, the distance traveled by the water (reflected by a drop in elevation) can be seen:</p></li>
 </ul>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="statistical-summaries-and-tests.html#cb429-1" aria-hidden="true" tabindex="-1"></a>wChemData <span class="sc">%&gt;%</span></span>
-<span id="cb429-2"><a href="statistical-summaries-and-tests.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Elevation, <span class="at">y=</span>TH, <span class="at">col=</span>Lithology)) <span class="sc">+</span> </span>
-<span id="cb429-3"><a href="statistical-summaries-and-tests.html#cb429-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb429-4"><a href="statistical-summaries-and-tests.html#cb429-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="statistical-summaries-and-tests.html#cb430-1" aria-hidden="true" tabindex="-1"></a>wChemData <span class="sc">%&gt;%</span></span>
+<span id="cb430-2"><a href="statistical-summaries-and-tests.html#cb430-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Elevation, <span class="at">y=</span>TH, <span class="at">col=</span>Lithology)) <span class="sc">+</span> </span>
+<span id="cb430-3"><a href="statistical-summaries-and-tests.html#cb430-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb430-4"><a href="statistical-summaries-and-tests.html#cb430-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span> <span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 </div>
 </div>
 <div id="correlation" class="section level3" number="7.3.2">
@@ -893,9 +925,9 @@ total sediment yield not significantly different.</p>
 <p>r<sup>2</sup> = amount of variance in one variable “explained” by the other – always positive.</p>
 <p>Can show with a pairs plot: <code>pairs(dataframe)</code>, but is tricky</p>
 <p>Here’s an easier method from the psych package [<strong><code>sierra</code></strong>]</p>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="statistical-summaries-and-tests.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb430-2"><a href="statistical-summaries-and-tests.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(sierraFeb <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(LATITUDE, LONGITUDE, ELEVATION, PRECIPITATION, TEMPERATURE))</span></code></pre></div>
-<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="statistical-summaries-and-tests.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb431-2"><a href="statistical-summaries-and-tests.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs.panels</span>(sierraFeb <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(LATITUDE, LONGITUDE, ELEVATION, PRECIPITATION, TEMPERATURE))</span></code></pre></div>
+<p><img src="EnvDataSci_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 
 </div>
 </div>
